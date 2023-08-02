@@ -1,0 +1,15 @@
+# Build
+build/
+dist/
+*.zip
+*.tar.gz
+*.rar
+
+# Tests
+/coverage
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
