@@ -19,12 +19,16 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx",
     "lint:fix": "eslint --fix --ext .ts,.tsx",
     "pretty": "prettier --check \"./**/*.{ts,tsx,json}\"",
-    "pretty:fix": "prettier --write \"./**/*.{ts,tsx,json}\""
+    "pretty:fix": "prettier --write \"./**/*.{ts,tsx,json}\"",
+    "test": "jest --verbose",
+    "test:coverage": "jest --coverage",
+    "test:report": "jest --verbose --reporters=default --reporters=jest-junit",
+    "test:watch": "jest --watch",
+    "test:watchAll": "jest --watchAll"
   },
   "eslintConfig": {
     "extends": [
