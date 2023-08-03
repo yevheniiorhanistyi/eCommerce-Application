@@ -17,7 +17,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build-prod": "tsc && vite build --mode production",
+    "build-dev": "tsc && vite build --mode development",
     "preview": "vite preview"
   },
   "eslintConfig": {
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.4",
+    "dotenv": "^16.3.1",
     "eslint": "^8.46.0",
     "eslint-config-react-app": "^7.0.1",
     "vite": "^4.4.8",
