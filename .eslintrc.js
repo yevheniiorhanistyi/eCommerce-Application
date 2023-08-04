@@ -10,6 +10,8 @@ module.exports = {
     'airbnb-typescript',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'react-app',
+    'react-app/jest',
   ],
   overrides: [
     {
