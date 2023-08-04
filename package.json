@@ -17,9 +17,10 @@
     "build-prod": "tsc && vite build --mode production",
     "build-dev": "tsc && vite build --mode development",
     "preview": "vite preview",
-    "prettier": "prettier --write .",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "prettier --check .",
+    "format": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
@@ -84,5 +85,10 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --write . && git add -A ."
+    }
   }
 }

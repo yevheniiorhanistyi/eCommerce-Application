@@ -1,2 +1,2 @@
-export {} //coment this if you ts-node to start complaining again 
+export {};
 module.exports = 'test-file-stub';
