@@ -18,7 +18,8 @@
     "build-dev": "tsc && vite build --mode development",
     "preview": "vite preview",
     "prettier": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -64,8 +65,10 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^8.0.3",
     "jest": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",
+    "lint-staged": "^13.2.3",
     "prettier": "^3.0.1",
     "react-test-renderer": "^18.2.0",
     "ts-jest": "^29.1.1",
@@ -75,5 +78,11 @@
     "vite-plugin-handlebars": "^1.6.0",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0"
+  },
+  "lint-staged": {
+    "*.{js,css,ts,tsx,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
