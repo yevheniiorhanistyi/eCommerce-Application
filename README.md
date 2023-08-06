@@ -51,10 +51,23 @@ The application will be launched in development mode and can be accessed at [htt
 
 ### Code Formatting and Linting
 
-This project uses ESLint and Prettier for code formatting and linting.
+This project uses ESLint and Prettier for code formatting and linting. Husky is also configured to run pre-commit hooks to ensure code quality. Before committing changes, the pre-commit hooks will automatically format the code using Prettier and check for linting errors using ESLint.
+
 To format the code using Prettier manually, use the following command:
 ```
    npm run prettier
+```
+To automatically fix Prettier formatting for TypeScript, JSX, and JSON files, use the following command:
+```
+   npm run pretty:fix
+```
+To run ESLint for TypeScript and JSX files, use the following command:
+```
+   npm run lint
+```
+To automatically fix ESLint errors for TypeScript and JSX files, use the following command:
+```
+   npm run lint:fix
 ```
 
 ### Testing
@@ -62,6 +75,10 @@ To format the code using Prettier manually, use the following command:
 To run tests, use the following command:
 ```
    npm test
+```
+To run tests with code coverage report, use the following command:
+```
+   npm run test:coverage
 ```
 
 ### Building the Project
