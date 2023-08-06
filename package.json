@@ -24,11 +24,8 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "pretty": "prettier --check \"./src/**/*.{ts,tsx,json}\"",
     "pretty:fix": "prettier --write \"./src/**/*.{ts,tsx,json}\"",
-    "test": "jest --verbose",
-    "test:coverage": "jest --coverage",
-    "test:report": "jest --verbose --reporters=default --reporters=jest-junit",
-    "test:watch": "jest --watch",
-    "test:watchAll": "jest --watchAll"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "eslintConfig": {
     "extends": [
