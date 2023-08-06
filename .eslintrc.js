@@ -34,5 +34,6 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'linebreak-style': 'off',
+    'object-curly-newline': 'off',
   },
 };
