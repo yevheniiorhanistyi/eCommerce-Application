@@ -1,6 +1,6 @@
 ### Description
 
-Please include a summary of the changes  behind this pull request. If it fixes an existing issue, make sure to reference the issue number.
+Please include a summary of the changes behind this pull request. If it fixes an existing issue, make sure to reference the issue number.
 
 ## Type of change
 
@@ -31,4 +31,3 @@ Before submitting this pull request, please make sure to review and check the fo
 ### Additional Notes (Optional)
 
 Add any additional information or context that may be helpful for reviewers.
-
