@@ -19,8 +19,10 @@
     "preview": "vite preview",
     "test": "jest",
     "prepare": "husky install",
-    "lint": "prettier --check .",
-    "format": "prettier --write ."
+    "elint": "eslint --ext .ts,.tsx ./src",
+    "elint:fix": "eslint --fix --ext .ts,.tsx ./src",
+    "pretty": "prettier --check \"./src/**/*.{ts,tsx,json}\"",
+    "pretty:fix": "prettier --write \"./src/**/*.{ts,tsx,json}\""
   },
   "eslintConfig": {
     "extends": [
