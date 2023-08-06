@@ -2,7 +2,6 @@
 
 _The eCommerce Application is an online store built using modern web development technologies. It represents an innovative and user-friendly web application designed for selling products and services online. The main objective of the project is to provide users with a convenient and secure online shopping experience._
 
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
