@@ -1,11 +1,11 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Vite React",
+  "_version": "2.0.0",
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,10 +18,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "noImplicitAny": true,
+    "jsx": "react-jsx",
+    "types": ["vite/client", "vite-plugin-svgr/client"]
   },
-  "include": [
-    "src",
-    "src/custom.d.ts"
-  ]
+  "include": ["src", "vite.config.ts", ".eslintrc.js"],
+  "extends": "@tsconfig/vite-react/tsconfig.json"
 }
