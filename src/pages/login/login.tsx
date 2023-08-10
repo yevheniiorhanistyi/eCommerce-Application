@@ -10,7 +10,7 @@ import {
 
 import styles from './login.styles';
 
-const Login = () => (
+const Login = (): JSX.Element => (
   <Box sx={styles.outerBox}>
     <Container maxWidth="sm">
       <Box sx={styles.innerBox}>

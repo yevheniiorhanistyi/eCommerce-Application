@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Login from '../pages/login/login';
 import Main from '../pages/main/main';
 import Registration from '../pages/registration/registration';
+import NotFound404 from '../pages/NotFound404/NotFound404';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: '/registration',
     element: <Registration />,
+  },
+  {
+    path: '*',
+    element: <NotFound404 />,
   },
 ]);
 
