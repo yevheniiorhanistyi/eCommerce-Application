@@ -29,9 +29,21 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: './tsconfig.json',
+    extraFileExtensions: ['.scss'],
   },
   plugins: ['react'],
   rules: {
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: [
+          'function-declaration',
+          'function-expression',
+          'arrow-function',
+        ],
+        unnamedComponents: ['function-expression', 'arrow-function'],
+      },
+    ],
     'react/react-in-jsx-scope': 'off',
     'linebreak-style': 'off',
     'object-curly-newline': 'off',

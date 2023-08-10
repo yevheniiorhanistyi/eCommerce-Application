@@ -5,7 +5,11 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,8 +24,16 @@
     "noEmit": true,
     "noImplicitAny": true,
     "jsx": "react-jsx",
-    "types": ["vite/client", "vite-plugin-svgr/client"]
+    "types": [
+      "vite/client",
+      "vite-plugin-svgr/client",
+      "react"
+    ]
   },
-  "include": ["src", "vite.config.ts", ".eslintrc.js"],
+  "include": [
+    "src",
+    "vite.config.ts",
+    ".eslintrc.js"
+  ],
   "extends": "@tsconfig/vite-react/tsconfig.json"
 }
