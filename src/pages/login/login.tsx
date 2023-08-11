@@ -8,9 +8,9 @@ import {
   TextField,
 } from '@mui/material';
 
-import styles from './SignIn.styles';
+import styles from './Login.styles';
 
-const SignIn = () => (
+const Login = (): JSX.Element => (
   <Box sx={styles.outerBox}>
     <Container maxWidth="sm">
       <Box sx={styles.innerBox}>
@@ -20,7 +20,7 @@ const SignIn = () => (
           </Typography>
           <Typography variant="body2" align="center" sx={styles.subtitle}>
             {'Not a member yet? '}
-            <Link href="/" align="center" underline="hover">
+            <Link href="/registration" align="center" underline="hover">
               Sign Up here
             </Link>
           </Typography>
@@ -47,4 +47,4 @@ const SignIn = () => (
   </Box>
 );
 
-export default SignIn;
+export default Login;
