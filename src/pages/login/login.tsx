@@ -1,12 +1,7 @@
-import {
-  Typography,
-  Box,
-  Paper,
-  Container,
-  Link,
-  Button,
-  TextField,
-} from '@mui/material';
+import { Typography, Box, Paper, Container, Link } from '@mui/material';
+
+import { Link as RouterLink } from 'react-router-dom';
+import SignInForm from '../../components/SignInForm/LoginForm';
 
 import styles from './Login.styles';
 
@@ -20,27 +15,16 @@ const Login = (): JSX.Element => (
           </Typography>
           <Typography variant="body2" align="center" sx={styles.subtitle}>
             {'Not a member yet? '}
-            <Link href="/registration" align="center" underline="hover">
+            <Link
+              align="center"
+              underline="hover"
+              component={RouterLink}
+              to="/registration"
+            >
               Sign Up here
             </Link>
           </Typography>
-          <Box sx={styles.inputBox}>
-            <TextField
-              variant="outlined"
-              label="Email"
-              required
-              sx={styles.field}
-            />
-            <TextField
-              variant="outlined"
-              label="Password"
-              required
-              sx={styles.field}
-            />
-          </Box>
-          <Button variant="contained" sx={styles.button}>
-            Sign In
-          </Button>
+          <SignInForm />
         </Paper>
       </Box>
     </Container>
