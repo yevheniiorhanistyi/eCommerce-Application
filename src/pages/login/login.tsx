@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@mui/material';
 
-import styles from './login.styles';
+import styles from './Login.styles';
 
 const Login = (): JSX.Element => (
   <Box sx={styles.outerBox}>
