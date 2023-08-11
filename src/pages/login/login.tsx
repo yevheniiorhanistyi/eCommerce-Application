@@ -20,7 +20,7 @@ const Login = (): JSX.Element => (
           </Typography>
           <Typography variant="body2" align="center" sx={styles.subtitle}>
             {'Not a member yet? '}
-            <Link href="/" align="center" underline="hover">
+            <Link href="/registration" align="center" underline="hover">
               Sign Up here
             </Link>
           </Typography>
