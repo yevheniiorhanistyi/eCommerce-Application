@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { Typography, Box, Button, TextField, Grid } from '@mui/material';
+import { Button, TextField, Grid } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import CenteredDivider from '../CenteredDivider/CenteredDivider';
 
 import styles from './Registration.styles';
 
@@ -20,6 +24,9 @@ const Registration = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2} sx={styles.contanierGrid}>
+        <Grid item sm={12} xs={12}>
+          <CenteredDivider caption="Personal information" />
+        </Grid>
         <Grid item sm={6} xs={12}>
           <TextField
             label="First Name"
@@ -39,16 +46,18 @@ const Registration = () => {
           />
         </Grid>
         <Grid item sm={6} xs={12}>
-          <TextField
-            label="Date of Birth"
-            fullWidth
-            type="date"
-            name="birthDate"
-            value={formData.birthDate}
-            onChange={handleInputChange}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Date of birth"
+              onChange={handleInputChange}
+              sx={styles.birthDate}
+            />
+          </LocalizationProvider>
         </Grid>
-        <Grid item sm={12}>
+        <Grid item sm={12} xs={12}>
+          <CenteredDivider caption="Credentials Information" />
+        </Grid>
+        <Grid item sm={12} xs={12}>
           <TextField
             label="Email"
             fullWidth
@@ -77,7 +86,10 @@ const Registration = () => {
             onChange={handleInputChange}
           />
         </Grid>
-        <Grid item sm={12}>
+        <Grid item sm={12} xs={12}>
+          <CenteredDivider caption="Adress" />
+        </Grid>
+        <Grid item sm={12} xs={12}>
           <TextField
             label="Street"
             fullWidth
