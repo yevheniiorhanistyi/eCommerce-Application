@@ -1,15 +1,14 @@
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
-import SignIn from './pages/SignIn/SignIn';
+import { RouterProvider } from 'react-router-dom';
 import theme from './theme';
-import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
+import router from './routes/router';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box data-testid="app" className="App">
-        <RegistrationPage />
-        <SignIn />
+        <RouterProvider router={router} />
       </Box>
     </ThemeProvider>
   );
