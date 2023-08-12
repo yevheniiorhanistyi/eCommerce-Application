@@ -1,7 +1,5 @@
-const Main = (): JSX.Element => (
-  <div id="main">
-    <h1>Main page</h1>
-  </div>
-);
+import Header from '../../components/Header/Header';
+
+const Main = (): JSX.Element => <Header />;
 
 export default Main;

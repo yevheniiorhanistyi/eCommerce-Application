@@ -1,6 +1,7 @@
 const styles = {
   outerBox: {
     display: 'flex',
+    flexDirection: 'column',
   },
   innerBox: {
     mt: 7,
