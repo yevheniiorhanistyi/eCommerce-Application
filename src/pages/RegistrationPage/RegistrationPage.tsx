@@ -7,7 +7,7 @@ const RegistrationPage = () => (
   <Container component="main" maxWidth="lg">
     <Paper elevation={0} sx={{ p: 3 }}>
       <Typography variant="h3" align="center" gutterBottom>
-        Registration
+        Create your account
       </Typography>
       <Typography variant="body2" align="center" sx={styles.subtitle}>
         {'already registered? '}
