@@ -6,6 +6,11 @@ const styles = {
   field: {
     mb: '20px',
   },
+  outlinedInput: {
+    '& .MuiOutlinedInput-input': {
+      fontFamily: 'Roboto',
+    },
+  },
   button: {
     fontWeight: 700,
     textTransform: 'uppercase',
