@@ -105,12 +105,12 @@ const Header = (): JSX.Element => {
           </Box>
 
           <Box sx={styles.menuBox}>
-            <Link to="/login" style={{ textDecoration: 'none' }}>
+            <Link to="/signin" style={{ textDecoration: 'none' }}>
               <Button startIcon={<LoginIcon />} variant="text" sx={styles.button}>
                 Sign in
               </Button>
             </Link>
-            <Link to="/registration" style={{ textDecoration: 'none' }}>
+            <Link to="/signup" style={{ textDecoration: 'none' }}>
               <Button startIcon={<VpnKeyIcon />} variant="outlined" sx={styles.button}>
                 Sign up
               </Button>
