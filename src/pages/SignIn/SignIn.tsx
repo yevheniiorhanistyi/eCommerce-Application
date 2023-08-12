@@ -1,11 +1,11 @@
 import { Typography, Box, Paper, Container, Link } from '@mui/material';
 
 import { Link as RouterLink } from 'react-router-dom';
-import LoginForm from '../../components/LoginForm/LoginForm';
+import SignInForm from '../../components/SignInForm/SignInForm';
 
-import styles from './Login.styles';
+import styles from './SignIn.styles';
 
-const Login = (): JSX.Element => (
+const SignIn = (): JSX.Element => (
   <Box sx={styles.outerBox}>
     <Container maxWidth="sm">
       <Box sx={styles.innerBox}>
@@ -24,11 +24,11 @@ const Login = (): JSX.Element => (
               Sign Up here
             </Link>
           </Typography>
-          <LoginForm />
+          <SignInForm />
         </Paper>
       </Box>
     </Container>
   </Box>
 );
 
-export default Login;
+export default SignIn;
