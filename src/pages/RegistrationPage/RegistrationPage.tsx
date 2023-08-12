@@ -4,7 +4,7 @@ import styles from './RegistrationPage.style';
 import Registration from '../../components/Registration/Registration';
 
 const RegistrationPage = () => (
-  <Container component="main" maxWidth="lg">
+  <Container component="main" maxWidth="md">
     <Paper elevation={0} sx={{ p: 3 }}>
       <Typography variant="h3" align="center" gutterBottom>
         Create your account
