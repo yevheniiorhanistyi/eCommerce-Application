@@ -126,7 +126,7 @@ const Registration = () => {
           />
         </Grid>
       </Grid>
-      <Button type="submit" variant="contained" color="primary" fullWidth>
+      <Button type="submit" variant="contained" fullWidth>
         Register
       </Button>
     </form>
