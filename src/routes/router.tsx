@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Main from '../pages/Main/Main';
 import SignIn from '../pages/SignIn/SignIn';
-import RegistrationPage from '../pages/RegistrationPage/RegistrationPage';
+import SingUp from '../pages/RegistrationPage/SingUp';
 import NotFound404 from '../pages/NotFound404/NotFound404';
 
 const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/registration',
-    element: <RegistrationPage />,
+    element: <SingUp />,
   },
   {
     path: '*',

@@ -1,7 +1,7 @@
 import { Typography, Paper, Container, Link } from '@mui/material';
 
-import styles from './RegistrationPage.style';
-import Registration from '../../components/Registration/Registration';
+import styles from './SingUp.style';
+import SingUpForm from '../../components/SingUpForm/SingUpForm';
 
 const RegistrationPage = () => (
   <Container component="main" maxWidth="md">
@@ -15,7 +15,7 @@ const RegistrationPage = () => (
           Sign In
         </Link>
       </Typography>
-      <Registration />
+      <SingUpForm />
     </Paper>
   </Container>
 );
