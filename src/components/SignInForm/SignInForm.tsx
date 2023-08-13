@@ -104,7 +104,7 @@ const SignInForm = () => {
               ) : null}
             </FormControl>
           </Box>
-          <Button type="submit" variant="contained" sx={styles.button}>
+          <Button type="submit" variant="contained" fullWidth>
             Sign In
           </Button>
         </Form>

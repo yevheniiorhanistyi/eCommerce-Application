@@ -22,7 +22,7 @@ const SignIn = (): JSX.Element => (
                 align="center"
                 underline="hover"
                 component={RouterLink}
-                to="/registration"
+                to="/signup"
               >
                 Sign Up here
               </Link>
