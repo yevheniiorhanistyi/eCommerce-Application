@@ -1,5 +1,7 @@
 import { Typography, Paper, Container, Link } from '@mui/material';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 import styles from './SignUp.style';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import Header from '../../components/Header/Header';
@@ -13,8 +15,13 @@ const SignUp = () => (
           Create your account
         </Typography>
         <Typography variant="body2" align="center" sx={styles.subtitle}>
-          {'already registered? '}
-          <Link href="/" align="center" underline="hover">
+          {'Already registered? '}
+          <Link
+            align="center"
+            underline="hover"
+            component={RouterLink}
+            to="/signin"
+          >
             Sign In
           </Link>
         </Typography>

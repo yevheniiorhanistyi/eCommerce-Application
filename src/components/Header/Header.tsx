@@ -41,7 +41,6 @@ const Header = (): JSX.Element => {
               variant="h6"
               noWrap
               component="a"
-              href="/"
               sx={[styles.typo, styles.typoH6]}
             >
               BUYIT
@@ -83,15 +82,16 @@ const Header = (): JSX.Element => {
             </Menu>
           </Box>
           <StoreIcon sx={styles.storeIconFlex} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={[styles.typo, styles.typoH5]}
-          >
-            BUYIT
-          </Typography>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              sx={[styles.typo, styles.typoH5]}
+            >
+              BUYIT
+            </Typography>
+          </Link>
           <Box sx={styles.navMenuBox}>
             {pages.map((page) => (
               <Button
