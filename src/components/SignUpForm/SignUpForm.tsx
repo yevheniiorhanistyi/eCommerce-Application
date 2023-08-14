@@ -5,9 +5,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 
-import styles from './Registration.styles';
+import styles from './SignUpForm.styles';
 
-const Registration = () => {
+const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -133,4 +133,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default SignUpForm;

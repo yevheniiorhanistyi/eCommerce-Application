@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 
+import { Link } from 'react-router-dom';
+
 import styles from './NotFound.styles';
 
-const NotFound404 = (): JSX.Element => (
+const NotFound404: React.FC = () => (
   <Box sx={styles.outerBox}>
     <Typography variant="h1" sx={styles.title}>
       404
@@ -10,9 +12,11 @@ const NotFound404 = (): JSX.Element => (
     <Typography variant="h6" sx={styles.subtitle}>
       The page you’re looking for doesn’t exist.
     </Typography>
-    <Button variant="contained" sx={styles.button}>
-      Back Home
-    </Button>
+    <Link to="/">
+      <Button variant="contained" sx={styles.button}>
+        Back Home
+      </Button>
+    </Link>
   </Box>
 );
 
