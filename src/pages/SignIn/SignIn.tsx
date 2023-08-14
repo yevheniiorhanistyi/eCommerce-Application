@@ -1,4 +1,4 @@
-import { Typography, Box, Paper, Container, Link } from '@mui/material';
+import { Typography, Paper, Container, Link } from '@mui/material';
 
 import { Link as RouterLink } from 'react-router-dom';
 import SignInForm from '../../components/SignInForm/SignInForm';
@@ -9,29 +9,25 @@ import Header from '../../components/Header/Header';
 const SignIn: React.FC = () => (
   <Container maxWidth="xl" disableGutters>
     <Header />
-    <Box sx={styles.outerBox}>
-      <Container maxWidth="sm">
-        <Box sx={styles.innerBox}>
-          <Paper sx={styles.paper}>
-            <Typography variant="h3" align="center" sx={styles.title}>
-              Sign In
-            </Typography>
-            <Typography variant="body2" align="center" sx={styles.subtitle}>
-              {'Not a member yet? '}
-              <Link
-                align="center"
-                underline="hover"
-                component={RouterLink}
-                to="/signup"
-              >
-                Sign Up here
-              </Link>
-            </Typography>
-            <SignInForm />
-          </Paper>
-        </Box>
-      </Container>
-    </Box>
+    <Container maxWidth="sm" sx={styles.outerBox}>
+      <Paper sx={styles.paper}>
+        <Typography variant="h3" align="center" sx={styles.title}>
+          Sign In
+        </Typography>
+        <Typography variant="body2" align="center" sx={styles.subtitle}>
+          {'Not a member yet? '}
+          <Link
+            align="center"
+            underline="hover"
+            component={RouterLink}
+            to="/signup"
+          >
+            Sign Up here
+          </Link>
+        </Typography>
+        <SignInForm />
+      </Paper>
+    </Container>
   </Container>
 );
 
