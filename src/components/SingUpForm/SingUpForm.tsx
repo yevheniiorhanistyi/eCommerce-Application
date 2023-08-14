@@ -11,6 +11,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
@@ -21,6 +22,7 @@ import emailValidation from '../../validation/email.validation';
 import nameValidation from '../../validation/name.validation';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
+import birthDatelValidation from '../../validation/birthDate.validation';
 
 const validationSchema = Yup.object({
   firstName: nameValidation.required('First name is required'),
@@ -30,6 +32,7 @@ const validationSchema = Yup.object({
   confirmPassword: confirmFiled('password', 'Passwords must match'),
   street: notEmtyValidation,
   city: nameValidation.required('City is required'),
+  birthDate: birthDatelValidation,
 });
 
 const SingUpForm = () => {
@@ -49,7 +52,7 @@ const SingUpForm = () => {
     confirmPassword: '',
     firstName: '',
     lastName: '',
-    birthDate: '',
+    birthDate: null,
     street: '',
     city: '',
     postalCode: '',
@@ -58,16 +61,6 @@ const SingUpForm = () => {
 
   const handleSubmit = () => {};
   const handleInputChange = () => {};
-  const handleInputBlur = (
-    fieldName: keyof typeof formData,
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    formik.handleBlur(e);
-    if (!formik.errors[fieldName]) {
-      formData[fieldName] = e.target.value;
-    }
-    console.log(`formData.${fieldName}`, formData[fieldName]);
-  };
   const handlePasswordBlur = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -82,7 +75,7 @@ const SingUpForm = () => {
     initialValues: formData,
     validationSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+      handleSubmit();
     },
   });
 
@@ -99,7 +92,7 @@ const SingUpForm = () => {
             label="First Name"
             value={formik.values.firstName}
             onChange={formik.handleChange}
-            onBlur={(e) => handleInputBlur('firstName', e)}
+            onBlur={formik.handleBlur}
             error={formik.touched.firstName && Boolean(formik.errors.firstName)}
             helperText={formik.touched.firstName && formik.errors.firstName}
             required
@@ -112,7 +105,7 @@ const SingUpForm = () => {
             label="Last Name"
             value={formik.values.lastName}
             onChange={formik.handleChange}
-            onBlur={(e) => handleInputBlur('lastName', e)}
+            onBlur={formik.handleBlur}
             error={formik.touched.lastName && Boolean(formik.errors.lastName)}
             helperText={formik.touched.lastName && formik.errors.lastName}
             required
@@ -122,9 +115,15 @@ const SingUpForm = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Date of birth"
-              onChange={handleInputChange}
-              value={formData.birthDate ? formData.birthDate : null}
+              value={formik.values.birthDate}
+              onChange={(value) => formik.setFieldValue('birthDate', value ?? new Date())}
               sx={styles.birthDate}
+              slotProps={{
+                textField: {
+                  error: Boolean(formik.errors.birthDate),
+                  helperText: formik.errors.birthDate,
+                },
+              }}
             />
           </LocalizationProvider>
         </Grid>
@@ -138,7 +137,7 @@ const SingUpForm = () => {
             label="Email"
             value={formik.values.email}
             onChange={formik.handleChange}
-            onBlur={(e) => handleInputBlur('email', e)}
+            onBlur={formik.handleBlur}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
             required
@@ -211,7 +210,7 @@ const SingUpForm = () => {
             label="Street"
             value={formik.values.street}
             onChange={formik.handleChange}
-            onBlur={(e) => handleInputBlur('street', e)}
+            onBlur={formik.handleBlur}
             error={formik.touched.street && Boolean(formik.errors.street)}
             helperText={formik.touched.street && formik.errors.street}
             required
@@ -224,7 +223,7 @@ const SingUpForm = () => {
             label="City"
             value={formik.values.city}
             onChange={formik.handleChange}
-            onBlur={(e) => handleInputBlur('city', e)}
+            onBlur={formik.handleBlur}
             error={formik.touched.city && Boolean(formik.errors.city)}
             helperText={formik.touched.city && formik.errors.city}
             required
