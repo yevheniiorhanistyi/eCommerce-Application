@@ -40,7 +40,6 @@ const Header: React.FC = () => {
             <Typography
               variant="h6"
               noWrap
-              component="a"
               sx={[styles.typo, styles.typoH6]}
             >
               BUYIT
@@ -86,7 +85,6 @@ const Header: React.FC = () => {
             <Typography
               variant="h5"
               noWrap
-              component="a"
               sx={[styles.typo, styles.typoH5]}
             >
               BUYIT
