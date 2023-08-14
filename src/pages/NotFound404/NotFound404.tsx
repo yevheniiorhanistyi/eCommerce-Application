@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './NotFound.styles';
 
-const NotFound404 = (): JSX.Element => (
+const NotFound404: React.FC = () => (
   <Box sx={styles.outerBox}>
     <Typography variant="h1" sx={styles.title}>
       404

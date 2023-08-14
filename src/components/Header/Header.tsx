@@ -18,7 +18,7 @@ import styles from './Header.styles';
 
 const pages = ['Catalog', 'About Us'];
 
-const Header = (): JSX.Element => {
+const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );

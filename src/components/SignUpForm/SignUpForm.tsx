@@ -7,7 +7,7 @@ import CenteredDivider from '../CenteredDivider/CenteredDivider';
 
 import styles from './SignUpForm.styles';
 
-const SignUpForm = () => {
+const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',

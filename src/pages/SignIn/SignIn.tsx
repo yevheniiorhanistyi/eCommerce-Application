@@ -6,7 +6,7 @@ import SignInForm from '../../components/SignInForm/SignInForm';
 import styles from './SignIn.styles';
 import Header from '../../components/Header/Header';
 
-const SignIn = (): JSX.Element => (
+const SignIn: React.FC = () => (
   <Container maxWidth="xl" disableGutters>
     <Header />
     <Box sx={styles.outerBox}>
