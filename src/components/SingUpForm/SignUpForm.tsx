@@ -16,7 +16,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 
-import styles from './SingUpForm.styles';
+import styles from './SignUpForm.styles';
 import passwordValidation from '../../validation/password.validation';
 import emailValidation from '../../validation/email.validation';
 import nameValidation from '../../validation/name.validation';
@@ -35,7 +35,7 @@ const validationSchema = Yup.object({
   birthDate: birthDatelValidation,
 });
 
-const SingUpForm = () => {
+const SignUpForm = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
@@ -255,4 +255,4 @@ const SingUpForm = () => {
   );
 };
 
-export default SingUpForm;
+export default SignUpForm;

@@ -1,8 +1,7 @@
 const styles = {
   outerBox: {
     display: 'flex',
-  },
-  innerBox: {
+    flexDirection: 'column',
     mt: 7,
     mb: 12,
   },
