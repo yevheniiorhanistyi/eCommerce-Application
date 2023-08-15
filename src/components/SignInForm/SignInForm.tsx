@@ -18,7 +18,7 @@ import SignInSchema from './SignInSchema';
 
 import styles from './SignInForm.styles';
 
-const SignInForm = () => {
+const SignInForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -104,7 +104,7 @@ const SignInForm = () => {
               ) : null}
             </FormControl>
           </Box>
-          <Button type="submit" variant="contained" sx={styles.button}>
+          <Button type="submit" variant="contained" fullWidth>
             Sign In
           </Button>
         </Form>
