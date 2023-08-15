@@ -17,6 +17,6 @@ export const getProject = () => apiRoot
   .then(({ body }) => {
     console.log(JSON.stringify(body));
   })
-  .catch(console.error);
+  .catch();
 
 export default getProject;
