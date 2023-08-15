@@ -5,6 +5,11 @@ import {
   Grid,
   InputAdornment,
   IconButton,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  SelectChangeEvent,
 } from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
@@ -23,6 +28,7 @@ import nameValidation from '../../validation/name.validation';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
 import birthDatelValidation from '../../validation/birthDate.validation';
+import getCountries from '../../services/getCountries';
 
 const validationSchema = Yup.object({
   firstName: nameValidation.required('First name is required'),
@@ -70,6 +76,12 @@ const SignUpForm = () => {
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
+  const handleSelectChange = (
+    nameFiled: string,
+    e: SelectChangeEvent<string>,
+  ) => {
+    formik.setFieldValue(nameFiled, e.target.value, false);
+  };
 
   const formik = useFormik({
     initialValues: formData,
@@ -78,6 +90,8 @@ const SignUpForm = () => {
       handleSubmit();
     },
   });
+
+  const labelSelectCountry = 'Contry';
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -230,13 +244,26 @@ const SignUpForm = () => {
           />
         </Grid>
         <Grid item sm={6} xs={12}>
-          <TextField
-            label="Country"
-            fullWidth
-            name="country"
-            value={formData.country}
-            onChange={handleInputChange}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="labelSelectContryId">
+              {labelSelectCountry}
+            </InputLabel>
+            <Select
+              labelId="labelSelectContryId"
+              id="selectContry"
+              label={labelSelectCountry}
+              fullWidth
+              name="country"
+              value={formik.values.country}
+              onChange={(e) => handleSelectChange('country', e)}
+            >
+              {getCountries().map((item) => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
           <TextField
