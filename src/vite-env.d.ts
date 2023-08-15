@@ -5,7 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_REACT_APP_CLIENT_ID: string;
   readonly VITE_REACT_APP_AUTH_URL: string;
   readonly VITE_REACT_APP_API_URL: string;
-  readonly VITE_REACT_APP_SCOPES: string;
+  readonly VITE_REACT_APP_SCOPES: string[];
 }
 
 interface ImportMeta {
