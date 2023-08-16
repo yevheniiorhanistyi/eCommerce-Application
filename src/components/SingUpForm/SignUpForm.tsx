@@ -10,6 +10,7 @@ import {
   InputLabel,
   FormControl,
   SelectChangeEvent,
+  FormHelperText,
 } from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
@@ -29,8 +30,9 @@ import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
 import birthDatelValidation from '../../validation/birthDate.validation';
 import getCountries from '../../services/getCountries';
+import { postcodeValidator } from '../../validation/postalCode/postalCode';
 
-const validationSchema = Yup.object({
+const createValidationSchema = (country: string) => Yup.object().shape({
   firstName: nameValidation.required('First name is required'),
   lastName: nameValidation.required('Last name is required'),
   email: emailValidation,
@@ -39,11 +41,20 @@ const validationSchema = Yup.object({
   street: notEmtyValidation,
   city: nameValidation.required('City is required'),
   birthDate: birthDatelValidation,
+  country: notEmtyValidation,
+  postalCode: Yup.string()
+    .test('postcode-validation', 'Invalid postcode', (value) => {
+      if (typeof value === 'string') {
+        return postcodeValidator(value, country);
+      }
+      return false;
+    })
+    .required('Postcode is required'),
 });
 
 const SignUpForm = () => {
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -51,6 +62,10 @@ const SignUpForm = () => {
       confirmPasswordRef.current.focus();
     }
   }, [isPasswordValid]);
+
+  const [isContrySelected, setIsContrySelected] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const labelSelectCountry = 'Contry';
 
   const formData = {
     email: '',
@@ -65,8 +80,15 @@ const SignUpForm = () => {
     country: '',
   };
 
+  const formik = useFormik({
+    initialValues: formData,
+    validationSchema: createValidationSchema(selectedCountry),
+    onSubmit: (values) => {
+      handleSubmit();
+    },
+  });
+
   const handleSubmit = () => {};
-  const handleInputChange = () => {};
   const handlePasswordBlur = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -80,18 +102,21 @@ const SignUpForm = () => {
     nameFiled: string,
     e: SelectChangeEvent<string>,
   ) => {
-    formik.setFieldValue(nameFiled, e.target.value, false);
+    const { value } = e.target;
+    formik.setFieldValue(nameFiled, value, false).then(() => {
+      formik.validateField(nameFiled).then(() => {
+        if (nameFiled in formik.errors) {
+          setIsContrySelected(false);
+        } else {
+          const idCountry = value.match(/\((.*?)\)/)?.[1];
+          setIsContrySelected(true);
+          if (typeof idCountry === 'string') setSelectedCountry(idCountry);
+          console.log('country', value.match(/\((.*?)\)/)?.[1]);
+        }
+      });
+    });
+    formik.setFieldTouched(nameFiled, true, false);
   };
-
-  const formik = useFormik({
-    initialValues: formData,
-    validationSchema,
-    onSubmit: (values) => {
-      handleSubmit();
-    },
-  });
-
-  const labelSelectCountry = 'Contry';
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -130,12 +155,22 @@ const SignUpForm = () => {
             <DatePicker
               label="Date of birth"
               value={formik.values.birthDate}
-              onChange={(value) => formik.setFieldValue('birthDate', value ?? new Date())}
+              onChange={(value) => {
+                formik
+                  .setFieldValue('birthDate', value ?? new Date(), false)
+                  .then(() => {
+                    formik.validateField('birthDate');
+                    formik.touched.birthDate = true;
+                  });
+              }}
               sx={styles.birthDate}
               slotProps={{
                 textField: {
-                  error: Boolean(formik.errors.birthDate),
-                  helperText: formik.errors.birthDate,
+                  error:
+                    formik.touched.birthDate
+                    && Boolean(formik.errors.birthDate),
+                  helperText:
+                    formik.touched.birthDate && formik.errors.birthDate,
                 },
               }}
             />
@@ -244,7 +279,10 @@ const SignUpForm = () => {
           />
         </Grid>
         <Grid item sm={6} xs={12}>
-          <FormControl fullWidth>
+          <FormControl
+            fullWidth
+            error={Boolean(formik.touched.country && formik.errors.country)}
+          >
             <InputLabel id="labelSelectContryId">
               {labelSelectCountry}
             </InputLabel>
@@ -256,6 +294,7 @@ const SignUpForm = () => {
               name="country"
               value={formik.values.country}
               onChange={(e) => handleSelectChange('country', e)}
+              required
             >
               {getCountries().map((item) => (
                 <MenuItem key={item} value={item}>
@@ -263,6 +302,9 @@ const SignUpForm = () => {
                 </MenuItem>
               ))}
             </Select>
+            <FormHelperText>
+              {formik.touched.country && formik.errors.country}
+            </FormHelperText>
           </FormControl>
         </Grid>
         <Grid item sm={6} xs={12}>
@@ -270,8 +312,15 @@ const SignUpForm = () => {
             label="Postal Code"
             fullWidth
             name="postalCode"
-            value={formData.postalCode}
-            onChange={handleInputChange}
+            value={formik.values.postalCode}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.postalCode && Boolean(formik.errors.postalCode)
+            }
+            helperText={formik.touched.postalCode && formik.errors.postalCode}
+            required
+            disabled={!isContrySelected}
           />
         </Grid>
       </Grid>
