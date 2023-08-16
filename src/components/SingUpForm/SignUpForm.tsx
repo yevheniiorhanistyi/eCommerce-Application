@@ -109,9 +109,9 @@ const SignUpForm = () => {
     e: SelectChangeEvent<string>,
   ) => {
     const { value } = e.target;
-    formik.setFieldValue(nameFiled, value, false).then(() => {
+    formik.setFieldValue(nameFiled, value).then((error) => {
       formik.validateField(nameFiled).then(() => {
-        if (nameFiled in formik.errors) {
+        if (!error || nameFiled in error) {
           setIsContrySelected(false);
         } else {
           const idCountry = value.match(/\((.*?)\)/)?.[1];
