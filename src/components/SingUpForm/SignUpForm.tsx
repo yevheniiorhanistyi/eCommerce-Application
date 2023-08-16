@@ -66,9 +66,19 @@ const SignUpForm = () => {
     }
   }, [isPasswordValid]);
 
+  const labelSelectCountry = 'Contry';
   const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
-  const labelSelectCountry = 'Contry';
+  const [countries, setCountries] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const countriesData = await getCountries();
+      setCountries(countriesData);
+    };
+
+    fetchData();
+  }, []);
 
   const formData = {
     email: '',
@@ -117,7 +127,6 @@ const SignUpForm = () => {
           const idCountry = value.match(/\((.*?)\)/)?.[1];
           setIsContrySelected(true);
           if (typeof idCountry === 'string') setSelectedCountry(idCountry);
-          console.log('country', value.match(/\((.*?)\)/)?.[1]);
         }
       });
     });
@@ -302,7 +311,7 @@ const SignUpForm = () => {
               onChange={(e) => handleSelectChange('country', e)}
               required
             >
-              {getCountries().map((item) => (
+              {countries.map((item) => (
                 <MenuItem key={item} value={item}>
                   {item}
                 </MenuItem>

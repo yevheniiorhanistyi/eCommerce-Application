@@ -164,6 +164,7 @@ enum CountryCode {
   YT = 'YT',
   PE = 'PE',
   INTL = 'INTL',
+  EU = 'EU',
 }
 
 export default CountryCode;

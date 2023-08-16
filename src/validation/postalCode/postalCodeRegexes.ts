@@ -175,6 +175,7 @@ const POSTCODE_REGEXES: Map<string, RegExp> = new Map([
   [CountryCode.XK, /^\d{5}$/],
   [CountryCode.YT, /^976\d{2}$/],
   [CountryCode.PE, /^\d{5}$/],
+  [CountryCode.EU, /^(?:[A-Z0-9]+([- ]?[A-Z0-9]+)*)?$/i],
   [CountryCode.INTL, /^(?:[A-Z0-9]+([- ]?[A-Z0-9]+)*)?$/i],
 ]);
 
