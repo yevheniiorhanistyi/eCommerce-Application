@@ -11,6 +11,9 @@ import {
   FormControl,
   SelectChangeEvent,
   FormHelperText,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
@@ -78,6 +81,8 @@ const SignUpForm = () => {
     city: '',
     postalCode: '',
     country: '',
+    isSetDefaultShippingAddress: false,
+    isSetDefaultBillinAddress: false,
   };
 
   const formik = useFormik({
@@ -85,6 +90,7 @@ const SignUpForm = () => {
     validationSchema: createValidationSchema(selectedCountry),
     onSubmit: (values) => {
       handleSubmit();
+      console.log('values', values);
     },
   });
 
@@ -322,6 +328,40 @@ const SignUpForm = () => {
             required
             disabled={!isContrySelected}
           />
+        </Grid>
+        <Grid item sm={12} xs={12}>
+          <FormGroup>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  name="isSetDefaultShippingAddress"
+                  onChange={(e) => formik.setFieldValue(
+                    'isSetDefaultShippingAddress',
+                    e.target.checked,
+                    false,
+                  )}
+                />
+              )}
+              label="Set this address as the default shipping address"
+            />
+          </FormGroup>
+        </Grid>
+        <Grid item sm={12} xs={12}>
+          <FormGroup>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  name="isSetDefaultBillingAddress"
+                  onChange={(e) => formik.setFieldValue(
+                    'isSetDefaultBillingAddress',
+                    e.target.checked,
+                    false,
+                  )}
+                />
+              )}
+              label="Set this address as the default billing address"
+            />
+          </FormGroup>
         </Grid>
       </Grid>
       <Button type="submit" variant="contained" fullWidth>
