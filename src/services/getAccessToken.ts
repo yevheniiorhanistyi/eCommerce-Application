@@ -1,11 +1,11 @@
-import { setTokenToSessionStorage } from '../utils/authUtils';
+import { setTokenToLocalStorage } from '../utils/authUtils';
 
 const baseUrl = 'https://auth.europe-west1.gcp.commercetools.com/oauth/token';
 const clientID = import.meta.env.VITE_REACT_APP_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_REACT_APP_CLIENT_SECRET;
 const scope = import.meta.env.VITE_REACT_APP_SCOPES;
 
-export const getAccessToken = async () => {
+export const getAccessToken = async (): Promise<string> => {
   try {
     const credentials = `${clientID}:${clientSecret}`;
     const base64Credentials = btoa(credentials);
@@ -26,8 +26,8 @@ export const getAccessToken = async () => {
       throw new Error(`Request failed with status: ${response.status}`);
     }
 
-    const data = await response.json();
-    setTokenToSessionStorage(data.access_token);
+    const data: { access_token: string } = await response.json();
+    setTokenToLocalStorage(data.access_token);
     return data.access_token;
   } catch (error) {
     throw new Error(String(error));

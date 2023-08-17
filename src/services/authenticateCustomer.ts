@@ -1,4 +1,4 @@
-import { getTokenFromSessionStorage } from '../utils/authUtils';
+import { getTokenFromLocalStorage } from '../utils/authUtils';
 import { getAccessToken } from './getAccessToken';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
@@ -13,7 +13,7 @@ export const authenticateCustomer = async ({
   email,
   password,
 }: AuthenticateCustomerProps) => {
-  const token = (await getTokenFromSessionStorage()) || (await getAccessToken());
+  const token: string | null = getTokenFromLocalStorage() || (await getAccessToken());
   try {
     const response = await fetch(`${baseUrl}/${projectKey}/login`, {
       method: 'POST',
