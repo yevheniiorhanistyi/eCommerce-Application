@@ -1,8 +1,12 @@
-export const setTokenToSessionStorage = (token: string): void => {
-  sessionStorage.setItem('accessToken', token);
+export const setTokenToLocalStorage = (token: string): void => {
+  localStorage.setItem('accessToken', token);
 };
 
-export const getTokenFromSessionStorage = (): string | null => {
-  const token = sessionStorage.getItem('accessToken');
+export const getTokenFromLocalStorage = (): string | null => {
+  const token = localStorage.getItem('accessToken');
   return token;
+};
+
+export const removeTokenFromLocalStorage = (): void => {
+  localStorage.removeItem('accessToken');
 };
