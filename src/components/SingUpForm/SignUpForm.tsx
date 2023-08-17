@@ -55,21 +55,22 @@ const createValidationSchema = (country: string) => Yup.object().shape({
     .required('Postcode is required'),
 });
 
-const SignUpForm = () => {
+const SignUpForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isContrySelected, setIsContrySelected] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [countries, setCountries] = useState<string[]>([]);
+
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
+
+  const labelSelectCountry = 'Contry';
 
   useEffect(() => {
     if (isPasswordValid && confirmPasswordRef.current) {
       confirmPasswordRef.current.focus();
     }
   }, [isPasswordValid]);
-
-  const labelSelectCountry = 'Contry';
-  const [isContrySelected, setIsContrySelected] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [countries, setCountries] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,12 +100,10 @@ const SignUpForm = () => {
     initialValues: formData,
     validationSchema: createValidationSchema(selectedCountry),
     onSubmit: (values) => {
-      handleSubmit();
       console.log('values', values);
     },
   });
 
-  const handleSubmit = () => {};
   const handlePasswordBlur = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -114,6 +113,7 @@ const SignUpForm = () => {
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
+
   const handleSelectChange = (
     nameFiled: string,
     e: SelectChangeEvent<string>,
