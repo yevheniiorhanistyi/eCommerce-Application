@@ -16,6 +16,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Formik, Form } from 'formik';
 import SignInSchema from './SignInSchema';
 
+import { authenticateCustomer } from '../../services/authenticateCustomer';
+
 import styles from './SignInForm.styles';
 
 const SignInForm: React.FC = () => {
@@ -36,9 +38,13 @@ const SignInForm: React.FC = () => {
         password: '',
       }}
       validationSchema={SignInSchema}
-      onSubmit={(values, { resetForm }) => {
-        // alert(JSON.stringify(values, null, 2));
-        resetForm();
+      onSubmit={async (values, { resetForm }) => {
+        try {
+          await authenticateCustomer(values);
+          resetForm();
+        } catch {
+          throw new Error('Error');
+        }
       }}
     >
       {({ errors, touched, values, handleChange, handleBlur }) => (
