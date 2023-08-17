@@ -1,7 +1,7 @@
 import iso3166Alpha2 from '../utils/countries';
 import { getProject } from './getProject';
 
-const getCountries: () => Promise<string[]> = async () => {
+const getCountries = async (): Promise<string[]> => {
   const body = await getProject();
   if (body) {
     const codesCountrie = body.countries;
@@ -11,11 +11,5 @@ const getCountries: () => Promise<string[]> = async () => {
   }
   return [];
 };
-
-// [
-//   'European Union (EU)',
-//   'Poland (PL)',
-//   'United Kingdom (GB)',
-// ];
 
 export default getCountries;
