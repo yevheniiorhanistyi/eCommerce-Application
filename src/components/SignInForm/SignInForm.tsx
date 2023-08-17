@@ -84,7 +84,6 @@ const SignInForm: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.password && Boolean(errors.password)}
-                sx={styles.outlinedInput}
                 endAdornment={(
                   <InputAdornment position="end">
                     <IconButton

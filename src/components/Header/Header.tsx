@@ -37,11 +37,7 @@ const Header: React.FC = () => {
         <Toolbar disableGutters>
           <StoreIcon sx={styles.storeIcon} />
           <Link to="/" style={{ textDecoration: 'none' }}>
-            <Typography
-              variant="h6"
-              noWrap
-              sx={[styles.typo, styles.typoH6]}
-            >
+            <Typography variant="h6" noWrap sx={[styles.typo, styles.typoH6]}>
               BUYIT
             </Typography>
           </Link>
@@ -82,11 +78,7 @@ const Header: React.FC = () => {
           </Box>
           <StoreIcon sx={styles.storeIconFlex} />
           <Link to="/" style={{ textDecoration: 'none' }}>
-            <Typography
-              variant="h5"
-              noWrap
-              sx={[styles.typo, styles.typoH5]}
-            >
+            <Typography variant="h5" noWrap sx={[styles.typo, styles.typoH5]}>
               BUYIT
             </Typography>
           </Link>
@@ -104,17 +96,23 @@ const Header: React.FC = () => {
 
           <Box sx={styles.menuBox}>
             <Link to="/signin" style={{ textDecoration: 'none' }}>
-              <Button startIcon={<LoginIcon />} variant="text" sx={styles.button}>
+              <Button
+                startIcon={<LoginIcon />}
+                variant="text"
+                sx={styles.button}
+              >
                 Sign in
               </Button>
             </Link>
             <Link to="/signup" style={{ textDecoration: 'none' }}>
-              <Button startIcon={<VpnKeyIcon />} variant="outlined" sx={styles.button}>
+              <Button
+                startIcon={<VpnKeyIcon />}
+                variant="outlined"
+                sx={styles.button}
+              >
                 Sign up
               </Button>
-
             </Link>
-
           </Box>
         </Toolbar>
       </Container>

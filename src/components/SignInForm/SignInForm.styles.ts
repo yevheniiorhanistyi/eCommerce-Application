@@ -6,11 +6,6 @@ const styles = {
   field: {
     mb: '20px',
   },
-  outlinedInput: {
-    '& .MuiOutlinedInput-input': {
-      fontFamily: 'Roboto',
-    },
-  },
 };
 
 export default styles;

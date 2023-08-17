@@ -5,6 +5,10 @@ const styles = {
   birthDate: {
     width: '100%',
   },
+  helperText: {
+    ml: 1,
+    mr: 1,
+  },
 };
 
 export default styles;

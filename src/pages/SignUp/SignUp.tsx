@@ -1,9 +1,9 @@
 import { Typography, Paper, Container, Link } from '@mui/material';
 
 import { Link as RouterLink } from 'react-router-dom';
+import SignUpForm from '../../components/SingUpForm/SignUpForm';
 
 import styles from './SignUp.style';
-import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
 const SignUp: React.FC = () => (
   <Container component="main" maxWidth="md">

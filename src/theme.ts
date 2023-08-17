@@ -41,6 +41,15 @@ const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '& input[type="password"]': {
+            fontFamily: 'Roboto',
+          },
+        },
+      },
+    },
   },
 });
 
