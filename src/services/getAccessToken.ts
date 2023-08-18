@@ -1,5 +1,3 @@
-import { setTokenToLocalStorage } from '../utils/authUtils';
-
 const baseUrl = 'https://auth.europe-west1.gcp.commercetools.com/oauth/token';
 const clientID = import.meta.env.VITE_REACT_APP_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_REACT_APP_CLIENT_SECRET;
@@ -27,7 +25,6 @@ export const getAccessToken = async (): Promise<string> => {
     }
 
     const data: { access_token: string } = await response.json();
-    setTokenToLocalStorage(data.access_token);
     return data.access_token;
   } catch (error) {
     throw new Error(String(error));

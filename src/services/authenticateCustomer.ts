@@ -1,4 +1,7 @@
-import { getTokenFromLocalStorage } from '../utils/authUtils';
+import {
+  getTokenFromLocalStorage,
+  setTokenToLocalStorage,
+} from '../utils/authUtils';
 import { getAccessToken } from './getAccessToken';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
@@ -25,8 +28,13 @@ export const authenticateCustomer = async ({
     });
 
     if (!response.ok) {
-      throw new Error(`Request failed with status: ${response.status}`);
+      if (response.status === 400) {
+        throw new Error('Incorrect email or password');
+      } else {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
     }
+    setTokenToLocalStorage(token);
   } catch (error) {
     throw new Error(String(error));
   }
