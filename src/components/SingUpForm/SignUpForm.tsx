@@ -33,7 +33,7 @@ import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
 import birthDatelValidation from '../../validation/birthDate.validation';
 import getCountries from '../../services/getCountries';
-import { postcodeValidator } from '../../validation/postalCode/postalCode';
+import postalCodeValidation from '../../validation/postalCode.validation';
 
 const createValidationSchema = (country: string) => Yup.object().shape({
   firstName: nameValidation.required('First name is required'),
@@ -45,14 +45,7 @@ const createValidationSchema = (country: string) => Yup.object().shape({
   city: nameValidation.required('City is required'),
   birthDate: birthDatelValidation,
   country: notEmtyValidation,
-  postalCode: Yup.string()
-    .test('postcode-validation', 'Invalid postcode', (value) => {
-      if (typeof value === 'string') {
-        return postcodeValidator(value, country);
-      }
-      return false;
-    })
-    .required('Postcode is required'),
+  postalCode: postalCodeValidation(country),
 });
 
 const SignUpForm: React.FC = () => {
