@@ -35,10 +35,10 @@ import birthDatelValidation from '../../validation/birthDate.validation';
 import getCountries from '../../services/getCountries';
 import postalCodeValidation from '../../validation/postalCode.validation';
 
-const createValidationSchema = (country: string) => Yup.object().shape({
+const createValidationSchema = (country: string, email: string) => Yup.object().shape({
   firstName: nameValidation.required('First name is required'),
   lastName: nameValidation.required('Last name is required'),
-  email: emailValidation,
+  email: emailValidation(email),
   password: passwordValidation,
   confirmPassword: confirmFiled('password', 'Passwords must match'),
   street: notEmtyValidation,
@@ -91,7 +91,7 @@ const SignUpForm: React.FC = () => {
 
   const formik = useFormik({
     initialValues: formData,
-    validationSchema: createValidationSchema(selectedCountry),
+    validationSchema: createValidationSchema(selectedCountry, ''),
     onSubmit: (values) => {
       console.log('values', values);
     },
