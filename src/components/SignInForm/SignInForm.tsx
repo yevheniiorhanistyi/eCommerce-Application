@@ -20,7 +20,13 @@ import { authenticateCustomer } from '../../services/authenticateCustomer';
 
 import styles from './SignInForm.styles';
 
-const SignInForm: React.FC = () => {
+interface SignInFormProps {
+  onSignInSuccess: () => void;
+}
+
+const SignInForm: React.FC<SignInFormProps> = ({
+  onSignInSuccess,
+}: SignInFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -41,8 +47,9 @@ const SignInForm: React.FC = () => {
       onSubmit={async (values, { resetForm }) => {
         try {
           await authenticateCustomer(values);
+          onSignInSuccess();
           resetForm();
-        } catch {
+        } catch (error) {
           throw new Error('Error');
         }
       }}
