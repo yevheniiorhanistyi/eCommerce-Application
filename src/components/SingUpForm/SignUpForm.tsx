@@ -24,7 +24,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
-
 import styles from './SignUpForm.styles';
 import passwordValidation from '../../validation/password.validation';
 import emailValidation from '../../validation/email.validation';
@@ -34,26 +33,18 @@ import confirmFiled from '../../validation/confirmFiled';
 import birthDatelValidation from '../../validation/birthDate.validation';
 import getCountries from '../../services/getCountries';
 import postalCodeValidation from '../../validation/postalCode.validation';
-
-const createValidationSchema = (country: string, email: string) => Yup.object().shape({
-  firstName: nameValidation.required('First name is required'),
-  lastName: nameValidation.required('Last name is required'),
-  email: emailValidation(email),
-  password: passwordValidation,
-  confirmPassword: confirmFiled('password', 'Passwords must match'),
-  street: notEmtyValidation,
-  city: nameValidation.required('City is required'),
-  birthDate: birthDatelValidation,
-  country: notEmtyValidation,
-  postalCode: postalCodeValidation(country),
-});
+import { useModal } from '../ModalProvider/ModalProvider';
+import { ICustomer } from '../../types/types';
+import { checkEmailCustomer } from '../../services/customers';
 
 const SignUpForm: React.FC = () => {
+  const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [countries, setCountries] = useState<string[]>([]);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
@@ -64,17 +55,29 @@ const SignUpForm: React.FC = () => {
       confirmPasswordRef.current.focus();
     }
   }, [isPasswordValid]);
-
   useEffect(() => {
     const fetchData = async () => {
-      const countriesData = await getCountries();
+      const countriesData = await getCountries(modal);
       setCountries(countriesData);
     };
 
     fetchData();
-  }, []);
+  }, [modal]);
 
-  const formData = {
+  const createValidationSchema = (country: string, email: string) => Yup.object().shape({
+    firstName: nameValidation.required('First name is required'),
+    lastName: nameValidation.required('Last name is required'),
+    email: emailValidation(modal),
+    password: passwordValidation,
+    confirmPassword: confirmFiled('password', 'Passwords must match'),
+    street: notEmtyValidation,
+    city: nameValidation.required('City is required'),
+    birthDate: birthDatelValidation,
+    country: notEmtyValidation,
+    postalCode: postalCodeValidation(country),
+  });
+
+  const formData: ICustomer = {
     email: '',
     password: '',
     confirmPassword: '',
@@ -92,8 +95,12 @@ const SignUpForm: React.FC = () => {
   const formik = useFormik({
     initialValues: formData,
     validationSchema: createValidationSchema(selectedCountry, ''),
+    validateOnChange: false,
     onSubmit: (values) => {
       console.log('values', values);
+      setSubmitting(true);
+
+      setSubmitting(false);
     },
   });
 
@@ -103,6 +110,7 @@ const SignUpForm: React.FC = () => {
     formik.handleBlur(e);
     setIsPasswordValid(!formik.errors.password);
   };
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -127,7 +135,7 @@ const SignUpForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} noValidate>
       <Grid container spacing={2} sx={styles.contanierGrid}>
         <Grid item sm={12} xs={12}>
           <CenteredDivider caption="Personal information" />
@@ -366,7 +374,12 @@ const SignUpForm: React.FC = () => {
           </FormGroup>
         </Grid>
       </Grid>
-      <Button type="submit" variant="contained" fullWidth>
+      <Button
+        type="submit"
+        variant="contained"
+        disabled={isSubmitting}
+        fullWidth
+      >
         Register
       </Button>
     </form>
