@@ -1,8 +1,9 @@
+import { ModalContextType } from '../components/ModalProvider/type';
 import iso3166Alpha2 from '../utils/countries';
-import { getProject } from './getProject';
+import { getProject } from './project';
 
-const getCountries = async (): Promise<string[]> => {
-  const body = await getProject();
+const getCountries = async (modal: ModalContextType): Promise<string[]> => {
+  const body = await getProject(modal);
   if (body) {
     const codesCountrie = body.countries;
     return codesCountrie.map(
