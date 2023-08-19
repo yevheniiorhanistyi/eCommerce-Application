@@ -17,6 +17,7 @@ import { Formik, Form } from 'formik';
 import SignInSchema from './SignInSchema';
 
 import { authenticateCustomer } from '../../services/authenticateCustomer';
+import { useModal } from '../ModalProvider/ModalProvider';
 
 import styles from './SignInForm.styles';
 
@@ -28,8 +29,14 @@ const SignInForm: React.FC<SignInFormProps> = ({
   onSignInSuccess,
 }: SignInFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { openModal, setContent } = useModal();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const showErrorModal = (error: Error) => {
+    setContent({ title: 'Oops 😕', text: error.message });
+    openModal();
+  };
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -48,9 +55,10 @@ const SignInForm: React.FC<SignInFormProps> = ({
         try {
           await authenticateCustomer(values);
           onSignInSuccess();
-          resetForm();
         } catch (error) {
-          throw new Error('Error');
+          if (error instanceof Error) showErrorModal(error);
+        } finally {
+          resetForm();
         }
       }}
     >
