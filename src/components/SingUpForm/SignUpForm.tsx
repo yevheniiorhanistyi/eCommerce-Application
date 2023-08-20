@@ -30,12 +30,10 @@ import emailValidation from '../../validation/email.validation';
 import nameValidation from '../../validation/name.validation';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
-import birthDatelValidation from '../../validation/birthDate.validation';
 import getCountries from '../../services/getCountries';
 import postalCodeValidation from '../../validation/postalCode.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
-import { ICustomer } from '../../types/types';
-import { checkEmailCustomer } from '../../services/customers';
+import { IAddress, ICustomer, ICustomerForm } from '../../types/types';
 
 const SignUpForm: React.FC = () => {
   const modal = useModal();
@@ -64,32 +62,39 @@ const SignUpForm: React.FC = () => {
     fetchData();
   }, [modal]);
 
+  const addressValidation = (country: string) => Yup.object().shape({
+    street: notEmtyValidation,
+    city: nameValidation.required('City is required'),
+    country: notEmtyValidation,
+    postalCode: postalCodeValidation(country),
+  });
+
   const createValidationSchema = (country: string, email: string) => Yup.object().shape({
     firstName: nameValidation.required('First name is required'),
     lastName: nameValidation.required('Last name is required'),
     email: emailValidation(modal),
     password: passwordValidation,
     confirmPassword: confirmFiled('password', 'Passwords must match'),
-    street: notEmtyValidation,
-    city: nameValidation.required('City is required'),
-    birthDate: birthDatelValidation,
-    country: notEmtyValidation,
-    postalCode: postalCodeValidation(country),
+    address: addressValidation(country),
   });
 
-  const formData: ICustomer = {
+  const defaultAddressValues: IAddress = {
+    street: '',
+    city: '',
+    postalCode: '',
+    country: '',
+    isSetDefaultShippingAddress: false,
+    isSetDefaultBillingAddress: false,
+  };
+
+  const formData: ICustomerForm = {
     email: '',
     password: '',
     confirmPassword: '',
     firstName: '',
     lastName: '',
     birthDate: null,
-    street: '',
-    city: '',
-    postalCode: '',
-    country: '',
-    isSetDefaultShippingAddress: false,
-    isSetDefaultBillinAddress: false,
+    address: { ...defaultAddressValues },
   };
 
   const formik = useFormik({
@@ -97,7 +102,8 @@ const SignUpForm: React.FC = () => {
     validationSchema: createValidationSchema(selectedCountry, ''),
     validateOnChange: false,
     onSubmit: (values) => {
-      console.log('values', values);
+      const customerData = values as ICustomer;
+      console.log('values', customerData);
       setSubmitting(true);
 
       setSubmitting(false);
@@ -122,7 +128,7 @@ const SignUpForm: React.FC = () => {
     const { value } = e.target;
     formik.setFieldValue(nameFiled, value).then((error) => {
       formik.validateField(nameFiled).then(() => {
-        if (!error || nameFiled in error) {
+        if (error && nameFiled in error) {
           setIsContrySelected(false);
         } else {
           const idCountry = value.match(/\((.*?)\)/)?.[1];
@@ -271,33 +277,53 @@ const SignUpForm: React.FC = () => {
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth
-            name="street"
+            name="address.street"
             label="Street"
-            value={formik.values.street}
+            value={formik.values.address.street}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.street && Boolean(formik.errors.street)}
-            helperText={formik.touched.street && formik.errors.street}
+            error={
+              formik.errors.address
+              && formik.touched.address?.street
+              && Boolean(formik.errors.address.street)
+            }
+            helperText={
+              formik.errors.address
+              && formik.touched.address?.street
+              && formik.errors.address.street
+            }
             required
           />
         </Grid>
         <Grid item sm={6} xs={12}>
           <TextField
             fullWidth
-            name="city"
+            name="address.city"
             label="City"
-            value={formik.values.city}
+            value={formik.values.address.city}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.city && Boolean(formik.errors.city)}
-            helperText={formik.touched.city && formik.errors.city}
+            error={
+              formik.errors.address
+              && formik.touched.address?.city
+              && Boolean(formik.errors.address.city)
+            }
+            helperText={
+              formik.errors.address
+              && formik.touched.address?.city
+              && formik.errors.address.city
+            }
             required
           />
         </Grid>
         <Grid item sm={6} xs={12}>
           <FormControl
             fullWidth
-            error={Boolean(formik.touched.country && formik.errors.country)}
+            error={Boolean(
+              formik.errors.address
+                && formik.touched.address?.country
+                && formik.errors.address.country,
+            )}
           >
             <InputLabel id="labelSelectContryId">
               {labelSelectCountry}
@@ -307,9 +333,9 @@ const SignUpForm: React.FC = () => {
               id="selectContry"
               label={labelSelectCountry}
               fullWidth
-              name="country"
-              value={formik.values.country}
-              onChange={(e) => handleSelectChange('country', e)}
+              name="address.country"
+              value={formik.values.address.country}
+              onChange={(e) => handleSelectChange('address.country', e)}
               required
             >
               {countries.map((item) => (
@@ -319,7 +345,9 @@ const SignUpForm: React.FC = () => {
               ))}
             </Select>
             <FormHelperText>
-              {formik.touched.country && formik.errors.country}
+              {formik.errors.address
+                && formik.touched.address?.country
+                && formik.errors.address.country}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -327,14 +355,20 @@ const SignUpForm: React.FC = () => {
           <TextField
             label="Postal Code"
             fullWidth
-            name="postalCode"
-            value={formik.values.postalCode}
+            name="address.postalCode"
+            value={formik.values.address.postalCode}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
-              formik.touched.postalCode && Boolean(formik.errors.postalCode)
+              formik.errors.address
+              && formik.touched.address?.postalCode
+              && Boolean(formik.errors.address.postalCode)
             }
-            helperText={formik.touched.postalCode && formik.errors.postalCode}
+            helperText={
+              formik.errors.address
+              && formik.touched.address?.postalCode
+              && formik.errors.address.postalCode
+            }
             required
             disabled={!isContrySelected}
           />
