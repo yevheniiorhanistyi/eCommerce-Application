@@ -16,7 +16,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Formik, Form } from 'formik';
 import SignInSchema from './SignInSchema';
 
-import { authenticateCustomer } from '../../services/authenticateCustomer';
+import { authenticateClient } from '../../services/authenticateClient';
 import { useModal } from '../ModalProvider/ModalProvider';
 
 import styles from './SignInForm.styles';
@@ -34,7 +34,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const showErrorModal = (error: Error) => {
-    setContent({ title: 'Oops 😕', text: error.message });
+    setContent({ title: 'Oops', text: error.message });
     openModal();
   };
 
@@ -53,7 +53,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
       validationSchema={SignInSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await authenticateCustomer(values);
+          await authenticateClient(values);
           onSignInSuccess();
         } catch (error) {
           if (error instanceof Error) showErrorModal(error);
@@ -80,6 +80,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
               <OutlinedInput
                 id="outlined-email"
                 name="email"
+                type="email"
                 label="Email"
                 value={values.email}
                 onChange={handleChange}
