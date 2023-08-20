@@ -1,6 +1,7 @@
 import { Typography, Paper, Container, Link } from '@mui/material';
 
 import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import SignInForm from '../../components/SignInForm/SignInForm';
 
 import { useAuth } from '../../components/AuthProvider/AuthProvider';
@@ -9,9 +10,13 @@ import styles from './SignIn.styles';
 
 const SignIn: React.FC = () => {
   const { isSignedIn, setIsSignedIn } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSignIn = () => {
     setIsSignedIn(true);
+    enqueueSnackbar('You have been successfully signed in!', {
+      variant: 'success',
+    });
   };
 
   return isSignedIn ? (
