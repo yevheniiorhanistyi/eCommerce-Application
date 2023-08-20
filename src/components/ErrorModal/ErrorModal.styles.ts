@@ -18,6 +18,7 @@ const styles = {
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
+    padding: '10px 40px',
   },
 };
 
