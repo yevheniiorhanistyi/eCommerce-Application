@@ -22,3 +22,8 @@ export interface ICustomerForm extends ICustomerBase {
 export interface ICustomer extends ICustomerBase {
   birthDate: Date;
 }
+
+export interface ICountrie {
+  codeCountrie: string;
+  nameCountrie: string;
+}

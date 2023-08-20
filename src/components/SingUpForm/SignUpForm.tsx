@@ -33,7 +33,12 @@ import confirmFiled from '../../validation/confirmFiled';
 import getCountries from '../../services/getCountries';
 import postalCodeValidation from '../../validation/postalCode.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
-import { IAddress, ICustomer, ICustomerForm } from '../../types/types';
+import {
+  IAddress,
+  ICountrie,
+  ICustomer,
+  ICustomerForm,
+} from '../../types/types';
 
 const SignUpForm: React.FC = () => {
   const modal = useModal();
@@ -41,7 +46,7 @@ const SignUpForm: React.FC = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
-  const [countries, setCountries] = useState<string[]>([]);
+  const [countries, setCountries] = useState<ICountrie[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
@@ -131,9 +136,8 @@ const SignUpForm: React.FC = () => {
         if (error && nameFiled in error) {
           setIsContrySelected(false);
         } else {
-          const idCountry = value.match(/\((.*?)\)/)?.[1];
           setIsContrySelected(true);
-          if (typeof idCountry === 'string') setSelectedCountry(idCountry);
+          setSelectedCountry(value);
         }
       });
     });
@@ -339,8 +343,8 @@ const SignUpForm: React.FC = () => {
               required
             >
               {countries.map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
+                <MenuItem key={item.codeCountrie} value={item.codeCountrie}>
+                  {item.nameCountrie}
                 </MenuItem>
               ))}
             </Select>

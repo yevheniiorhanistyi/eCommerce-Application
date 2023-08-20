@@ -6,7 +6,8 @@ import {
 import { ModalContextType } from '../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
 import constants from './constants';
-import { ICustomer } from '../types/types';
+import { IAddress, ICustomer } from '../types/types';
+import { formatDateToYYYYMMDD } from '../utils/formatDate';
 
 export const getCustomers = async (
   modal: ModalContextType,
@@ -50,27 +51,32 @@ export const checkEmailCustomer = async (
   }
 };
 
-export const createCustomerDraft = (customerFormData: ICustomer) => {
-  // const address: BaseAddress[] = [
-  //   {
-  //     id: randomUUID(),
-  //     country: 'DE',
-  //   },
-  // ];
-  // const customerDraft: CustomerDraft = {
-  //   key: randomUUID(),
-  //   email: 'test-email-customer' + randomUUID(),
-  //   password: 'test-password-customer' + randomUUID(),
-  //   addresses: address,
-  // };
-  // return customerDraft;
+export const createAddress = (addressData: IAddress): BaseAddress => {};
+
+export const createCustomerDraft = (customerData: ICustomer): CustomerDraft => {
+  const address: BaseAddress[] = [
+    {
+      country: 'DE',
+    },
+  ];
+  const customerDraft: CustomerDraft = {
+    // key: randomUUID(),
+    email: customerData.email,
+    password: customerData.password,
+    firstName: customerData.firstName,
+    lastName: customerData.lastName,
+    dateOfBirth: formatDateToYYYYMMDD(customerData.birthDate),
+    addresses: address,
+  };
+  return customerDraft;
 };
 
 export const createCustomer = async (
-  customerDraft: CustomerDraft,
+  customerData: ICustomer,
   modal: ModalContextType,
 ): Promise<boolean | null> => {
   try {
+    const customerDraft = createCustomerDraft(customerData);
     const responseCreatedCustomer = await apiRoot
       .customers()
       .post({ body: customerDraft })
