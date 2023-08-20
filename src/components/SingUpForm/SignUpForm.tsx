@@ -39,6 +39,7 @@ import {
   ICustomer,
   ICustomerForm,
 } from '../../types/types';
+import { createCustomer } from '../../services/customers';
 
 const SignUpForm: React.FC = () => {
   const modal = useModal();
@@ -106,11 +107,23 @@ const SignUpForm: React.FC = () => {
     initialValues: formData,
     validationSchema: createValidationSchema(selectedCountry, ''),
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const customerData = values as ICustomer;
-      console.log('values', customerData);
       setSubmitting(true);
-
+      const isCreate = await createCustomer(customerData, modal);
+      if (isCreate) {
+        modal.openModal();
+        modal.setContent({
+          title: 'Congratulations',
+          text: 'You have successfully registered',
+        });
+      } else {
+        modal.openModal();
+        modal.setContent({
+          title: 'Sorry',
+          text: 'Registration failed, please try again later',
+        });
+      }
       setSubmitting(false);
     },
   });

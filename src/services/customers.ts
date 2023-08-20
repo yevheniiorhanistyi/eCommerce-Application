@@ -51,22 +51,25 @@ export const checkEmailCustomer = async (
   }
 };
 
-export const createAddress = (addressData: IAddress): BaseAddress => {};
+export const createAddress = (addressData: IAddress): BaseAddress => {
+  const addrress = {
+    country: addressData.country,
+    postalCode: addressData.postalCode,
+    city: addressData.city,
+    streetName: addressData.street,
+  };
+  return addrress;
+};
 
 export const createCustomerDraft = (customerData: ICustomer): CustomerDraft => {
-  const address: BaseAddress[] = [
-    {
-      country: 'DE',
-    },
-  ];
+  const addresses: BaseAddress[] = [createAddress(customerData.address)];
   const customerDraft: CustomerDraft = {
-    // key: randomUUID(),
     email: customerData.email,
     password: customerData.password,
     firstName: customerData.firstName,
     lastName: customerData.lastName,
     dateOfBirth: formatDateToYYYYMMDD(customerData.birthDate),
-    addresses: address,
+    addresses,
   };
   return customerDraft;
 };
@@ -84,7 +87,7 @@ export const createCustomer = async (
     if (responseCreatedCustomer.statusCode === 201) {
       return true;
     }
-    throw new Error('buyer not created');
+    return false;
   } catch (e) {
     modal.openModal();
     modal.setContent({
