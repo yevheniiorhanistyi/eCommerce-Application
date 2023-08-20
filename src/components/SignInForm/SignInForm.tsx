@@ -16,12 +16,27 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Formik, Form } from 'formik';
 import SignInSchema from './SignInSchema';
 
+import { authenticateClient } from '../../services/authenticateClient';
+import { useModal } from '../ModalProvider/ModalProvider';
+
 import styles from './SignInForm.styles';
 
-const SignInForm: React.FC = () => {
+interface SignInFormProps {
+  onSignInSuccess: () => void;
+}
+
+const SignInForm: React.FC<SignInFormProps> = ({
+  onSignInSuccess,
+}: SignInFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { openModal, setContent } = useModal();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const showErrorModal = (error: Error) => {
+    setContent({ title: 'Oops 😕', text: error.message });
+    openModal();
+  };
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -36,9 +51,15 @@ const SignInForm: React.FC = () => {
         password: '',
       }}
       validationSchema={SignInSchema}
-      onSubmit={(values, { resetForm }) => {
-        // alert(JSON.stringify(values, null, 2));
-        resetForm();
+      onSubmit={async (values, { resetForm }) => {
+        try {
+          await authenticateClient(values);
+          onSignInSuccess();
+        } catch (error) {
+          if (error instanceof Error) showErrorModal(error);
+        } finally {
+          resetForm();
+        }
       }}
     >
       {({ errors, touched, values, handleChange, handleBlur }) => (
@@ -59,6 +80,7 @@ const SignInForm: React.FC = () => {
               <OutlinedInput
                 id="outlined-email"
                 name="email"
+                type="email"
                 label="Email"
                 value={values.email}
                 onChange={handleChange}

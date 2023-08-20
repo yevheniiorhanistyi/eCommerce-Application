@@ -40,6 +40,7 @@ import {
   ICustomerForm,
 } from '../../types/types';
 import { createCustomer } from '../../services/customers';
+import birthDatelValidation from '../../validation/birthDate.validation';
 
 const SignUpForm: React.FC = () => {
   const modal = useModal();
@@ -78,6 +79,7 @@ const SignUpForm: React.FC = () => {
   const createValidationSchema = (country: string, email: string) => Yup.object().shape({
     firstName: nameValidation.required('First name is required'),
     lastName: nameValidation.required('Last name is required'),
+    birthDate: birthDatelValidation,
     email: emailValidation(modal),
     password: passwordValidation,
     confirmPassword: confirmFiled('password', 'Passwords must match'),
