@@ -24,43 +24,32 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
-
 import styles from './SignUpForm.styles';
 import passwordValidation from '../../validation/password.validation';
 import emailValidation from '../../validation/email.validation';
 import nameValidation from '../../validation/name.validation';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
-import birthDatelValidation from '../../validation/birthDate.validation';
 import getCountries from '../../services/getCountries';
-import { postcodeValidator } from '../../validation/postalCode/postalCode';
-
-const createValidationSchema = (country: string) => Yup.object().shape({
-  firstName: nameValidation.required('First name is required'),
-  lastName: nameValidation.required('Last name is required'),
-  email: emailValidation,
-  password: passwordValidation,
-  confirmPassword: confirmFiled('password', 'Passwords must match'),
-  street: notEmtyValidation,
-  city: nameValidation.required('City is required'),
-  birthDate: birthDatelValidation,
-  country: notEmtyValidation,
-  postalCode: Yup.string()
-    .test('postcode-validation', 'Invalid postcode', (value) => {
-      if (typeof value === 'string') {
-        return postcodeValidator(value, country);
-      }
-      return false;
-    })
-    .required('Postcode is required'),
-});
+import postalCodeValidation from '../../validation/postalCode.validation';
+import { useModal } from '../ModalProvider/ModalProvider';
+import {
+  IAddress,
+  ICountrie,
+  ICustomer,
+  ICustomerForm,
+} from '../../types/types';
+import { createCustomer } from '../../services/customers';
+import birthDatelValidation from '../../validation/birthDate.validation';
 
 const SignUpForm: React.FC = () => {
+  const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
-  const [countries, setCountries] = useState<string[]>([]);
+  const [countries, setCountries] = useState<ICountrie[]>([]);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
@@ -71,36 +60,73 @@ const SignUpForm: React.FC = () => {
       confirmPasswordRef.current.focus();
     }
   }, [isPasswordValid]);
-
   useEffect(() => {
     const fetchData = async () => {
-      const countriesData = await getCountries();
+      const countriesData = await getCountries(modal);
       setCountries(countriesData);
     };
 
     fetchData();
-  }, []);
+  }, [modal]);
 
-  const formData = {
+  const addressValidation = (country: string) => Yup.object().shape({
+    street: notEmtyValidation,
+    city: nameValidation.required('City is required'),
+    country: notEmtyValidation,
+    postalCode: postalCodeValidation(country),
+  });
+
+  const createValidationSchema = (country: string, email: string) => Yup.object().shape({
+    firstName: nameValidation.required('First name is required'),
+    lastName: nameValidation.required('Last name is required'),
+    birthDate: birthDatelValidation,
+    email: emailValidation(modal),
+    password: passwordValidation,
+    confirmPassword: confirmFiled('password', 'Passwords must match'),
+    address: addressValidation(country),
+  });
+
+  const defaultAddressValues: IAddress = {
+    street: '',
+    city: '',
+    postalCode: '',
+    country: '',
+    isSetDefaultShippingAddress: false,
+    isSetDefaultBillingAddress: false,
+  };
+
+  const formData: ICustomerForm = {
     email: '',
     password: '',
     confirmPassword: '',
     firstName: '',
     lastName: '',
     birthDate: null,
-    street: '',
-    city: '',
-    postalCode: '',
-    country: '',
-    isSetDefaultShippingAddress: false,
-    isSetDefaultBillinAddress: false,
+    address: { ...defaultAddressValues },
   };
 
   const formik = useFormik({
     initialValues: formData,
-    validationSchema: createValidationSchema(selectedCountry),
-    onSubmit: (values) => {
-      console.log('values', values);
+    validationSchema: createValidationSchema(selectedCountry, ''),
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      const customerData = values as ICustomer;
+      setSubmitting(true);
+      const isCreate = await createCustomer(customerData, modal);
+      if (isCreate) {
+        modal.openModal();
+        modal.setContent({
+          title: 'Congratulations',
+          text: 'You have successfully registered',
+        });
+      } else {
+        modal.openModal();
+        modal.setContent({
+          title: 'Sorry',
+          text: 'Registration failed, please try again later',
+        });
+      }
+      setSubmitting(false);
     },
   });
 
@@ -110,6 +136,7 @@ const SignUpForm: React.FC = () => {
     formik.handleBlur(e);
     setIsPasswordValid(!formik.errors.password);
   };
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -121,12 +148,11 @@ const SignUpForm: React.FC = () => {
     const { value } = e.target;
     formik.setFieldValue(nameFiled, value).then((error) => {
       formik.validateField(nameFiled).then(() => {
-        if (!error || nameFiled in error) {
+        if (error && nameFiled in error) {
           setIsContrySelected(false);
         } else {
-          const idCountry = value.match(/\((.*?)\)/)?.[1];
           setIsContrySelected(true);
-          if (typeof idCountry === 'string') setSelectedCountry(idCountry);
+          setSelectedCountry(value);
         }
       });
     });
@@ -134,7 +160,7 @@ const SignUpForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} noValidate>
       <Grid container spacing={2} sx={styles.contanierGrid}>
         <Grid item sm={12} xs={12}>
           <CenteredDivider caption="Personal information" />
@@ -270,33 +296,53 @@ const SignUpForm: React.FC = () => {
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth
-            name="street"
+            name="address.street"
             label="Street"
-            value={formik.values.street}
+            value={formik.values.address.street}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.street && Boolean(formik.errors.street)}
-            helperText={formik.touched.street && formik.errors.street}
+            error={
+              formik.errors.address
+              && formik.touched.address?.street
+              && Boolean(formik.errors.address.street)
+            }
+            helperText={
+              formik.errors.address
+              && formik.touched.address?.street
+              && formik.errors.address.street
+            }
             required
           />
         </Grid>
         <Grid item sm={6} xs={12}>
           <TextField
             fullWidth
-            name="city"
+            name="address.city"
             label="City"
-            value={formik.values.city}
+            value={formik.values.address.city}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.city && Boolean(formik.errors.city)}
-            helperText={formik.touched.city && formik.errors.city}
+            error={
+              formik.errors.address
+              && formik.touched.address?.city
+              && Boolean(formik.errors.address.city)
+            }
+            helperText={
+              formik.errors.address
+              && formik.touched.address?.city
+              && formik.errors.address.city
+            }
             required
           />
         </Grid>
         <Grid item sm={6} xs={12}>
           <FormControl
             fullWidth
-            error={Boolean(formik.touched.country && formik.errors.country)}
+            error={Boolean(
+              formik.errors.address
+                && formik.touched.address?.country
+                && formik.errors.address.country,
+            )}
           >
             <InputLabel id="labelSelectContryId">
               {labelSelectCountry}
@@ -306,19 +352,21 @@ const SignUpForm: React.FC = () => {
               id="selectContry"
               label={labelSelectCountry}
               fullWidth
-              name="country"
-              value={formik.values.country}
-              onChange={(e) => handleSelectChange('country', e)}
+              name="address.country"
+              value={formik.values.address.country}
+              onChange={(e) => handleSelectChange('address.country', e)}
               required
             >
               {countries.map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
+                <MenuItem key={item.codeCountrie} value={item.codeCountrie}>
+                  {item.nameCountrie}
                 </MenuItem>
               ))}
             </Select>
             <FormHelperText>
-              {formik.touched.country && formik.errors.country}
+              {formik.errors.address
+                && formik.touched.address?.country
+                && formik.errors.address.country}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -326,14 +374,20 @@ const SignUpForm: React.FC = () => {
           <TextField
             label="Postal Code"
             fullWidth
-            name="postalCode"
-            value={formik.values.postalCode}
+            name="address.postalCode"
+            value={formik.values.address.postalCode}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
-              formik.touched.postalCode && Boolean(formik.errors.postalCode)
+              formik.errors.address
+              && formik.touched.address?.postalCode
+              && Boolean(formik.errors.address.postalCode)
             }
-            helperText={formik.touched.postalCode && formik.errors.postalCode}
+            helperText={
+              formik.errors.address
+              && formik.touched.address?.postalCode
+              && formik.errors.address.postalCode
+            }
             required
             disabled={!isContrySelected}
           />
@@ -373,7 +427,12 @@ const SignUpForm: React.FC = () => {
           </FormGroup>
         </Grid>
       </Grid>
-      <Button type="submit" variant="contained" fullWidth>
+      <Button
+        type="submit"
+        variant="contained"
+        disabled={isSubmitting}
+        fullWidth
+      >
         Register
       </Button>
     </form>
