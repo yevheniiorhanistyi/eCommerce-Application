@@ -59,7 +59,6 @@ const SignUpForm: React.FC = () => {
   const [countries, setCountries] = useState<ICountrie[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
   const [isVisibleAddressBilling, setIsVisibleAddressBilling] = useState(false);
-  const [isValidateFields, setIsValidateFields] = useState(false);
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
@@ -72,6 +71,7 @@ const SignUpForm: React.FC = () => {
       confirmPasswordRef.current.focus();
     }
   }, [isPasswordValid]);
+
   useEffect(() => {
     const fetchData = async () => {
       const countriesData = await getCountries(modal);
@@ -159,12 +159,11 @@ const SignUpForm: React.FC = () => {
     },
   });
 
-  const handlePasswordBlur = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    formik.handleBlur(e);
-    setIsPasswordValid(!formik.errors.password);
-  };
+  useEffect(() => {
+    setIsPasswordValid(
+      !formik.errors.password && Boolean(formik.values.password),
+    );
+  }, [formik.errors.password, formik.values.password]);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -280,7 +279,7 @@ const SignUpForm: React.FC = () => {
             label="Password"
             value={formik.values.password}
             onChange={formik.handleChange}
-            onBlur={(e) => handlePasswordBlur(e)}
+            onBlur={formik.handleBlur}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             required
