@@ -59,6 +59,7 @@ const SignUpForm: React.FC = () => {
   const [countries, setCountries] = useState<ICountrie[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
   const [isVisibleAddressBilling, setIsVisibleAddressBilling] = useState(false);
+  const [isValidateFields, setIsValidateFields] = useState(false);
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
@@ -84,11 +85,16 @@ const SignUpForm: React.FC = () => {
   const addressValidation = (
     countryField: Record<string, string>,
     nameFiled: string,
+    validateFields = true,
   ) => Yup.object().shape({
-    street: notEmtyValidation,
-    city: nameValidation.required('City is required'),
-    country: notEmtyValidation,
-    postalCode: createPostalCodeValidation(countryField)(nameFiled),
+    street: validateFields ? notEmtyValidation : Yup.string(),
+    city: validateFields
+      ? nameValidation.required('City is required')
+      : Yup.string(),
+    country: validateFields ? notEmtyValidation : Yup.string(),
+    postalCode: validateFields
+      ? createPostalCodeValidation(countryField)(nameFiled)
+      : Yup.string(),
   });
 
   const createValidationSchema = (
@@ -102,7 +108,11 @@ const SignUpForm: React.FC = () => {
     password: passwordValidation,
     confirmPassword: confirmFiled('password', 'Passwords must match'),
     addressShipping: addressValidation(countryField, 'addressShipping'),
-    addressBilling: addressValidation(countryField, 'addressBilling'),
+    addressBilling: addressValidation(
+      countryField,
+      'addressBilling',
+      isVisibleAddressBilling,
+    ),
   });
 
   const defaultAddressValues: IAddress = {
