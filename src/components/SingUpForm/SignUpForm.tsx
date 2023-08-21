@@ -75,7 +75,7 @@ const SignUpForm: React.FC = () => {
     };
 
     fetchData();
-  }, [modal]);
+  }, []);
 
   const addressValidation = (
     countryField: Record<string, string>,
