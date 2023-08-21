@@ -10,15 +10,23 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
-import LoginIcon from '@mui/icons-material/Login';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 import { Link } from 'react-router-dom';
 import styles from './Header.styles';
+import SignInButton from '../buttons/SignInButton/SignInButton';
+import SignUpButton from '../buttons/SignUpButton/SignUpButton';
+import SignOutButton from '../buttons/SignOutButton/SignOutButton';
+import { useAuth } from '../AuthProvider/AuthProvider';
 
 const pages = ['Catalog', 'About Us'];
 
 const Header: React.FC = () => {
+  const { isSignedIn, setIsSignedIn } = useAuth();
+
+  const handleSignOut = () => {
+    setIsSignedIn(false);
+  };
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
@@ -95,24 +103,17 @@ const Header: React.FC = () => {
           </Box>
 
           <Box sx={styles.menuBox}>
-            <Link to="/signin" style={{ textDecoration: 'none' }}>
-              <Button
-                startIcon={<LoginIcon />}
-                variant="text"
-                sx={styles.button}
-              >
-                Sign in
-              </Button>
-            </Link>
-            <Link to="/signup" style={{ textDecoration: 'none' }}>
-              <Button
-                startIcon={<VpnKeyIcon />}
-                variant="outlined"
-                sx={styles.button}
-              >
-                Sign up
-              </Button>
-            </Link>
+            {isSignedIn ? (
+              <>
+                <SignInButton />
+                <SignOutButton onSignOutSuccess={handleSignOut} />
+              </>
+            ) : (
+              <>
+                <SignInButton />
+                <SignUpButton />
+              </>
+            )}
           </Box>
         </Toolbar>
       </Container>
