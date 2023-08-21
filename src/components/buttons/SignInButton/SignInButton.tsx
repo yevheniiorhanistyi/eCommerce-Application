@@ -8,7 +8,11 @@ import styles from './SignInButton.styles';
 const SignInButton: React.FC = () => (
   <Link to="/signin" style={{ textDecoration: 'none' }}>
     <Button
-      startIcon={<LoginIcon />}
+      startIcon={(
+        <LoginIcon
+          sx={styles.loginIcon}
+        />
+)}
       variant="text"
       sx={styles.button}
     >
