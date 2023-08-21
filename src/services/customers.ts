@@ -61,8 +61,23 @@ export const createAddress = (addressData: IAddress): BaseAddress => {
   return addrress;
 };
 
+const setDefaultBillingAddress = (customerData: ICustomer): 0 | 1 | void => {
+  if (customerData.isSetDefaultBillingAddress) {
+    if (customerData.isTwoAddresses) {
+      return 1;
+    }
+    if (!customerData.isTwoAddresses) {
+      return 0;
+    }
+  }
+  return undefined;
+};
+
 export const createCustomerDraft = (customerData: ICustomer): CustomerDraft => {
-  const addresses: BaseAddress[] = [createAddress(customerData.address)];
+  const addresses: BaseAddress[] = [
+    createAddress(customerData.addressShipping),
+  ];
+  if (customerData.isTwoAddresses) addresses.push(createAddress(customerData.addressBilling));
   const customerDraft: CustomerDraft = {
     email: customerData.email,
     password: customerData.password,
@@ -70,6 +85,12 @@ export const createCustomerDraft = (customerData: ICustomer): CustomerDraft => {
     lastName: customerData.lastName,
     dateOfBirth: formatDateToYYYYMMDD(customerData.birthDate),
     addresses,
+    shippingAddresses: [0],
+    defaultShippingAddress: customerData.isSetDefaultShippingAddress
+      ? 0
+      : undefined,
+    billingAddresses: customerData.isTwoAddresses ? [1] : undefined,
+    defaultBillingAddress: setDefaultBillingAddress(customerData) ?? undefined,
   };
   return customerDraft;
 };

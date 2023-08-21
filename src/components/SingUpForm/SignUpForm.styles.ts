@@ -9,6 +9,9 @@ const styles = {
     ml: 1,
     mr: 1,
   },
+  collapse: {
+    pl: 1,
+  },
 };
 
 export default styles;
