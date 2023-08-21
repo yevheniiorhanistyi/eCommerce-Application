@@ -62,7 +62,9 @@ export const createAddress = (addressData: IAddress): BaseAddress => {
 };
 
 export const createCustomerDraft = (customerData: ICustomer): CustomerDraft => {
-  const addresses: BaseAddress[] = [createAddress(customerData.address)];
+  const addresses: BaseAddress[] = [
+    createAddress(customerData.addressShipping),
+  ];
   const customerDraft: CustomerDraft = {
     email: customerData.email,
     password: customerData.password,
@@ -70,6 +72,10 @@ export const createCustomerDraft = (customerData: ICustomer): CustomerDraft => {
     lastName: customerData.lastName,
     dateOfBirth: formatDateToYYYYMMDD(customerData.birthDate),
     addresses,
+    shippingAddresses: [0],
+    defaultShippingAddress: 0,
+    billingAddresses: [0],
+    defaultBillingAddress: 0,
   };
   return customerDraft;
 };

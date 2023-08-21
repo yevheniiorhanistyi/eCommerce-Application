@@ -14,6 +14,7 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Collapse,
 } from '@mui/material';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
@@ -31,7 +32,7 @@ import nameValidation from '../../validation/name.validation';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
 import getCountries from '../../services/getCountries';
-import postalCodeValidation from '../../validation/postalCode.validation';
+import createPostalCodeValidation from '../../validation/postalCode.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
 import {
   IAddress,
@@ -46,10 +47,17 @@ const SignUpForm: React.FC = () => {
   const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [isContrySelected, setIsContrySelected] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [isContrySelected, setIsContrySelected] = useState({
+    addressShipping: false,
+    addressBilling: false,
+  });
+  const [selectedCountry, setSelectedCountry] = useState({
+    addressShipping: '',
+    addressBilling: '',
+  });
   const [countries, setCountries] = useState<ICountrie[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
+  const [isVisibleAddressBilling, setIsVisibleAddressBilling] = useState(false);
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
@@ -69,21 +77,28 @@ const SignUpForm: React.FC = () => {
     fetchData();
   }, [modal]);
 
-  const addressValidation = (country: string) => Yup.object().shape({
+  const addressValidation = (
+    countryField: Record<string, string>,
+    nameFiled: string,
+  ) => Yup.object().shape({
     street: notEmtyValidation,
     city: nameValidation.required('City is required'),
     country: notEmtyValidation,
-    postalCode: postalCodeValidation(country),
+    postalCode: createPostalCodeValidation(countryField)(nameFiled),
   });
 
-  const createValidationSchema = (country: string, email: string) => Yup.object().shape({
+  const createValidationSchema = (
+    countryField: Record<string, string>,
+    email: string,
+  ) => Yup.object().shape({
     firstName: nameValidation.required('First name is required'),
     lastName: nameValidation.required('Last name is required'),
     birthDate: birthDatelValidation,
     email: emailValidation(modal),
     password: passwordValidation,
     confirmPassword: confirmFiled('password', 'Passwords must match'),
-    address: addressValidation(country),
+    addressShipping: addressValidation(countryField, 'addressShipping'),
+    addressBilling: addressValidation(countryField, 'addressBilling'),
   });
 
   const defaultAddressValues: IAddress = {
@@ -91,8 +106,6 @@ const SignUpForm: React.FC = () => {
     city: '',
     postalCode: '',
     country: '',
-    isSetDefaultShippingAddress: false,
-    isSetDefaultBillingAddress: false,
   };
 
   const formData: ICustomerForm = {
@@ -102,7 +115,11 @@ const SignUpForm: React.FC = () => {
     firstName: '',
     lastName: '',
     birthDate: null,
-    address: { ...defaultAddressValues },
+    addressShipping: { ...defaultAddressValues },
+    addressBilling: { ...defaultAddressValues },
+    isSetDefaultShippingAddress: false,
+    isSetDefaultBillingAddress: false,
+    isTwoAddresses: false,
   };
 
   const formik = useFormik({
@@ -148,11 +165,21 @@ const SignUpForm: React.FC = () => {
     const { value } = e.target;
     formik.setFieldValue(nameFiled, value).then((error) => {
       formik.validateField(nameFiled).then(() => {
+        const nameFiledAdrress = nameFiled.split('.')[0];
         if (error && nameFiled in error) {
-          setIsContrySelected(false);
+          setIsContrySelected((prevState) => ({
+            ...prevState,
+            [nameFiledAdrress]: true,
+          }));
         } else {
-          setIsContrySelected(true);
-          setSelectedCountry(value);
+          setIsContrySelected((prevState) => ({
+            ...prevState,
+            [nameFiledAdrress]: true,
+          }));
+          setSelectedCountry((prevState) => ({
+            ...prevState,
+            [nameFiledAdrress]: value,
+          }));
         }
       });
     });
@@ -291,25 +318,47 @@ const SignUpForm: React.FC = () => {
           />
         </Grid>
         <Grid item sm={12} xs={12}>
-          <CenteredDivider caption="Adress" />
+          <CenteredDivider
+            caption={isVisibleAddressBilling ? 'Adrress Shipping' : 'Adrress'}
+          />
+        </Grid>
+        <Grid item sm={12} xs={12}>
+          <FormGroup>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  name="isTwoAddresses"
+                  onChange={(e) => {
+                    formik.setFieldValue(
+                      'isTwoAddresses',
+                      e.target.checked,
+                      false,
+                    );
+                    setIsVisibleAddressBilling(e.target.checked);
+                  }}
+                />
+              )}
+              label="Use different addresses for shipping and billing"
+            />
+          </FormGroup>
         </Grid>
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth
-            name="address.street"
+            name="addressShipping.street"
             label="Street"
-            value={formik.values.address.street}
+            value={formik.values.addressShipping.street}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
-              formik.errors.address
-              && formik.touched.address?.street
-              && Boolean(formik.errors.address.street)
+              formik.errors.addressShipping
+              && formik.touched.addressShipping?.street
+              && Boolean(formik.errors.addressShipping.street)
             }
             helperText={
-              formik.errors.address
-              && formik.touched.address?.street
-              && formik.errors.address.street
+              formik.errors.addressShipping
+              && formik.touched.addressShipping?.street
+              && formik.errors.addressShipping.street
             }
             required
           />
@@ -317,20 +366,20 @@ const SignUpForm: React.FC = () => {
         <Grid item sm={6} xs={12}>
           <TextField
             fullWidth
-            name="address.city"
+            name="addressShipping.city"
             label="City"
-            value={formik.values.address.city}
+            value={formik.values.addressShipping.city}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
-              formik.errors.address
-              && formik.touched.address?.city
-              && Boolean(formik.errors.address.city)
+              formik.errors.addressShipping
+              && formik.touched.addressShipping?.city
+              && Boolean(formik.errors.addressShipping.city)
             }
             helperText={
-              formik.errors.address
-              && formik.touched.address?.city
-              && formik.errors.address.city
+              formik.errors.addressShipping
+              && formik.touched.addressShipping?.city
+              && formik.errors.addressShipping.city
             }
             required
           />
@@ -339,9 +388,9 @@ const SignUpForm: React.FC = () => {
           <FormControl
             fullWidth
             error={Boolean(
-              formik.errors.address
-                && formik.touched.address?.country
-                && formik.errors.address.country,
+              formik.errors.addressShipping
+                && formik.touched.addressShipping?.country
+                && formik.errors.addressShipping.country,
             )}
           >
             <InputLabel id="labelSelectContryId">
@@ -352,9 +401,9 @@ const SignUpForm: React.FC = () => {
               id="selectContry"
               label={labelSelectCountry}
               fullWidth
-              name="address.country"
-              value={formik.values.address.country}
-              onChange={(e) => handleSelectChange('address.country', e)}
+              name="addressShipping.country"
+              value={formik.values.addressShipping.country}
+              onChange={(e) => handleSelectChange('addressShipping.country', e)}
               required
             >
               {countries.map((item) => (
@@ -364,9 +413,9 @@ const SignUpForm: React.FC = () => {
               ))}
             </Select>
             <FormHelperText>
-              {formik.errors.address
-                && formik.touched.address?.country
-                && formik.errors.address.country}
+              {formik.errors.addressShipping
+                && formik.touched.addressShipping?.country
+                && formik.errors.addressShipping.country}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -374,22 +423,22 @@ const SignUpForm: React.FC = () => {
           <TextField
             label="Postal Code"
             fullWidth
-            name="address.postalCode"
-            value={formik.values.address.postalCode}
+            name="addressShipping.postalCode"
+            value={formik.values.addressShipping.postalCode}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
-              formik.errors.address
-              && formik.touched.address?.postalCode
-              && Boolean(formik.errors.address.postalCode)
+              formik.errors.addressShipping
+              && formik.touched.addressShipping?.postalCode
+              && Boolean(formik.errors.addressShipping.postalCode)
             }
             helperText={
-              formik.errors.address
-              && formik.touched.address?.postalCode
-              && formik.errors.address.postalCode
+              formik.errors.addressShipping
+              && formik.touched.addressShipping?.postalCode
+              && formik.errors.addressShipping.postalCode
             }
             required
-            disabled={!isContrySelected}
+            disabled={!isContrySelected.addressShipping}
           />
         </Grid>
         <Grid item sm={12} xs={12}>
@@ -409,6 +458,112 @@ const SignUpForm: React.FC = () => {
             />
           </FormGroup>
         </Grid>
+        <Collapse in={isVisibleAddressBilling} sx={styles.collapse}>
+          <Grid container spacing={2} sx={styles.contanierGrid}>
+            <Grid item sm={12} xs={12}>
+              <CenteredDivider caption="Adrress Billing" />
+            </Grid>
+            <Grid item sm={12} xs={12}>
+              <TextField
+                fullWidth
+                name="addressBilling.street"
+                label="Street"
+                value={formik.values.addressBilling.street}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.errors.addressBilling
+                  && formik.touched.addressBilling?.street
+                  && Boolean(formik.errors.addressBilling.street)
+                }
+                helperText={
+                  formik.errors.addressBilling
+                  && formik.touched.addressBilling?.street
+                  && formik.errors.addressBilling.street
+                }
+                required
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <TextField
+                fullWidth
+                name="addressBilling.city"
+                label="City"
+                value={formik.values.addressBilling.city}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.errors.addressBilling
+                  && formik.touched.addressBilling?.city
+                  && Boolean(formik.errors.addressBilling.city)
+                }
+                helperText={
+                  formik.errors.addressBilling
+                  && formik.touched.addressBilling?.city
+                  && formik.errors.addressBilling.city
+                }
+                required
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <FormControl
+                fullWidth
+                error={Boolean(
+                  formik.errors.addressBilling
+                    && formik.touched.addressBilling?.country
+                    && formik.errors.addressBilling.country,
+                )}
+              >
+                <InputLabel id="labelSelectContryId">
+                  {labelSelectCountry}
+                </InputLabel>
+                <Select
+                  labelId="labelSelectContryId"
+                  id="selectContry"
+                  label={labelSelectCountry}
+                  fullWidth
+                  name="addressBilling.country"
+                  value={formik.values.addressBilling.country}
+                  onChange={(e) => handleSelectChange('addressBilling.country', e)}
+                  required
+                >
+                  {countries.map((item) => (
+                    <MenuItem key={item.codeCountrie} value={item.codeCountrie}>
+                      {item.nameCountrie}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>
+                  {formik.errors.addressBilling
+                    && formik.touched.addressBilling?.country
+                    && formik.errors.addressBilling.country}
+                </FormHelperText>
+              </FormControl>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <TextField
+                label="Postal Code"
+                fullWidth
+                name="addressBilling.postalCode"
+                value={formik.values.addressBilling.postalCode}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.errors.addressBilling
+                  && formik.touched.addressBilling?.postalCode
+                  && Boolean(formik.errors.addressBilling.postalCode)
+                }
+                helperText={
+                  formik.errors.addressBilling
+                  && formik.touched.addressBilling?.postalCode
+                  && formik.errors.addressBilling.postalCode
+                }
+                required
+                disabled={!isContrySelected.addressBilling}
+              />
+            </Grid>
+          </Grid>
+        </Collapse>
         <Grid item sm={12} xs={12}>
           <FormGroup>
             <FormControlLabel

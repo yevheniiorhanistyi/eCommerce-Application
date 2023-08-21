@@ -3,8 +3,6 @@ export interface IAddress {
   city: string;
   postalCode: string;
   country: string;
-  isSetDefaultShippingAddress: boolean;
-  isSetDefaultBillingAddress: boolean;
 }
 export interface ICustomerBase {
   email: string;
@@ -12,7 +10,11 @@ export interface ICustomerBase {
   confirmPassword: string;
   firstName: string;
   lastName: string;
-  address: IAddress;
+  addressShipping: IAddress;
+  addressBilling: IAddress;
+  isSetDefaultShippingAddress: boolean;
+  isSetDefaultBillingAddress: boolean;
+  isTwoAddresses: boolean;
 }
 
 export interface ICustomerForm extends ICustomerBase {
