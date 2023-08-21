@@ -43,8 +43,15 @@ import {
 } from '../../types/types';
 import { createCustomer } from '../../services/customers';
 import birthDatelValidation from '../../validation/birthDate.validation';
+import { authenticateClient } from '../../services/authenticateClient';
 
-const SignUpForm: React.FC = () => {
+interface SignUpFormProps {
+  onSignInSuccess: () => void;
+}
+
+const SignUpForm: React.FC<SignUpFormProps> = ({
+  onSignInSuccess,
+}: SignUpFormProps) => {
   const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
@@ -148,6 +155,21 @@ const SignUpForm: React.FC = () => {
         enqueueSnackbar('You have successfully registered!', {
           variant: 'success',
         });
+        try {
+          await authenticateClient({
+            email: customerData.email,
+            password: customerData.password,
+          });
+          onSignInSuccess();
+        } catch (error) {
+          modal.openModal();
+          modal.setContent({
+            title: 'Sorry',
+            text: 'Sing in failed, please try again later',
+          });
+        } finally {
+          formik.resetForm();
+        }
       } else {
         modal.openModal();
         modal.setContent({
