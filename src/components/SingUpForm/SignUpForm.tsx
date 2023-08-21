@@ -24,6 +24,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useSnackbar } from 'notistack';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './SignUpForm.styles';
 import passwordValidation from '../../validation/password.validation';
@@ -61,6 +62,8 @@ const SignUpForm: React.FC = () => {
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const labelSelectCountry = 'Contry';
 
   useEffect(() => {
@@ -75,6 +78,7 @@ const SignUpForm: React.FC = () => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addressValidation = (
@@ -131,10 +135,8 @@ const SignUpForm: React.FC = () => {
       setSubmitting(true);
       const isCreate = await createCustomer(customerData, modal);
       if (isCreate) {
-        modal.openModal();
-        modal.setContent({
-          title: 'Congratulations',
-          text: 'You have successfully registered',
+        enqueueSnackbar('You have successfully registered!', {
+          variant: 'success',
         });
       } else {
         modal.openModal();
