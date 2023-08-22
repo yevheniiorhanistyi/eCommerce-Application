@@ -98,7 +98,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     city: validateFields
       ? nameValidation.required('City is required')
       : Yup.string(),
-    country: validateFields ? notEmtyValidation : Yup.string(),
+    country: validateFields
+      ? notEmtyValidation.required('Country is required')
+      : Yup.string(),
     postalCode: validateFields
       ? createPostalCodeValidation(countryField)(nameFiled)
       : Yup.string(),
@@ -146,7 +148,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   const formik = useFormik({
     initialValues: formData,
     validationSchema: createValidationSchema(selectedCountry, ''),
-    validateOnChange: false,
+    validateOnChange: true,
     onSubmit: async (values) => {
       const customerData = values as ICustomer;
       setSubmitting(true);
