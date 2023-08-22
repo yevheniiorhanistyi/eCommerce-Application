@@ -20,7 +20,7 @@ const SignUp: React.FC = () => {
   return isSignedIn ? (
     <Navigate to="/" />
   ) : (
-    <Container component="main" maxWidth="md">
+    <Container maxWidth="md">
       <Paper elevation={0} sx={{ p: 3, mt: 7, mb: 4 }}>
         <Typography variant="h3" align="center" gutterBottom>
           Create your account

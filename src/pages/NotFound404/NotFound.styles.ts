@@ -4,7 +4,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    minHeight: '100vh',
+    flexGrow: 1,
     backgroundColor: '#808080',
   },
   title: {
