@@ -17,6 +17,7 @@ import SignInButton from '../buttons/SignInButton/SignInButton';
 import SignUpButton from '../buttons/SignUpButton/SignUpButton';
 import SignOutButton from '../buttons/SignOutButton/SignOutButton';
 import { useAuth } from '../AuthProvider/AuthProvider';
+import { removeTokenFromLocalStorage } from '../../utils/authUtils';
 
 const pages = ['Catalog', 'About Us'];
 
@@ -25,6 +26,7 @@ const Header: React.FC = () => {
 
   const handleSignOut = () => {
     setIsSignedIn(false);
+    removeTokenFromLocalStorage();
   };
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
