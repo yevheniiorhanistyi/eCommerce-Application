@@ -8,7 +8,11 @@ import styles from './SignUpButton.styles';
 const SignUpButton: React.FC = () => (
   <Link to="/signup" style={{ textDecoration: 'none' }}>
     <Button
-      startIcon={<VpnKeyIcon />}
+      startIcon={(
+        <VpnKeyIcon
+          sx={styles.vpnKeyIcon}
+        />
+)}
       variant="outlined"
       sx={styles.button}
     >
