@@ -23,27 +23,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './SignUpForm.styles';
-import passwordValidation from '../../validation/password.validation';
-import emailValidation from '../../validation/email.validation';
-import nameValidation from '../../validation/name.validation';
-import notEmtyValidation from '../../validation/notEmty.validation';
-import confirmFiled from '../../validation/confirmFiled';
 import getCountries from '../../services/getCountries';
-import createPostalCodeValidation from '../../validation/postalCode.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
-import {
-  IAddress,
-  ICountrie,
-  ICustomer,
-  ICustomerForm,
-} from '../../types/types';
-import { createCustomer } from '../../services/customers';
-import birthDatelValidation from '../../validation/birthDate.validation';
-import { authenticateClient } from '../../services/authenticateClient';
+import { ICountrie, ICustomer } from '../../types/types';
+import createValidationSchema from './utils/createValidationSchema';
+import { defaultDataValues } from './utils/defaultValues';
+import handleSubmit from './utils/handleSubmit';
 
 interface SignUpFormProps {
   onSignInSuccess: () => void;
@@ -69,8 +57,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
-  const { enqueueSnackbar } = useSnackbar();
-
   const labelSelectCountry = 'Contry';
 
   useEffect(() => {
@@ -89,94 +75,19 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addressValidation = (
-    countryField: Record<string, string>,
-    nameFiled: string,
-    validateFields = true,
-  ) => Yup.object().shape({
-    street: validateFields ? notEmtyValidation : Yup.string(),
-    city: validateFields
-      ? nameValidation.required('City is required')
-      : Yup.string(),
-    country: validateFields ? notEmtyValidation : Yup.string(),
-    postalCode: validateFields
-      ? createPostalCodeValidation(countryField)(nameFiled)
-      : Yup.string(),
-  });
-
-  const createValidationSchema = (
-    countryField: Record<string, string>,
-    email: string,
-  ) => Yup.object().shape({
-    firstName: nameValidation.required('First name is required'),
-    lastName: nameValidation.required('Last name is required'),
-    birthDate: birthDatelValidation,
-    email: emailValidation(modal),
-    password: passwordValidation,
-    confirmPassword: confirmFiled('password', 'Passwords must match'),
-    addressShipping: addressValidation(countryField, 'addressShipping'),
-    addressBilling: addressValidation(
-      countryField,
-      'addressBilling',
+  const formik = useFormik({
+    initialValues: defaultDataValues,
+    validationSchema: createValidationSchema(
+      selectedCountry,
+      modal,
       isVisibleAddressBilling,
     ),
-  });
-
-  const defaultAddressValues: IAddress = {
-    street: '',
-    city: '',
-    postalCode: '',
-    country: '',
-  };
-
-  const formData: ICustomerForm = {
-    email: '',
-    password: '',
-    confirmPassword: '',
-    firstName: '',
-    lastName: '',
-    birthDate: null,
-    addressShipping: { ...defaultAddressValues },
-    addressBilling: { ...defaultAddressValues },
-    isSetDefaultShippingAddress: false,
-    isSetDefaultBillingAddress: false,
-    isTwoAddresses: false,
-  };
-
-  const formik = useFormik({
-    initialValues: formData,
-    validationSchema: createValidationSchema(selectedCountry, ''),
     validateOnChange: false,
     onSubmit: async (values) => {
       const customerData = values as ICustomer;
       setSubmitting(true);
-      const isCreate = await createCustomer(customerData, modal);
-      if (isCreate) {
-        enqueueSnackbar('You have successfully registered!', {
-          variant: 'success',
-        });
-        try {
-          await authenticateClient({
-            email: customerData.email,
-            password: customerData.password,
-          });
-          onSignInSuccess();
-        } catch (error) {
-          modal.openModal();
-          modal.setContent({
-            title: 'Sorry',
-            text: 'Sing in failed, please try again later',
-          });
-        } finally {
-          formik.resetForm();
-        }
-      } else {
-        modal.openModal();
-        modal.setContent({
-          title: 'Sorry',
-          text: 'Registration failed, please try again later',
-        });
-      }
+      await handleSubmit(customerData, modal, onSignInSuccess);
+      formik.resetForm();
       setSubmitting(false);
     },
   });
