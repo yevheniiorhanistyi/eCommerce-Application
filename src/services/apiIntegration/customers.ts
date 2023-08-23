@@ -3,11 +3,11 @@ import {
   CustomerDraft,
   CustomerPagedQueryResponse,
 } from '@commercetools/platform-sdk';
-import { ModalContextType } from '../components/ModalProvider/type';
+import { ModalContextType } from '../../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
 import constants from './constants';
-import { IAddress, ICustomer } from '../types/types';
-import { formatDateToYYYYMMDD } from '../utils/formatDate';
+import { IAddress, ICustomer } from '../../types/types';
+import { formatDateToYYYYMMDD } from '../../utils/formatDate';
 
 export const getCustomers = async (
   modal: ModalContextType,

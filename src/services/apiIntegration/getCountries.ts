@@ -1,6 +1,6 @@
-import { ModalContextType } from '../components/ModalProvider/type';
-import { ICountrie } from '../types/types';
-import iso3166Alpha2 from '../utils/countries';
+import { ModalContextType } from '../../components/ModalProvider/type';
+import { ICountrie } from '../../types/types';
+import iso3166Alpha2 from '../../utils/countries';
 import { getProject } from './project';
 
 const getCountries = async (

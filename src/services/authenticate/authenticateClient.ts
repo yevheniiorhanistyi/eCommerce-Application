@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setTokenToLocalStorage } from '../utils/authUtils';
+import { setTokenToLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const baseUrl = import.meta.env.VITE_REACT_APP_AUTH_URL;
