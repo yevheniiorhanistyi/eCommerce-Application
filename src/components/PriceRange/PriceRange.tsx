@@ -26,9 +26,12 @@ const PriceRange: React.FC = () => {
     if (!isNaN(newValue)) {
       const updatedValue = [...value];
       if (index === 0) {
-        updatedValue[index] = Math.min(Math.max(newValue, 0), maxPrice);
+        updatedValue[index] = Math.min(Math.max(newValue, -1), value[1]);
       } else {
-        updatedValue[index] = Math.min(Math.max(newValue, 0), maxPrice);
+        updatedValue[index] = Math.min(
+          Math.max(newValue, value[0]),
+          maxPrice,
+        );
       }
       setValue(updatedValue);
     }
