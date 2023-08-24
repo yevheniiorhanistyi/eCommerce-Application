@@ -44,6 +44,18 @@ const Main: React.FC = () => (
             Sign Up
           </Link>
         </ListItem>
+        <ListItem>
+          <Link
+            align="center"
+            underline="hover"
+            sx={styles.link}
+            component={RouterLink}
+            variant="h5"
+            to="/product/maternity_top"
+          >
+            Product
+          </Link>
+        </ListItem>
       </List>
     </Paper>
   </Container>
