@@ -19,7 +19,7 @@ const styles = {
     margin: '0 auto 10px',
   },
   sliderBox: {
-    padding: '0 10px',
+    padding: '0 15px',
   },
   outlinedInput: {
     width: 'calc(50% - 5px)',
