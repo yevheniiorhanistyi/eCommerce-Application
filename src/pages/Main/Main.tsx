@@ -53,7 +53,31 @@ const Main: React.FC = () => (
             variant="h5"
             to="/product/maternity_top"
           >
-            Product
+            maternity_top
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link
+            align="center"
+            underline="hover"
+            sx={styles.link}
+            component={RouterLink}
+            variant="h5"
+            to="/product/Patagonia Micro D Snap-T Fleece Jacket - Kids'"
+          >
+            Patagonia Micro D Snap-T Fleece Jacket - Kids
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link
+            align="center"
+            underline="hover"
+            sx={styles.link}
+            component={RouterLink}
+            variant="h5"
+            to="/product/Patagonia Nano Puff Insulated Jacket - Boys'"
+          >
+            Patagonia Nano Puff Insulated Jacket - Boys
           </Link>
         </ListItem>
       </List>
