@@ -53,7 +53,7 @@ export const authenticateClient = async ({
   )
     .then((response) => {
       const { data } = response;
-      setTokenToLocalStorage(data.access_token);
+      setTokenToLocalStorage(data.access_token, true);
     })
     .catch((error) => {
       if (error.response) processResponseError(error.response);

@@ -22,10 +22,10 @@ import { removeTokenFromLocalStorage } from '../../utils/authUtils';
 const pages = ['Catalog', 'About Us'];
 
 const Header: React.FC = () => {
-  const { isSignedIn, setIsSignedIn } = useAuth();
+  const { isAuthenticated, setAuthentication } = useAuth();
 
   const handleSignOut = () => {
-    setIsSignedIn(false);
+    setAuthentication(false);
     removeTokenFromLocalStorage();
   };
 
@@ -105,7 +105,7 @@ const Header: React.FC = () => {
           </Box>
 
           <Box sx={styles.menuBox}>
-            {isSignedIn ? (
+            {isAuthenticated ? (
               <>
                 <SignInButton />
                 <SignOutButton onSignOutSuccess={handleSignOut} />
