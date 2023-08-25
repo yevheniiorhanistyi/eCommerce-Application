@@ -1,27 +1,14 @@
-import { useEffect, useState } from 'react';
-import { Backdrop, Box, Typography } from '@mui/material';
-import { Product } from '@commercetools/platform-sdk';
+import { useEffect, useRef, useState } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 import { getProduct } from '../../services/product';
 import { useModal } from '../ModalProvider/ModalProvider';
 import DetailedProductNotFound from './DetailedProductNotFound';
-import languageCode from '../../utils/languageCode';
+import CenteredDivider from '../CenteredDivider/CenteredDivider';
+import styles from './DetailedProduct.styles';
+import { IProductDisplayData, parsingData } from './services/parsingData';
 
 interface DetailedProductProps {
   keyProduct: string | undefined;
-}
-
-interface IImage {
-  url: string;
-  dimensions: {
-    w: number;
-    h: number;
-  };
-}
-
-interface IProductDisplayData {
-  title: string;
-  description: string;
-  images: IImage[];
 }
 
 const DetailedProduct: React.FC<DetailedProductProps> = ({
@@ -31,19 +18,29 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
   const [productData, setProductData] = useState<
   IProductDisplayData | null | ''
   >('');
+  const imageViewRef = useRef<HTMLDivElement>(null);
+  const [imageViewWidth, setImageViewWidth] = useState(0);
 
-  const parsingData = (data: Product | null): IProductDisplayData | null => {
-    if (data) {
-      return {
-        title: data.masterData.current.name[languageCode],
-        description: data.masterData.current.description
-          ? data.masterData.current.description[languageCode]
-          : '',
-        images: data.masterData.staged.masterVariant.images ?? [],
-      };
-    }
-    return null;
-  };
+  // useEffect(() => {
+  //   if (imageViewRef.current) {
+  //     setImageViewWidth(imageViewRef.current.offsetWidth);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (imageViewRef.current) {
+        setImageViewWidth(imageViewRef.current.offsetWidth);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +54,11 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
     fetchData();
   }, [keyProduct, modal]);
 
+  const imageViewHeight = imageViewWidth * 0.75;
+  const stylesImageView = {
+    height: imageViewHeight,
+  };
+
   if (productData === null) {
     return <DetailedProductNotFound />;
   }
@@ -64,21 +66,42 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
     return <DetailedProductNotFound />;
   }
   return (
-    <Box>
-      <Typography variant="h5">
-        {productData ? productData.title : ''}
-      </Typography>
-      <Typography variant="body2">
-        {productData ? productData.description : ''}
-      </Typography>
-      {productData
-        ? productData.images.map((item) => (
-          <Typography key={item.url} variant="body2">
-            {item.url}
+    <Grid container spacing={2}>
+      <Grid item sm={6} xs={12}>
+        <Box
+          sx={[
+            styles.sliderView,
+            {
+              height: imageViewWidth * 0.75,
+            },
+          ]}
+          ref={imageViewRef}
+        >
+          {productData
+            ? productData.images.map((item) => (
+              <Box key={item.url} sx={styles.imageWrap}>
+                <img src={item.url} alt={keyProduct} style={styles.image} />
+              </Box>
+            ))
+            : ''}
+        </Box>
+      </Grid>
+      <Grid item sm={6} xs={12}>
+        <Box>
+          <Typography variant="h2" sx={styles.title}>
+            {productData ? productData.title : ''}
           </Typography>
-        ))
-        : ''}
-    </Box>
+        </Box>
+      </Grid>
+      <Grid item sm={12} xs={12}>
+        <Box>
+          <CenteredDivider caption="Description" />
+          <Typography variant="body2">
+            {productData ? productData.description : ''}
+          </Typography>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
 
