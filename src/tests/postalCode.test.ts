@@ -1,17 +1,16 @@
 import {
   postcodeValidator,
   existsForCountry,
-} from '../validation/postalCode/postalCode'; // Подставьте путь к вашему модулю
+} from '../validation/postalCode/postalCode';
 
-// Mocking the POSTCODE_REGEXES object for testing
 jest.mock(
   '../validation/postalCode/postalCodeRegexes.ts',
   () => new Map([
-    ['US', /^([0-9]{5})(?:-([0-9]{4}))?$/], // Example regular expression for the US
+    ['US', /^([0-9]{5})(?:-([0-9]{4}))?$/],
     [
       'CA',
       /^([ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ])\s*([0-9][ABCEGHJKLMNPRSTVWXYZ][0-9])$/i,
-    ], // Example regular expression for Canada
+    ],
   ]),
 );
 
