@@ -6,14 +6,10 @@ import React, {
   useMemo,
   ReactNode,
 } from 'react';
+import { IAuthContextType } from '../../types/types';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
 
-interface AuthContextType {
-  isSignedIn: boolean;
-  setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<IAuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

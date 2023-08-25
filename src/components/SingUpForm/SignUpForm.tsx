@@ -40,18 +40,14 @@ import {
   ICountrie,
   ICustomer,
   ICustomerForm,
-} from '../../types/types';
+  ISignUpFormProps } from '../../types/types';
 import { createCustomer } from '../../services/customers';
 import birthDatelValidation from '../../validation/birthDate.validation';
 import { authenticateClient } from '../../services/authenticateClient';
 
-interface SignUpFormProps {
-  onSignInSuccess: () => void;
-}
-
-const SignUpForm: React.FC<SignUpFormProps> = ({
+const SignUpForm: React.FC<ISignUpFormProps> = ({
   onSignInSuccess,
-}: SignUpFormProps) => {
+}: ISignUpFormProps) => {
   const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
