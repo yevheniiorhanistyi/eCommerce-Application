@@ -20,6 +20,8 @@ import SignUpButton from '../buttons/SignUpButton/SignUpButton';
 import SignOutButton from '../buttons/SignOutButton/SignOutButton';
 import ProfileButton from '../buttons/ProfileButton/ProfileButton';
 
+import { removeTokenFromLocalStorage } from '../../utils/authUtils';
+
 const pages = ['Catalog', 'About Us'];
 
 const Header: React.FC = () => {
@@ -27,6 +29,7 @@ const Header: React.FC = () => {
 
   const handleSignOut = () => {
     setIsSignedIn(false);
+    removeTokenFromLocalStorage();
   };
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
