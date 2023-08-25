@@ -6,6 +6,8 @@ import DetailedProductNotFound from './DetailedProductNotFound';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './DetailedProduct.styles';
 import { IProductDisplayData, parsingData } from './services/parsingData';
+import ProductImage from '../ProductImage/ProductImage';
+import ProductSlider from '../ProductSlider/ProductSlider';
 
 interface DetailedProductProps {
   keyProduct: string | undefined;
@@ -20,12 +22,6 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
   >('');
   const imageViewRef = useRef<HTMLDivElement>(null);
   const [imageViewWidth, setImageViewWidth] = useState(0);
-
-  // useEffect(() => {
-  //   if (imageViewRef.current) {
-  //     setImageViewWidth(imageViewRef.current.offsetWidth);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,9 +50,22 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
     fetchData();
   }, [keyProduct, modal]);
 
-  const imageViewHeight = imageViewWidth * 0.75;
-  const stylesImageView = {
-    height: imageViewHeight,
+  const renderImageView = () => {
+    if (!productData) {
+      return null;
+    }
+
+    if (productData.images.length === 1) {
+      return (
+        <ProductImage url={productData.images[0].url} alt={productData.title} />
+      );
+    }
+    return (
+      <ProductSlider
+        images={productData.images}
+        keyProduct={productData.title}
+      />
+    );
   };
 
   if (productData === null) {
@@ -77,13 +86,7 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
           ]}
           ref={imageViewRef}
         >
-          {productData
-            ? productData.images.map((item) => (
-              <Box key={item.url} sx={styles.imageWrap}>
-                <img src={item.url} alt={keyProduct} style={styles.image} />
-              </Box>
-            ))
-            : ''}
+          {renderImageView()}
         </Box>
       </Grid>
       <Grid item sm={6} xs={12}>
