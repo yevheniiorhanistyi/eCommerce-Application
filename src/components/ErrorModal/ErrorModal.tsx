@@ -10,7 +10,7 @@ type ErrorModalProps = {
 };
 
 const ErrorModal = ({ open, content, onClose }: ErrorModalProps) => (
-  <Modal open={open} onClose={onClose} sx={styles.modal}>
+  <Modal open={open} onClose={onClose}>
     <Box sx={styles.box}>
       <Typography textAlign="center" variant="h4" component="h2">
         {content.title}
