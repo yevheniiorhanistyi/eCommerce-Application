@@ -6,6 +6,7 @@ import SignUp from '../pages/SignUp/SignUp';
 import Catalog from '../pages/Catalog/Catalog';
 import NotFound404 from '../pages/NotFound404/NotFound404';
 import PrimaryLayout from '../layouts/PrimaryLayout';
+import DetailedProductPage from '../pages/DetailedProductPage/DetailedProductPage';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignUp />,
+      },
+      {
+        path: '/product/:key',
+        element: <DetailedProductPage />,
       },
       {
         path: '/catalog',
