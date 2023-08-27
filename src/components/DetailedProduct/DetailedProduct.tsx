@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
-import getProduct from '../../services/product';
 import { useModal } from '../ModalProvider/ModalProvider';
 import DetailedProductNotFound from './DetailedProductNotFound';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
@@ -8,6 +7,7 @@ import styles from './DetailedProduct.styles';
 import { IProductDisplayData, parsingData } from './services/parsingData';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductSlider from '../ProductSlider/ProductSlider';
+import getProduct from '../../services/apiIntegration/product';
 
 interface DetailedProductProps {
   keyProduct: string | undefined;
@@ -48,7 +48,8 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
     };
 
     fetchData();
-  }, [keyProduct, modal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderImageView = () => {
     if (!productData) {
