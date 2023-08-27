@@ -32,7 +32,7 @@ import emailValidation from '../../validation/email.validation';
 import nameValidation from '../../validation/name.validation';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import confirmFiled from '../../validation/confirmFiled';
-import getCountries from '../../services/getCountries';
+import getCountries from '../../services/apiIntegration/getCountries';
 import createPostalCodeValidation from '../../validation/postalCode.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
 import {
@@ -40,10 +40,10 @@ import {
   ICountrie,
   ICustomer,
   ICustomerForm,
-  ISignUpFormProps } from '../../types/types';
-import { createCustomer } from '../../services/customers';
+} from '../../types/types';
+import { createCustomer } from '../../services/apiIntegration/customers';
 import birthDatelValidation from '../../validation/birthDate.validation';
-import { authenticateClient } from '../../services/authenticateClient';
+import { authenticateClient } from '../../services/authenticate/authenticateClient';
 
 const SignUpForm: React.FC<ISignUpFormProps> = ({
   onSignInSuccess,

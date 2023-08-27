@@ -8,8 +8,14 @@ import React, {
 } from 'react';
 import { IAuthContextType } from '../../types/types';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
+import { getAccessToken } from '../../services/authenticate/getAccessToken';
 
-const AuthContext = createContext<IAuthContextType | undefined>(undefined);
+interface AuthContextType {
+  isAuthenticated: boolean;
+  setAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -20,16 +26,22 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isAuthenticated, setAuthentication] = useState(false);
 
   useEffect(() => {
-    const accessToken = getTokenFromLocalStorage();
-    if (accessToken) setIsSignedIn(true);
-  }, []);
+    const { isAuthenticated: storedIsAuthenticated } = getTokenFromLocalStorage();
+    const fetchAccessToken = async () => {
+      const accessToken = await getAccessToken();
+      return accessToken;
+    };
+    const { token } = getTokenFromLocalStorage() || fetchAccessToken();
+
+    if (token && storedIsAuthenticated) setAuthentication(true);
+  }, [isAuthenticated]);
 
   const contextValue = useMemo(
-    () => ({ isSignedIn, setIsSignedIn }),
-    [isSignedIn],
+    () => ({ isAuthenticated, setAuthentication }),
+    [isAuthenticated],
   );
 
   return (
