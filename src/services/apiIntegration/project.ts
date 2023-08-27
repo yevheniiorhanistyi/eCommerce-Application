@@ -1,6 +1,6 @@
 import { Project } from '@commercetools/platform-sdk';
 import { apiRoot } from './ClientBuilder';
-import { ModalContextType } from '../components/ModalProvider/type';
+import { ModalContextType } from '../../components/ModalProvider/type';
 import constants from './constants';
 
 // eslint-disable-next-line import/prefer-default-export

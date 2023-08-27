@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { ModalContextType } from '../components/ModalProvider/type';
-import { checkEmailCustomer } from '../services/customers';
+import { checkEmailCustomer } from '../services/apiIntegration/customers';
 
 // A properly formatted email address
 const emailValidation = (

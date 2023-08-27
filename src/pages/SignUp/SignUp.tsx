@@ -8,16 +8,16 @@ import { useAuth } from '../../components/AuthProvider/AuthProvider';
 import styles from './SignUp.style';
 
 const SignUp: React.FC = () => {
-  const { isSignedIn, setIsSignedIn } = useAuth();
+  const { isAuthenticated, setAuthentication } = useAuth();
 
   const handleSignIn = () => {
-    setIsSignedIn(true);
+    setAuthentication(true);
     enqueueSnackbar('You have been successfully signed in!', {
       variant: 'success',
     });
   };
 
-  return isSignedIn ? (
+  return isAuthenticated ? (
     <Navigate to="/" />
   ) : (
     <Container maxWidth="md">
