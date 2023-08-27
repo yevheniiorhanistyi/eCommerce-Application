@@ -3,8 +3,7 @@ import { ModalContextType } from '../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
 import constants from './constants';
 
-// eslint-disable-next-line import/prefer-default-export
-export const getProduct = async (
+const getProduct = async (
   keyProduct: string,
   modal: ModalContextType,
 ): Promise<Product | null> => {
@@ -28,3 +27,5 @@ export const getProduct = async (
     return null;
   }
 };
+
+export default getProduct;
