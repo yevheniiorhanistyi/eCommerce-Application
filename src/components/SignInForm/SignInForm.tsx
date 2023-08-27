@@ -16,7 +16,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Formik, Form } from 'formik';
 import SignInSchema from './SignInSchema';
 
-import { authenticateClient } from '../../services/authenticateClient';
+import { authenticateClient } from '../../services/authenticate/authenticateClient';
 import { useModal } from '../ModalProvider/ModalProvider';
 
 import styles from './SignInForm.styles';

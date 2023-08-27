@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setTokenToLocalStorage } from '../utils/authUtils';
+import { setTokenToLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const baseUrl = import.meta.env.VITE_REACT_APP_AUTH_URL;
@@ -53,7 +53,7 @@ export const authenticateClient = async ({
   )
     .then((response) => {
       const { data } = response;
-      setTokenToLocalStorage(data.access_token);
+      setTokenToLocalStorage(data.access_token, true);
     })
     .catch((error) => {
       if (error.response) processResponseError(error.response);
