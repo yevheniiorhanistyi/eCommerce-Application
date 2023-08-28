@@ -1,5 +1,5 @@
 import { Product } from '@commercetools/platform-sdk';
-import { ModalContextType } from '../components/ModalProvider/type';
+import { ModalContextType } from '../../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
 import constants from './constants';
 
