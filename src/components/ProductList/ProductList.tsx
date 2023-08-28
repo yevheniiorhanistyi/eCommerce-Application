@@ -35,7 +35,8 @@ const ProductList: React.FC = () => {
     <Box sx={styles.productListBox}>
       {productList.map((product) => (
         <ProductItem
-          key={product.id}
+          key={product.key}
+          keyProduct={product.key}
           title={product.masterData.current.name['en-US']}
           description={product.masterData.current.description?.['en-US']}
           url={product.masterData.current.masterVariant.images[0].url}

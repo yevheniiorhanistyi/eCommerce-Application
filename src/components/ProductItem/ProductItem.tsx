@@ -8,12 +8,15 @@ import {
   CardActionArea,
   Box,
   Rating,
+  Link,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import { IPrice } from '../../types/productInterfaces';
 
 import styles from './ProductItem.styles';
 
 type ProductItemProps = {
+  keyProduct: string;
   title: string;
   description: string;
   url: string;
@@ -21,6 +24,7 @@ type ProductItemProps = {
 };
 
 export const ProductItem: React.FC<ProductItemProps> = ({
+  keyProduct,
   title,
   description,
   url,
@@ -39,30 +43,37 @@ export const ProductItem: React.FC<ProductItemProps> = ({
 
   return (
     <Card sx={styles.card}>
-      <CardActionArea sx={styles.cardActionArea}>
-        <Box sx={styles.innerBox}>
-          <CardMedia
-            component="img"
-            image={url}
-            alt={title}
-            sx={styles.cardMedia}
-          />
-        </Box>
-        <CardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            align="center"
-            sx={styles.typograohyTitle}
-          >
-            {title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" align="center">
-            {description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <Link
+        to={`/product/${keyProduct}`}
+        component={RouterLink}
+        underline="none"
+        color="inherit"
+      >
+        <CardActionArea sx={styles.cardActionArea}>
+          <Box sx={styles.innerBox}>
+            <CardMedia
+              component="img"
+              image={url}
+              alt={title}
+              sx={styles.cardMedia}
+            />
+          </Box>
+          <CardContent>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              align="center"
+              sx={styles.typograohyTitle}
+            >
+              {title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" align="center">
+              {description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Link>
       <CardActions sx={styles.cardActions}>
         <Typography
           align="center"
