@@ -3,11 +3,33 @@ import {
   CustomerDraft,
   CustomerPagedQueryResponse,
 } from '@commercetools/platform-sdk';
+import axios from 'axios';
 import { ModalContextType } from '../../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
 import constants from './constants';
-import { IAddress, ICustomer } from '../../types/types';
+import { IAddress, ICustomer, TGetCustomerData } from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';
+import { getTokenFromLocalStorage } from '../../utils/authUtils';
+
+const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
+const region = import.meta.env.VITE_REACT_APP_API_URL;
+
+export const getCustomerData = async (): Promise<TGetCustomerData> => {
+  try {
+    const { token } = getTokenFromLocalStorage();
+    const response = await axios.get(`${region}/${projectKey}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 export const getCustomers = async (
   modal: ModalContextType,

@@ -40,6 +40,7 @@ import {
   ICountrie,
   ICustomer,
   ICustomerForm,
+  ISignUpFormProps,
 } from '../../types/types';
 import { createCustomer } from '../../services/apiIntegration/customers';
 import birthDatelValidation from '../../validation/birthDate.validation';

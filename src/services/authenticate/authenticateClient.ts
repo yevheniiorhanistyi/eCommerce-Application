@@ -20,7 +20,7 @@ interface ITokenResponse {
   token_type: string;
 }
 
-const processResponseError = (response: Response) => {
+export const processResponseError = (response: Response) => {
   if (response.status === 400) {
     throw new Error('Incorrect email or password');
   } else {

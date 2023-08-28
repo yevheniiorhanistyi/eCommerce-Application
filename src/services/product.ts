@@ -1,7 +1,7 @@
 import { Product } from '@commercetools/platform-sdk';
 import { ModalContextType } from '../components/ModalProvider/type';
-import { apiRoot } from './ClientBuilder';
-import constants from './constants';
+import { apiRoot } from './apiIntegration/ClientBuilder';
+import constants from './apiIntegration/constants';
 
 const getProduct = async (
   keyProduct: string,

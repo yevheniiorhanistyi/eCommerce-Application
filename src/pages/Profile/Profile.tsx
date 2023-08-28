@@ -1,9 +1,12 @@
-import { Typography } from '@mui/material';
+import { Container } from '@mui/material';
+import CustomerInfo from '../../components/CustomerInfo/CustomerInfo';
 
-const Main: React.FC = () => (
-  <Typography variant="h3" align="center">
-    Profile page
-  </Typography>
+import styles from './Profile.styles';
+
+const Page: React.FC = () => (
+  <Container maxWidth="md" sx={styles.outerBox}>
+    <CustomerInfo />
+  </Container>
 );
 
-export default Main;
+export default Page;

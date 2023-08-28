@@ -73,3 +73,37 @@ export interface ISignUpFormProps {
 export interface ISO3166Alpha2 {
   [key: string]: string;
 }
+
+export type TGetCustomerData = {
+  id: string;
+  version: number;
+  createdAt: string;
+  lastModifiedAt: string;
+  lastModifiedBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+  };
+  createdBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+  };
+  dateOfBirth: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  addresses: CustomerAddress[];
+  shippingAddressIds: string[];
+  billingAddressIds: string[];
+  isEmailVerified: boolean;
+  stores: string[];
+  authenticationMode: string;
+};
+
+export type CustomerAddress = {
+  id: string;
+  streetName: string;
+  postalCode: string;
+  city: string;
+  country: string;
+};

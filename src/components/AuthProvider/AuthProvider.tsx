@@ -6,7 +6,6 @@ import React, {
   useMemo,
   ReactNode,
 } from 'react';
-import { IAuthContextType } from '../../types/types';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
 import { getAccessToken } from '../../services/authenticate/getAccessToken';
 
