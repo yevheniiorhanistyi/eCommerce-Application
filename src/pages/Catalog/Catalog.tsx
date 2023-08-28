@@ -1,9 +1,9 @@
 import { Container } from '@mui/material';
-import SliderSizes from '../../components/PriceRange/PriceRange';
+import ProductList from '../../components/ProductList/ProductList';
 
 const Catalog: React.FC = () => (
-  <Container component="main" maxWidth="md">
-    <SliderSizes />
+  <Container component="main" maxWidth="lg">
+    <ProductList />
   </Container>
 );
 export default Catalog;
