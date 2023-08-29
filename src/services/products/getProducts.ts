@@ -8,7 +8,8 @@ const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const getProducts = async () => {
   try {
-    const { token } = getTokenFromLocalStorage() || (await getAnonymousToken());
+    let { token } = getTokenFromLocalStorage();
+    if (!token) token = (await getAnonymousToken()).token;
     const response = await axios.get<IProductResponse>(
       `${baseUrl}/${projectKey}/products`,
       {
