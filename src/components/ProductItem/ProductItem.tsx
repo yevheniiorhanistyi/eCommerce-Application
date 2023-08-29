@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Card,
   CardContent,
@@ -29,7 +28,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
   description,
   url,
   prices,
-}) => {
+}: ProductItemProps) => {
   const fractionDigits = 2;
   const discountedPrice = prices.discounted?.value
     ? (prices.discounted.value.centAmount / 10 ** fractionDigits).toFixed(
