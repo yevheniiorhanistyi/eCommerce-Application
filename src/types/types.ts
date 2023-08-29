@@ -74,7 +74,16 @@ export interface ISO3166Alpha2 {
   [key: string]: string;
 }
 
+export type CustomerAddress = {
+  id: string;
+  streetName: string;
+  postalCode: string;
+  city: string;
+  country: string;
+};
+
 export type TGetCustomerData = {
+  adresses: CustomerAddress[];
   id: string;
   version: number;
   createdAt: string;
@@ -98,12 +107,6 @@ export type TGetCustomerData = {
   isEmailVerified: boolean;
   stores: string[];
   authenticationMode: string;
-};
-
-export type CustomerAddress = {
-  id: string;
-  streetName: string;
-  postalCode: string;
-  city: string;
-  country: string;
+  defaultBillingAddressId: string;
+  defaultShippingAddressId: string;
 };
