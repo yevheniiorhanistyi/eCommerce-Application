@@ -7,7 +7,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
-import { getAccessToken } from '../../services/authenticate/getAccessToken';
+import { getAnonymousToken } from '../../services/authenticate/getAnonymousToken';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -30,7 +30,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const { isAuthenticated: storedIsAuthenticated } = getTokenFromLocalStorage();
     const fetchAccessToken = async () => {
-      const accessToken = await getAccessToken();
+      const accessToken = await getAnonymousToken();
       return accessToken;
     };
     const { token } = getTokenFromLocalStorage() || fetchAccessToken();

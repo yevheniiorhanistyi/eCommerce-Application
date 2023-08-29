@@ -1,20 +1,20 @@
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import { useState, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
+
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  MenuItem,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
 
-import { Link } from 'react-router-dom';
-import { useAuth } from '../AuthProvider/AuthProvider';
-
-import styles from './Header.styles';
 import SignInButton from '../buttons/SignInButton/SignInButton';
 import SignUpButton from '../buttons/SignUpButton/SignUpButton';
 import SignOutButton from '../buttons/SignOutButton/SignOutButton';
@@ -22,21 +22,24 @@ import ProfileButton from '../buttons/ProfileButton/ProfileButton';
 
 import { removeTokenFromLocalStorage } from '../../utils/authUtils';
 
-const pages = ['Catalog', 'About Us'];
+import styles from './Header.styles';
+import { useAuth } from '../AuthProvider/AuthProvider';
 
 const Header: React.FC = () => {
   const { isAuthenticated, setAuthentication } = useAuth();
+  const pages = [
+    { title: 'Catalog', route: '/catalog' },
+    { title: 'About Us', route: '/' },
+  ];
 
   const handleSignOut = () => {
     setAuthentication(false);
     removeTokenFromLocalStorage();
   };
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
@@ -83,8 +86,10 @@ const Header: React.FC = () => {
               sx={styles.menubar}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                  <Link style={{ textDecoration: 'none' }} to={page.route}>
+                    <Typography textAlign="center">{page.title}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -98,11 +103,13 @@ const Header: React.FC = () => {
           <Box sx={styles.navMenuBox}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.title}
+                component={Link}
+                to={page.route}
                 onClick={handleCloseNavMenu}
                 sx={styles.closeNavMenu}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
