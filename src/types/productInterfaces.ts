@@ -19,23 +19,20 @@ interface IImage {
   url: string;
 }
 
+interface IPriceValue {
+  centAmount: number;
+  currencyCode: string;
+  fractionDigits: number;
+  type: string;
+}
+
 export interface IPrice {
   id: string;
   discounted: {
     discount: { id: string; typeId: string };
-    value: {
-      centAmount: number;
-      currencyCode: string;
-      fractionDigits: number;
-      type: string;
-    };
+    value: IPriceValue;
   };
-  value: {
-    centAmount: number;
-    currencyCode: string;
-    fractionDigits: number;
-    type: string;
-  };
+  value: IPriceValue;
 }
 
 export interface IProduct {
