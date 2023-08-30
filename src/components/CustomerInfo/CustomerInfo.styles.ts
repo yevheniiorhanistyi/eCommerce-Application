@@ -1,4 +1,9 @@
 const styles = {
+  mainContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: '16px',
+    padding: '25px',
+  },
   mainCustomerInfo: {
     mt: 1,
     mb: 2,
@@ -12,7 +17,9 @@ const styles = {
     },
   },
   addressItem: {
-
+    borderBottom: 'solid',
+    borderBottomWidth: '1px',
+    borderBottomColor: '#ebedf0',
     '@media (max-width: 650px)': {
       flexDirection: 'column',
       alignItems: 'baseline',

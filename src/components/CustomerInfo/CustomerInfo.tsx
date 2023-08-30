@@ -48,7 +48,7 @@ const CustomerInfo: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <Container sx={styles.mainContainer}>
       <Typography variant="h2">
         Nice to see you,&#x20;
         {customerData?.firstName}
@@ -89,7 +89,7 @@ const CustomerInfo: React.FC = () => {
           <ListItemText primaryTypographyProps={{ style: styles.addressItemDataLabel }} primary="Postal code" secondary={address.postalCode} sx={styles.addressItemData} />
         </ListItem>
       ))}
-    </>
+    </Container>
   );
 };
 
