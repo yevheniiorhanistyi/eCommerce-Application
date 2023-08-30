@@ -7,14 +7,14 @@ import axios from 'axios';
 import { ModalContextType } from '../../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
 import constants from './constants';
-import { IAddress, ICustomer, TGetCustomerData } from '../../types/types';
+import { ICustomer, IGetCustomerData, ICustomerAddressBase } from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
 
-export const getCustomerData = async (): Promise<TGetCustomerData> => {
+export const getCustomerData = async (): Promise<IGetCustomerData> => {
   try {
     const { token } = getTokenFromLocalStorage();
     const response = await axios.get(`${region}/${projectKey}/me`, {
@@ -72,12 +72,12 @@ export const checkEmailCustomer = async (
   }
 };
 
-export const createAddress = (addressData: IAddress): BaseAddress => {
+export const createAddress = (addressData: ICustomerAddressBase): BaseAddress => {
   const addrress = {
     country: addressData.country,
     postalCode: addressData.postalCode,
     city: addressData.city,
-    streetName: addressData.street,
+    streetName: addressData.streetName,
   };
   return addrress;
 };
@@ -104,7 +104,7 @@ export const createCustomerDraft = (customerData: ICustomer): CustomerDraft => {
     password: customerData.password,
     firstName: customerData.firstName,
     lastName: customerData.lastName,
-    dateOfBirth: formatDateToYYYYMMDD(customerData.birthDate),
+    dateOfBirth: formatDateToYYYYMMDD(customerData.dateOfBirth),
     addresses,
     shippingAddresses: [0],
     defaultShippingAddress: customerData.isSetDefaultShippingAddress

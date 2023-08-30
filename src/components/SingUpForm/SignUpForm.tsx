@@ -36,14 +36,14 @@ import getCountries from '../../services/apiIntegration/getCountries';
 import createPostalCodeValidation from '../../validation/postalCode.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
 import {
-  IAddress,
-  ICountrie,
+  ICustomerAddressBase,
+  ICountry,
   ICustomer,
   ICustomerForm,
   ISignUpFormProps,
 } from '../../types/types';
 import { createCustomer } from '../../services/apiIntegration/customers';
-import birthDatelValidation from '../../validation/birthDate.validation';
+import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
 import { authenticateClient } from '../../services/authenticate/authenticateClient';
 
 const SignUpForm: React.FC<ISignUpFormProps> = ({
@@ -60,7 +60,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
     addressShipping: '',
     addressBilling: '',
   });
-  const [countries, setCountries] = useState<ICountrie[]>([]);
+  const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
   const [isVisibleAddressBilling, setIsVisibleAddressBilling] = useState(false);
 
@@ -109,7 +109,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
   ) => Yup.object().shape({
     firstName: nameValidation.required('First name is required'),
     lastName: nameValidation.required('Last name is required'),
-    birthDate: birthDatelValidation,
+    dateOfBirth: dateOfBirthlValidation,
     email: emailValidation(modal),
     password: passwordValidation,
     confirmPassword: confirmFiled('password', 'Passwords must match'),
@@ -121,8 +121,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
     ),
   });
 
-  const defaultAddressValues: IAddress = {
-    street: '',
+  const defaultAddressValues: ICustomerAddressBase = {
+    streetName: '',
     city: '',
     postalCode: '',
     country: '',
@@ -134,7 +134,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
     confirmPassword: '',
     firstName: '',
     lastName: '',
-    birthDate: null,
+    dateOfBirth: null,
     addressShipping: { ...defaultAddressValues },
     addressBilling: { ...defaultAddressValues },
     isSetDefaultShippingAddress: false,
@@ -254,23 +254,23 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Date of birth"
-              value={formik.values.birthDate}
+              value={formik.values.dateOfBirth}
               onChange={(value) => {
                 formik
-                  .setFieldValue('birthDate', value ?? new Date(), false)
+                  .setFieldValue('dateOfBirth', value ?? new Date(), false)
                   .then(() => {
-                    formik.validateField('birthDate');
-                    formik.touched.birthDate = true;
+                    formik.validateField('dateOfBirth');
+                    formik.touched.dateOfBirth = true;
                   });
               }}
-              sx={styles.birthDate}
+              sx={styles.dateOfBirth}
               slotProps={{
                 textField: {
                   error:
-                    formik.touched.birthDate
-                    && Boolean(formik.errors.birthDate),
+                    formik.touched.dateOfBirth
+                    && Boolean(formik.errors.dateOfBirth),
                   helperText:
-                    formik.touched.birthDate && formik.errors.birthDate,
+                    formik.touched.dateOfBirth && formik.errors.dateOfBirth,
                 },
               }}
             />
@@ -379,18 +379,18 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
             fullWidth
             name="addressShipping.street"
             label="Street"
-            value={formik.values.addressShipping.street}
+            value={formik.values.addressShipping.streetName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
               formik.errors.addressShipping
-              && formik.touched.addressShipping?.street
-              && Boolean(formik.errors.addressShipping.street)
+              && formik.touched.addressShipping?.streetName
+              && Boolean(formik.errors.addressShipping.streetName)
             }
             helperText={
               formik.errors.addressShipping
-              && formik.touched.addressShipping?.street
-              && formik.errors.addressShipping.street
+              && formik.touched.addressShipping?.streetName
+              && formik.errors.addressShipping.streetName
             }
             required
           />
@@ -439,8 +439,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
               required
             >
               {countries.map((item) => (
-                <MenuItem key={item.codeCountrie} value={item.codeCountrie}>
-                  {item.nameCountrie}
+                <MenuItem key={item.codeCountry} value={item.codeCountry}>
+                  {item.nameCountry}
                 </MenuItem>
               ))}
             </Select>
@@ -500,18 +500,18 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
                 fullWidth
                 name="addressBilling.street"
                 label="Street"
-                value={formik.values.addressBilling.street}
+                value={formik.values.addressBilling.streetName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
                   formik.errors.addressBilling
-                  && formik.touched.addressBilling?.street
-                  && Boolean(formik.errors.addressBilling.street)
+                  && formik.touched.addressBilling?.streetName
+                  && Boolean(formik.errors.addressBilling.streetName)
                 }
                 helperText={
                   formik.errors.addressBilling
-                  && formik.touched.addressBilling?.street
-                  && formik.errors.addressBilling.street
+                  && formik.touched.addressBilling?.streetName
+                  && formik.errors.addressBilling.streetName
                 }
                 required
               />
@@ -560,8 +560,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
                   required
                 >
                   {countries.map((item) => (
-                    <MenuItem key={item.codeCountrie} value={item.codeCountrie}>
-                      {item.nameCountrie}
+                    <MenuItem key={item.codeCountry} value={item.codeCountry}>
+                      {item.nameCountry}
                     </MenuItem>
                   ))}
                 </Select>

@@ -1,35 +1,64 @@
 import { ReactNode } from 'react';
 
-export interface IAddress {
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
 export interface ICustomerBase {
   email: string;
   password: string;
   confirmPassword: string;
   firstName: string;
   lastName: string;
-  addressShipping: IAddress;
-  addressBilling: IAddress;
+  addressShipping: ICustomerAddressBase;
+  addressBilling: ICustomerAddressBase;
   isSetDefaultShippingAddress: boolean;
   isSetDefaultBillingAddress: boolean;
   isTwoAddresses: boolean;
 }
 
+export interface ICustomerAddressBase {
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
+
+export interface IGetCustomerAddress extends ICustomerAddressBase {
+  id: string;
+}
+
+export interface IGetCustomerData extends ICustomerBase {
+  id: string;
+  version: number;
+  createdAt: string;
+  lastModifiedAt: string;
+  lastModifiedBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+  };
+  createdBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+  };
+  dateOfBirth: string;
+  addresses: IGetCustomerAddress[];
+  shippingAddressIds: string[];
+  billingAddressIds: string[];
+  isEmailVerified: boolean;
+  stores: string[];
+  authenticationMode: string;
+  defaultBillingAddressId: string;
+  defaultShippingAddressId: string;
+}
+
 export interface ICustomerForm extends ICustomerBase {
-  birthDate: Date | null;
+  dateOfBirth: Date | null;
 }
 
 export interface ICustomer extends ICustomerBase {
-  birthDate: Date;
+  dateOfBirth: Date;
 }
 
-export interface ICountrie {
-  codeCountrie: string;
-  nameCountrie: string;
+export interface ICountry {
+  codeCountry: string;
+  nameCountry: string;
 }
 
 export interface IAuthenticateCustomerProps {
@@ -69,57 +98,9 @@ export interface ISO3166Alpha2 {
   [key: string]: string;
 }
 
-export type TCustomerAddress = {
-  id: string;
-  streetName: string;
-  postalCode: string;
-  city: string;
-  country: string;
-};
-
-export type TGetCustomerData = {
-  adresses: TCustomerAddress[];
-  id: string;
-  version: number;
-  createdAt: string;
-  lastModifiedAt: string;
-  lastModifiedBy: {
-    clientId: string;
-    isPlatformClient: boolean;
-  };
-  createdBy: {
-    clientId: string;
-    isPlatformClient: boolean;
-  };
-  dateOfBirth: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  addresses: TCustomerAddress[];
-  shippingAddressIds: string[];
-  billingAddressIds: string[];
-  isEmailVerified: boolean;
-  stores: string[];
-  authenticationMode: string;
-  defaultBillingAddressId: string;
-  defaultShippingAddressId: string;
-};
-
 export interface IAnonymousTokenResponse {
   token: string;
   isAuthenticated: boolean;
-}
-
-export interface ICustomerData {
-  addresses: Array<TCustomerAddress>;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  shippingAddressIds: string[];
-  billingAddressIds: string[];
-  defaultBillingAddressId: string;
-  defaultShippingAddressId: string;
 }
 
 export interface IAuthContextType {

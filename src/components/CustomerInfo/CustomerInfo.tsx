@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, ListItem, ListItemText, Container } from '@mui/material';
 import { getCustomerData } from '../../services/apiIntegration/customers';
-import { TCustomerAddress, ICustomerData } from '../../types/types';
+import { IGetCustomerAddress, IGetCustomerData } from '../../types/types';
 
 import styles from './CustomerInfo.styles';
 
 const CustomerInfo: React.FC = () => {
-  const [customerData, setCustomerData] = useState<ICustomerData>();
-  const [shippingAddresses, setShippingAddresses] = useState<TCustomerAddress[]>(
+  const [customerData, setCustomerData] = useState<IGetCustomerData>();
+  const [shippingAddresses, setShippingAddresses] = useState<IGetCustomerAddress[]>(
     [],
   );
-  const [billingAddresses, setBillingAddresses] = useState<TCustomerAddress[]>(
+  const [billingAddresses, setBillingAddresses] = useState<IGetCustomerAddress[]>(
     [],
   );
 
@@ -19,8 +19,8 @@ const CustomerInfo: React.FC = () => {
       const customer = await getCustomerData();
       setCustomerData(customer);
 
-      const customerBillingAddresses: TCustomerAddress[] = [];
-      const customerShippingAddresses: TCustomerAddress[] = [];
+      const customerBillingAddresses: IGetCustomerAddress[] = [];
+      const customerShippingAddresses: IGetCustomerAddress[] = [];
 
       customer.addresses?.forEach((address) => {
         if (customer.billingAddressIds.includes(address.id)) {
