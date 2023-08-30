@@ -45,11 +45,6 @@ export interface ITokenResponse {
   token_type: string;
 }
 
-export interface IAuthContextType {
-  isSignedIn: boolean;
-  setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 export interface ISignOutButtonProps {
   onSignOutSuccess: () => void;
 }
@@ -74,7 +69,7 @@ export interface ISO3166Alpha2 {
   [key: string]: string;
 }
 
-export type CustomerAddress = {
+export type TCustomerAddress = {
   id: string;
   streetName: string;
   postalCode: string;
@@ -83,7 +78,7 @@ export type CustomerAddress = {
 };
 
 export type TGetCustomerData = {
-  adresses: CustomerAddress[];
+  adresses: TCustomerAddress[];
   id: string;
   version: number;
   createdAt: string;
@@ -101,7 +96,7 @@ export type TGetCustomerData = {
   firstName: string;
   lastName: string;
   password: string;
-  addresses: CustomerAddress[];
+  addresses: TCustomerAddress[];
   shippingAddressIds: string[];
   billingAddressIds: string[];
   isEmailVerified: boolean;
@@ -114,4 +109,48 @@ export type TGetCustomerData = {
 export interface IAnonymousTokenResponse {
   token: string;
   isAuthenticated: boolean;
+}
+
+export interface ICustomerData {
+  addresses: Array<TCustomerAddress>;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  shippingAddressIds: string[];
+  billingAddressIds: string[];
+  defaultBillingAddressId: string;
+  defaultShippingAddressId: string;
+}
+
+export interface IAuthContextType {
+  isAuthenticated: boolean;
+  setAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface IDetailedProductProps {
+  keyProduct: string | undefined;
+}
+
+export interface IImage {
+  url: string;
+  dimensions: {
+    w: number;
+    h: number;
+  };
+}
+
+export interface IProductDisplayData {
+  title: string;
+  description: string;
+  images: IImage[];
+}
+
+export interface IProductImageProps {
+  url: string;
+  alt: string;
+}
+
+export interface IProductSliderProps {
+  images: IImage[];
+  keyProduct: string;
 }

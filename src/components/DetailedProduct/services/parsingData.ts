@@ -1,21 +1,8 @@
 import { Product } from '@commercetools/platform-sdk';
+import { IProductDisplayData } from '../../../types/types';
 import languageCode from '../../../utils/languageCode';
 
-export interface IImage {
-  url: string;
-  dimensions: {
-    w: number;
-    h: number;
-  };
-}
-
-export interface IProductDisplayData {
-  title: string;
-  description: string;
-  images: IImage[];
-}
-
-export const parsingData = (
+const parsingData = (
   data: Product | null,
 ): IProductDisplayData | null => {
   if (data) {
@@ -29,3 +16,5 @@ export const parsingData = (
   }
   return null;
 };
+
+export default parsingData;

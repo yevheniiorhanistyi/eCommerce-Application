@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, ListItem, ListItemText, Container } from '@mui/material';
 import { getCustomerData } from '../../services/apiIntegration/customers';
-import { CustomerAddress } from '../../types/types';
+import { TCustomerAddress, ICustomerData } from '../../types/types';
 
 import styles from './CustomerInfo.styles';
 
-interface CustomerData {
-  addresses: Array<CustomerAddress>;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  shippingAddressIds: string[];
-  billingAddressIds: string[];
-  defaultBillingAddressId: string;
-  defaultShippingAddressId: string;
-}
-
 const CustomerInfo: React.FC = () => {
-  const [customerData, setCustomerData] = useState<CustomerData>();
-  const [shippingAddresses, setShippingAddresses] = useState<CustomerAddress[]>(
+  const [customerData, setCustomerData] = useState<ICustomerData>();
+  const [shippingAddresses, setShippingAddresses] = useState<TCustomerAddress[]>(
     [],
   );
-  const [billingAddresses, setBillingAddresses] = useState<CustomerAddress[]>(
+  const [billingAddresses, setBillingAddresses] = useState<TCustomerAddress[]>(
     [],
   );
 
@@ -30,8 +19,8 @@ const CustomerInfo: React.FC = () => {
       const customer = await getCustomerData();
       setCustomerData(customer);
 
-      const customerBillingAddresses: CustomerAddress[] = [];
-      const customerShippingAddresses: CustomerAddress[] = [];
+      const customerBillingAddresses: TCustomerAddress[] = [];
+      const customerShippingAddresses: TCustomerAddress[] = [];
 
       customer.addresses?.forEach((address) => {
         if (customer.billingAddressIds.includes(address.id)) {
