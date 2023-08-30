@@ -1,5 +1,5 @@
 const styles = {
-  mainContainer: {
+  innerContainer: {
     backgroundColor: '#ffffff',
     borderRadius: '16px',
     padding: '25px',

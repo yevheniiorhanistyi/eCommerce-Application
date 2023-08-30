@@ -37,7 +37,7 @@ const CustomerInfo: React.FC = () => {
   }, []);
 
   return (
-    <Container sx={styles.mainContainer}>
+    <Container sx={styles.innerContainer}>
       <Typography variant="h2">
         Nice to see you,&#x20;
         {customerData?.firstName}
