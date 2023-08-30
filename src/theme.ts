@@ -31,6 +31,13 @@ const theme = createTheme({
       textAlign: 'center',
       marginBottom: '0.35em',
     },
+    caption: {
+      fontSize: 'inherit',
+      fontWeight: 700,
+      lineHeight: 1.167,
+      textTransform: 'uppercase',
+      marginBottom: '0.35em',
+    },
   },
   components: {
     MuiButton: {
