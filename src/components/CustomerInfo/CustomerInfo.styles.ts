@@ -17,9 +17,7 @@ const styles = {
     },
   },
   addressItem: {
-    borderBottom: 'solid',
-    borderBottomWidth: '1px',
-    borderBottomColor: '#ebedf0',
+    borderBottom: '1px solid #ebedf0',
     '@media (max-width: 650px)': {
       flexDirection: 'column',
       alignItems: 'baseline',
