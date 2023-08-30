@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useModal } from '../ModalProvider/ModalProvider';
 import DetailedProductNotFound from './DetailedProductNotFound';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
@@ -7,6 +8,7 @@ import styles from './DetailedProduct.styles';
 import { IProductDisplayData, parsingData } from './services/parsingData';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductSlider from '../ProductSlider/ProductSlider';
+import PriceProduct from '../PriceProduct/PriceProduct';
 import getProduct from '../../services/apiIntegration/product';
 
 interface DetailedProductProps {
@@ -36,7 +38,8 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageViewRef.current]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,22 +54,11 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderImageView = () => {
-    if (!productData) {
-      return null;
+  const renderImageView = (data: IProductDisplayData) => {
+    if (data.images.length === 1) {
+      return <ProductImage url={data.images[0].url} alt={data.title} />;
     }
-
-    if (productData.images.length === 1) {
-      return (
-        <ProductImage url={productData.images[0].url} alt={productData.title} />
-      );
-    }
-    return (
-      <ProductSlider
-        images={productData.images}
-        keyProduct={productData.title}
-      />
-    );
+    return <ProductSlider images={data.images} keyProduct={data.title} />;
   };
 
   if (productData === null) {
@@ -74,6 +66,9 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
   }
   if (keyProduct === undefined) {
     return <DetailedProductNotFound />;
+  }
+  if (productData === '') {
+    return null;
   }
   return (
     <Grid container spacing={2}>
@@ -87,22 +82,28 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
           ]}
           ref={imageViewRef}
         >
-          {renderImageView()}
+          {renderImageView(productData)}
         </Box>
       </Grid>
       <Grid item sm={6} xs={12}>
-        <Box>
+        <Box sx={styles.tittleBlock}>
           <Typography variant="h2" sx={styles.title}>
-            {productData ? productData.title : ''}
+            {productData.title}
           </Typography>
+          <PriceProduct productData={productData} />
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddShoppingCartIcon />}
+          >
+            Buy
+          </Button>
         </Box>
       </Grid>
       <Grid item sm={12} xs={12}>
         <Box>
           <CenteredDivider caption="Description" />
-          <Typography variant="body2">
-            {productData ? productData.description : ''}
-          </Typography>
+          <Typography variant="body2">{productData.description}</Typography>
         </Box>
       </Grid>
     </Grid>
