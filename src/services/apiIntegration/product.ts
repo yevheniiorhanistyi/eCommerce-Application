@@ -14,7 +14,6 @@ const getProduct = async (
       .get()
       .execute();
     if (responseProduct.statusCode === 200) {
-      console.log('responseProduct.body', responseProduct.body);
       return responseProduct.body;
     }
     return null;
