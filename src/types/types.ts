@@ -135,3 +135,8 @@ export interface IProductSliderProps {
   images: IImage[];
   keyProduct: string;
 }
+
+export interface ICustomerAddressProps {
+  addresses: IGetCustomerAddress[];
+  defaultAddressId: string | undefined;
+}

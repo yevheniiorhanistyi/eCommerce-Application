@@ -16,30 +16,14 @@ const styles = {
       justifyContent: 'center',
     },
   },
-  addressItem: {
-    borderBottom: '1px solid #ebedf0',
+  addressesTitle: {
     '@media (max-width: 650px)': {
-      flexDirection: 'column',
-      alignItems: 'baseline',
-    },
-  },
-  addressItemData: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '20%',
-
-    '@media (max-width: 650px)': {
-      flexDirection: 'row',
+      textAlign: 'center',
     },
   },
   addressItemDataLabel: {
     minWidth: '90px',
     marginRight: '10px',
-  },
-  addressesTitle: {
-    '@media (max-width: 650px)': {
-      textAlign: 'center',
-    },
   },
 };
 
