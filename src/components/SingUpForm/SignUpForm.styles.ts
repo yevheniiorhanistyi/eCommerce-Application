@@ -2,7 +2,7 @@ const styles = {
   contanierGrid: {
     marginBottom: 2,
   },
-  birthDate: {
+  dateOfBirth: {
     width: '100%',
   },
   helperText: {

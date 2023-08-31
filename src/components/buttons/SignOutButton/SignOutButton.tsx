@@ -3,14 +3,11 @@ import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import styles from './SignOutButton.styles';
+import { ISignOutButtonProps } from '../../../types/types';
 
-interface SignOutButtonProps {
-  onSignOutSuccess: () => void;
-}
-
-const SignInButton: React.FC<SignOutButtonProps> = ({
+const SignInButton: React.FC<ISignOutButtonProps> = ({
   onSignOutSuccess,
-}: SignOutButtonProps) => (
+}: ISignOutButtonProps) => (
   <Link to="/" style={{ textDecoration: 'none' }}>
     <Button
       startIcon={(
