@@ -7,7 +7,11 @@ import axios from 'axios';
 import { ModalContextType } from '../../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
 import constants from './constants';
-import { ICustomer, IGetCustomerData, ICustomerAddressBase } from '../../types/types';
+import {
+  ICustomer,
+  IGetCustomerData,
+  ICustomerAddressBase,
+} from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
 
@@ -72,7 +76,9 @@ export const checkEmailCustomer = async (
   }
 };
 
-export const createAddress = (addressData: ICustomerAddressBase): BaseAddress => {
+export const createAddress = (
+  addressData: ICustomerAddressBase,
+): BaseAddress => {
   const addrress = {
     country: addressData.country,
     postalCode: addressData.postalCode,

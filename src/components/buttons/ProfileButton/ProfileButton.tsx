@@ -8,11 +8,7 @@ import styles from './ProfileButton.styles';
 const ProfileButton: React.FC = () => (
   <Link to="/profile" style={{ textDecoration: 'none' }}>
     <Button
-      startIcon={(
-        <AccountCircleIcon
-          sx={styles.loginIcon}
-        />
-)}
+      startIcon={<AccountCircleIcon sx={styles.loginIcon} />}
       variant="text"
       sx={styles.button}
     >

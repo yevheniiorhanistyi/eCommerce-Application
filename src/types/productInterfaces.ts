@@ -19,7 +19,7 @@ interface IImage {
   url: string;
 }
 
-interface IPriceValue {
+export interface IPriceValue {
   centAmount: number;
   currencyCode: string;
   fractionDigits: number;

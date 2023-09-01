@@ -10,11 +10,7 @@ const SignInButton: React.FC<ISignOutButtonProps> = ({
 }: ISignOutButtonProps) => (
   <Link to="/" style={{ textDecoration: 'none' }}>
     <Button
-      startIcon={(
-        <LogoutIcon
-          sx={styles.logoutIcon}
-        />
-)}
+      startIcon={<LogoutIcon sx={styles.logoutIcon} />}
       variant="text"
       sx={styles.button}
       onClick={onSignOutSuccess}

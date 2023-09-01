@@ -14,11 +14,7 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
         <ListItemText
           primaryTypographyProps={{ style: styles.addressItemDataLabel }}
           primary={index + 1}
-          secondary={
-              defaultAddressId === address.id
-                ? 'default'
-                : ''
-            }
+          secondary={defaultAddressId === address.id ? 'default' : ''}
           sx={styles.addressItemData}
         />
         <ListItemText

@@ -1,6 +1,11 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  palette: {
+    accent: {
+      main: '#d32f2f',
+    },
+  },
   typography: {
     fontFamily: [
       'Urbanist',
@@ -29,6 +34,13 @@ const theme = createTheme({
       lineHeight: 1.167,
       textTransform: 'uppercase',
       textAlign: 'center',
+      marginBottom: '0.35em',
+    },
+    caption: {
+      fontSize: 'inherit',
+      fontWeight: 700,
+      lineHeight: 1.167,
+      textTransform: 'uppercase',
       marginBottom: '0.35em',
     },
   },

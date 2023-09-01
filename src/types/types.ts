@@ -124,6 +124,8 @@ export interface IProductDisplayData {
   title: string;
   description: string;
   images: IImage[];
+  price: string;
+  discountPrice?: string;
 }
 
 export interface IProductImageProps {
