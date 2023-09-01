@@ -8,13 +8,9 @@ import React, {
 } from 'react';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
 import { getAnonymousToken } from '../../services/authenticate/getAnonymousToken';
+import { IAuthContextType } from '../../types/types';
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-  setAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<IAuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

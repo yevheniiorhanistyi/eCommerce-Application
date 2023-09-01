@@ -1,18 +1,13 @@
 import Carousel from 'react-material-ui-carousel';
-import { IImage } from '../DetailedProduct/services/parsingData';
 import ProductImage from '../ProductImage/ProductImage';
+import { IProductSliderProps } from '../../types/types';
 
 import './_product_slider.scss';
 
-interface ProductSliderProps {
-  images: IImage[];
-  keyProduct: string;
-}
-
-const ProductSlider: React.FC<ProductSliderProps> = ({
+const ProductSlider: React.FC<IProductSliderProps> = ({
   images,
   keyProduct,
-}: ProductSliderProps) => (
+}: IProductSliderProps) => (
   <Carousel
     autoPlay={false}
     animation="slide"

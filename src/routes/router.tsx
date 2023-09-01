@@ -7,6 +7,7 @@ import Catalog from '../pages/Catalog/Catalog';
 import NotFound404 from '../pages/NotFound404/NotFound404';
 import PrimaryLayout from '../layouts/PrimaryLayout';
 import DetailedProductPage from '../pages/DetailedProductPage/DetailedProductPage';
+import Profile from '../pages/Profile/Profile';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/catalog',
         element: <Catalog />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
       },
       {
         path: '*',

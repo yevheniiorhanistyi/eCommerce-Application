@@ -1,14 +1,11 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { ModalContentType, ModalContextType } from './type';
 import ErrorModal from '../ErrorModal/ErrorModal';
-
-interface ModalProviderProps {
-  children: ReactNode;
-}
+import { IModalProviderProps } from '../../types/types';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-export const ModalProvider = ({ children }: ModalProviderProps) => {
+export const ModalProvider = ({ children }: IModalProviderProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
     title: '',

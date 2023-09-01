@@ -5,19 +5,16 @@ import { useModal } from '../ModalProvider/ModalProvider';
 import DetailedProductNotFound from './DetailedProductNotFound';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './DetailedProduct.styles';
-import { IProductDisplayData, parsingData } from './services/parsingData';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductSlider from '../ProductSlider/ProductSlider';
 import PriceProduct from '../PriceProduct/PriceProduct';
 import getProduct from '../../services/apiIntegration/product';
+import { IDetailedProductProps, IProductDisplayData } from '../../types/types';
+import parsingData from './services/parsingData';
 
-interface DetailedProductProps {
-  keyProduct: string | undefined;
-}
-
-const DetailedProduct: React.FC<DetailedProductProps> = ({
+const DetailedProduct: React.FC<IDetailedProductProps> = ({
   keyProduct,
-}: DetailedProductProps) => {
+}: IDetailedProductProps) => {
   const modal = useModal();
   const [productData, setProductData] = useState<
   IProductDisplayData | null | ''
