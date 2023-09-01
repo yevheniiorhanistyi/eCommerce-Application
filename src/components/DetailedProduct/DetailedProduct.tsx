@@ -87,9 +87,7 @@ const DetailedProduct: React.FC<DetailedProductProps> = ({
       </Grid>
       <Grid item sm={6} xs={12}>
         <Box sx={styles.tittleBlock}>
-          <Typography variant="h2" sx={styles.title}>
-            {productData.title}
-          </Typography>
+          <Typography variant="h2">{productData.title}</Typography>
           <PriceProduct productData={productData} />
           <Button
             variant="contained"
