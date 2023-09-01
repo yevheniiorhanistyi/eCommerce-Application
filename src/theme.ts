@@ -1,6 +1,11 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  palette: {
+    accent: {
+      main: '#d32f2f',
+    },
+  },
   typography: {
     fontFamily: [
       'Urbanist',
