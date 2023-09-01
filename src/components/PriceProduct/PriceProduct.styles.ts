@@ -5,12 +5,15 @@ const styles = {
     alignSelf: 'center',
   },
   discountPrice: {
-    color: theme.palette.primary.main,
+    mb: '0.1em',
+    fontSize: '1.2em',
+    color: theme.palette.accent.main,
   },
   oldPrice: {
-    fontSize: '0.8em',
+    fontSize: '0.6em',
     textDecoration: 'line-through',
-    color: theme.palette.primary.light,
+    color: theme.palette.grey[500],
+    alignSelf: 'flex-end',
   },
   priceWrap: {
     alignSelf: 'center',
@@ -18,8 +21,8 @@ const styles = {
   },
   discountPriceWrap: {
     display: 'flex',
-    flexWrap: 'wrap',
-    columnGap: '1em',
+    flexDirection: 'column',
+    // columnGap: '0.6em',
     alignItems: 'center',
     justifyContent: 'center',
   },

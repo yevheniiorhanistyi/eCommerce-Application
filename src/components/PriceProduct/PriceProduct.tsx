@@ -13,11 +13,11 @@ const PriceProduct: React.FC<PriceProductProps> = ({
     if (data.discountPrice) {
       return (
         <Box sx={styles.discountPriceWrap}>
-          <Typography variant="caption" sx={styles.oldPrice}>
-            {data.price}
-          </Typography>
           <Typography variant="caption" sx={styles.discountPrice}>
             {data.discountPrice}
+          </Typography>
+          <Typography variant="caption" sx={styles.oldPrice}>
+            {data.price}
           </Typography>
         </Box>
       );
