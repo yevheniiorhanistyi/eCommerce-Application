@@ -1,19 +1,16 @@
 const styles = {
-  formControl: {
-    m: 1,
-    minWidth: 120,
-  },
   menuItem: {
     display: 'none',
     visibility: 'hidden',
   },
   contentBox: {
-    width: '180px',
+    m: 1,
+    minWidth: 120,
     padding: '10px 5px 0',
     textAlign: 'center',
   },
   inputBox: {
-    width: 160,
+    width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
     margin: '0 auto 10px',
@@ -28,11 +25,6 @@ const styles = {
     '& .MuiOutlinedInput-input': {
       padding: '5px 3px',
     },
-  },
-  button: {
-    width: '95%',
-    margin: 0,
-    padding: '5px 45px',
   },
 };
 

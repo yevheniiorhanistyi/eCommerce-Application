@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import {
-  Select,
-  MenuItem,
-  FormControl,
   Box,
   OutlinedInput,
   InputAdornment,
   Slider,
-  Button,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import styles from './PriceRange.styles';
 
@@ -37,16 +38,18 @@ const PriceRange: React.FC = () => {
     }
   };
 
+  const [expanded, setExpanded] = useState<boolean>(true);
+
+  const handleChangeAccordion = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <FormControl sx={styles.formControl}>
-      <Select
-        value=""
-        displayEmpty
-        inputProps={{ 'aria-label': 'Without label' }}
-      >
-        <MenuItem value="" sx={styles.menuItem}>
-          Price
-        </MenuItem>
+    <Accordion expanded={expanded} onChange={handleChangeAccordion}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography sx={{ width: '33%', flexShrink: 0 }}>Price</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
         <Box sx={styles.contentBox}>
           <Box sx={styles.inputBox}>
             <OutlinedInput
@@ -55,7 +58,7 @@ const PriceRange: React.FC = () => {
               onChange={handleInputChange(0)}
               sx={styles.outlinedInput}
               inputProps={{
-                'aria-label': 'Price',
+                'aria-label': 'Min price',
               }}
             />
             <OutlinedInput
@@ -64,7 +67,7 @@ const PriceRange: React.FC = () => {
               onChange={handleInputChange(1)}
               sx={styles.outlinedInput}
               inputProps={{
-                'aria-label': 'Price',
+                'aria-label': 'Max price',
               }}
             />
           </Box>
@@ -78,12 +81,9 @@ const PriceRange: React.FC = () => {
               max={maxPrice}
             />
           </Box>
-          <Button sx={styles.button} variant="contained">
-            Save
-          </Button>
         </Box>
-      </Select>
-    </FormControl>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 
