@@ -60,3 +60,11 @@ export interface IProductResponse {
   total: number;
   results: IProduct[];
 }
+
+export type ProductItemProps = {
+  keyProduct: string;
+  title: string;
+  description: string;
+  url: string;
+  prices: IPrice;
+};

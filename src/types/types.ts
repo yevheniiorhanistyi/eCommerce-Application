@@ -42,3 +42,17 @@ export interface IAnonymousTokenResponse {
   token: string;
   isAuthenticated: boolean;
 }
+
+export interface ITokenStatusResponse {
+  active: boolean;
+}
+
+export interface ISortingSelect {
+  selectedOption: string;
+}
+
+export type CategoryAccordionProps = {
+  isOpen: boolean;
+  label: string;
+  labelList: string[];
+};
