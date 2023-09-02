@@ -142,3 +142,8 @@ export interface ICustomerAddressProps {
   addresses: IGetCustomerAddress[];
   defaultAddressId: string | undefined;
 }
+
+export interface IProtectedComponentProps {
+  isLoggedIn: boolean;
+  children: React.ReactNode;
+}
