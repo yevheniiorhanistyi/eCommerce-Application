@@ -31,8 +31,8 @@ const SignInForm: React.FC<ISignInFormProps> = ({
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const showErrorModal = (error: Error) => {
-    setContent({ title: 'Oops 😕', text: error.message });
-    openModal();
+    setContent('error', { title: 'Oops 😕', text: error.message });
+    openModal('error');
   };
 
   const handleMouseDownPassword = (
