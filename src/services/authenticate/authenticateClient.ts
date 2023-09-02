@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IAuthenticateCustomerProps, ITokenResponse } from '../../types/types';
 import { setTokenToLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
@@ -7,20 +8,7 @@ const clientID = import.meta.env.VITE_REACT_APP_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_REACT_APP_CLIENT_SECRET;
 const scope = import.meta.env.VITE_REACT_APP_SCOPES;
 
-interface IAuthenticateCustomerProps {
-  email: string;
-  password: string;
-}
-
-interface ITokenResponse {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-  token_type: string;
-}
-
-const processResponseError = (response: Response) => {
+export const processResponseError = (response: Response) => {
   if (response.status === 400) {
     throw new Error('Incorrect email or password');
   } else {

@@ -1,15 +1,11 @@
 import { Box } from '@mui/material';
+import { IProductImageProps } from '../../types/types';
 import styles from './ProductImage.styles';
 
-interface ProductImageProps {
-  url: string;
-  alt: string;
-}
-
-const ProductImage: React.FC<ProductImageProps> = ({
+const ProductImage: React.FC<IProductImageProps> = ({
   url,
   alt,
-}: ProductImageProps) => (
+}: IProductImageProps) => (
   <Box key={url} sx={styles.imageWrap}>
     <img src={url} alt={alt} style={styles.image} />
   </Box>

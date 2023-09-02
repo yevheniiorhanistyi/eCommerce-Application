@@ -18,10 +18,12 @@ import StoreIcon from '@mui/icons-material/Store';
 import SignInButton from '../buttons/SignInButton/SignInButton';
 import SignUpButton from '../buttons/SignUpButton/SignUpButton';
 import SignOutButton from '../buttons/SignOutButton/SignOutButton';
-import { useAuth } from '../AuthProvider/AuthProvider';
+import ProfileButton from '../buttons/ProfileButton/ProfileButton';
+
 import { removeTokenFromLocalStorage } from '../../utils/authUtils';
 
 import styles from './Header.styles';
+import { useAuth } from '../AuthProvider/AuthProvider';
 
 const Header: React.FC = () => {
   const { isAuthenticated, setAuthentication } = useAuth();
@@ -115,7 +117,7 @@ const Header: React.FC = () => {
           <Box sx={styles.menuBox}>
             {isAuthenticated ? (
               <>
-                <SignInButton />
+                <ProfileButton />
                 <SignOutButton onSignOutSuccess={handleSignOut} />
               </>
             ) : (

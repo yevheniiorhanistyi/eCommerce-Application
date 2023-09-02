@@ -20,14 +20,11 @@ import { authenticateClient } from '../../services/authenticate/authenticateClie
 import { useModal } from '../ModalProvider/ModalProvider';
 
 import styles from './SignInForm.styles';
+import { ISignInFormProps } from '../../types/types';
 
-interface SignInFormProps {
-  onSignInSuccess: () => void;
-}
-
-const SignInForm: React.FC<SignInFormProps> = ({
+const SignInForm: React.FC<ISignInFormProps> = ({
   onSignInSuccess,
-}: SignInFormProps) => {
+}: ISignInFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const { openModal, setContent } = useModal();
 
