@@ -2,7 +2,6 @@ import { useState, useEffect, MouseEvent } from 'react';
 import { Grid, Box, Container, SelectChangeEvent } from '@mui/material';
 import { IProduct } from '../../types/productInterfaces';
 import { getProducts } from '../../services/products/getProducts';
-import { sortingOptions } from '../../constants/constants';
 import CategoryPopover from '../../components/CategoryPopover/CategoryPopover';
 import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
 import SortingSelect from '../../components/SortingSelect/SortingSelect';
