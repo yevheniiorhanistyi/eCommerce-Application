@@ -161,8 +161,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
           });
           onSignInSuccess();
         } catch (error) {
-          modal.openModal();
-          modal.setContent({
+          modal.openModal('error');
+          modal.setContent('error', {
             title: 'Sorry',
             text: 'Sing in failed, please try again later',
           });
@@ -170,8 +170,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
           formik.resetForm();
         }
       } else {
-        modal.openModal();
-        modal.setContent({
+        modal.openModal('error');
+        modal.setContent('error', {
           title: 'Sorry',
           text: 'Registration failed, please try again later',
         });
