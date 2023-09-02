@@ -142,3 +142,14 @@ export interface ICustomerAddressProps {
   addresses: IGetCustomerAddress[];
   defaultAddressId: string | undefined;
 }
+
+export interface ICustomerDataField {
+  title: string | undefined;
+  description: string | undefined;
+}
+
+export interface ICustomerDataProps {
+  logoIcon: ReactNode;
+  fields: ICustomerDataField[];
+  deleteIcon?: ReactNode;
+}

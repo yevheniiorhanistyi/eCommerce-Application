@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Container } from '@mui/material';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
 import { IGetCustomerAddress, IGetCustomerData } from '../../types/types';
 
 import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
+import CustomerData from '../CustomerData/CustomerData';
 
 const CustomerInfo: React.FC = () => {
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
@@ -37,27 +39,27 @@ const CustomerInfo: React.FC = () => {
     fetchCustomerData();
   }, []);
 
+  const primaryCustomerFields = [
+    {
+      title: 'First name:',
+      description: customerData?.firstName,
+    },
+    {
+      title: 'Second name:',
+      description: customerData?.lastName,
+    },
+    {
+      title: 'Date of birth:',
+      description: customerData?.dateOfBirth,
+    },
+  ];
+
   return (
     <Container sx={styles.innerContainer}>
-      <Typography variant="h2">
-        Nice to see you,&#x20;
-        {customerData?.firstName}
-        !
+      <Typography sx={styles.addressesTitle} variant="h5">
+        Personal data
       </Typography>
-      <Container sx={styles.mainCustomerInfo} disableGutters>
-        <Typography>
-          First name:&#x20;
-          {customerData?.firstName}
-        </Typography>
-        <Typography>
-          Last Name:&#x20;
-          {customerData?.lastName}
-        </Typography>
-        <Typography>
-          Date of birth:&#x20;
-          {customerData?.dateOfBirth}
-        </Typography>
-      </Container>
+      <CustomerData logoIcon={<PermIdentityIcon />} fields={primaryCustomerFields} />
       <Typography sx={styles.addressesTitle} variant="h5">
         Shipping addresses:
       </Typography>

@@ -25,6 +25,11 @@ const styles = {
     minWidth: '90px',
     marginRight: '10px',
   },
+  firstNameContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
 };
 
 export default styles;
