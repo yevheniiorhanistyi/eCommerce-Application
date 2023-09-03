@@ -38,18 +38,13 @@ export interface IPrice {
 export interface IProduct {
   id: string;
   key: string;
-  createdAt: string;
-  masterData: {
-    current: {
-      categories: ICategory[];
-      name: { 'en-US': string };
-      description: { 'en-US': string };
-      masterVariant: {
-        attributes: IAttribute[];
-        images: IImage[];
-        prices: IPrice[];
-      };
-    };
+  description: { 'en-US': string };
+  name: { 'en-US': string };
+  categories: ICategory[];
+  masterVariant: {
+    attributes: IAttribute[];
+    images: IImage[];
+    prices: IPrice[];
   };
 }
 
@@ -67,4 +62,9 @@ export type ProductItemProps = {
   description: string;
   url: string;
   prices: IPrice;
+};
+
+export type ProductListProps = {
+  isLoading: boolean;
+  products: IProduct[];
 };
