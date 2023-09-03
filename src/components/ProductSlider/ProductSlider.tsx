@@ -1,4 +1,5 @@
 import Carousel from 'react-material-ui-carousel';
+// eslint-disable-next-line import/no-cycle
 import ProductImage from '../ProductImage/ProductImage';
 import { IProductSliderProps } from '../../types/types';
 
@@ -6,7 +7,9 @@ import './_product_slider.scss';
 
 const ProductSlider: React.FC<IProductSliderProps> = ({
   images,
-  keyProduct,
+  title,
+  isButtondDisabled = false,
+  startIndex = 0,
 }: IProductSliderProps) => (
   <Carousel
     autoPlay={false}
@@ -19,10 +22,18 @@ const ProductSlider: React.FC<IProductSliderProps> = ({
     indicatorIconButtonProps={{ className: 'indicator__button' }}
     activeIndicatorIconButtonProps={{ className: 'indicator__button-active' }}
     height="100%"
+    index={startIndex}
     sx={{ height: '100%' }}
   >
-    {images.map((item) => (
-      <ProductImage key={item.url} url={item.url} alt={keyProduct} />
+    {images.map((item, index) => (
+      <ProductImage
+        key={item.url}
+        url={item.url}
+        alt={title}
+        isButtondDisabled={isButtondDisabled}
+        index={index}
+        images={images}
+      />
     ))}
   </Carousel>
 );

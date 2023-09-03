@@ -164,11 +164,16 @@ export interface IProductDisplayData {
 export interface IProductImageProps {
   url: string;
   alt: string;
+  isButtondDisabled?: boolean;
+  index?: number;
+  images?: IImage[];
 }
 
 export interface IProductSliderProps {
   images: IImage[];
-  keyProduct: string;
+  title: string;
+  isButtondDisabled?: boolean;
+  startIndex?: number;
 }
 
 export interface ICustomerAddressProps {
