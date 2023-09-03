@@ -4,6 +4,7 @@ const styles = {
   imageWrap: {
     position: 'relative',
     height: '100%',
+    boxShadow: 'none',
   },
   image: {
     width: '100%',
