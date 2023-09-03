@@ -1,5 +1,5 @@
-import { useState, useEffect, MouseEvent } from 'react';
-import { Grid, Box, Container, SelectChangeEvent } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Grid, Box, Container } from '@mui/material';
 import { IProduct } from '../../types/productInterfaces';
 import { getProductByParams } from '../../services/products/getProductByParams';
 import CategoryPopover from '../../components/CategoryPopover/CategoryPopover';
@@ -7,6 +7,7 @@ import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
 import SortingSelect from '../../components/SortingSelect/SortingSelect';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import ProductList from '../../components/ProductList/ProductList';
+import NoResultsMessage from '../../components/NoResultsMessage/NoResultsMessage';
 
 import styles from './Catalog.styles';
 
@@ -131,7 +132,11 @@ const Catalog: React.FC = () => {
                 setSelectedOption={setSelectedOption}
               />
             </Box>
-            <ProductList isLoading={isLoading} products={productList} />
+            {productList.length === 0 ? (
+              <NoResultsMessage />
+            ) : (
+              <ProductList isLoading={isLoading} products={productList} />
+            )}
           </Grid>
         </Grid>
       </Container>
