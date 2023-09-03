@@ -2,7 +2,6 @@ import React, {
   createContext,
   useContext,
   useState,
-  useEffect,
   useMemo,
   ReactNode,
 } from 'react';
@@ -21,18 +20,15 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isAuthenticated, setAuthentication] = useState(false);
-
-  useEffect(() => {
+  const [isAuthenticated, setAuthentication] = useState(() => {
     const { isAuthenticated: storedIsAuthenticated } = getTokenFromLocalStorage();
     const fetchAccessToken = async () => {
       const accessToken = await getAnonymousToken();
       return accessToken;
     };
     const { token } = getTokenFromLocalStorage() || fetchAccessToken();
-
-    if (token && storedIsAuthenticated) setAuthentication(true);
-  }, [isAuthenticated]);
+    return !!token && !!storedIsAuthenticated as boolean;
+  });
 
   const contextValue = useMemo(
     () => ({ isAuthenticated, setAuthentication }),
