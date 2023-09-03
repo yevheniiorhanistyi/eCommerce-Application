@@ -14,7 +14,7 @@ const CustomerData: FC<ICustomerDataProps> = ({
       {fields.map((field: ICustomerDataField) => (
         <ListItemText key={field.title} primary={field.title} secondary={field.description} />
       ))}
-      <EditIconButton content={customer}/>
+      <EditIconButton content={customer} />
     </ListItem>
   </List>
 );

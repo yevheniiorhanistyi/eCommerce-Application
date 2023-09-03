@@ -30,6 +30,11 @@ const styles = {
     alignItems: 'center',
     gap: '10px',
   },
+  flexBox: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
 };
 
 export default styles;

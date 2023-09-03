@@ -19,6 +19,12 @@ const styles = {
     minWidth: '90px',
     marginRight: '10px',
   },
+  separator: {
+    height: '20px',
+    width: '1px',
+    margin: '0 8px',
+    background: '#ebedf0',
+  },
 };
 
 export default styles;

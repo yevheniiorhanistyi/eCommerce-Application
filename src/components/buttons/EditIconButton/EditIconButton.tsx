@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import styles from './EditiconButton.styles';
 import { useModal } from '../../ModalProvider/ModalProvider';
 
-const EditIconButton: React.FC = ({content}) => {
+const EditIconButton: React.FC = ({ content }) => {
   const modal = useModal();
   console.log('editiconbuttoncontent', content);
 

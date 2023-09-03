@@ -24,11 +24,11 @@ export const editCustomerData = async ({
     const response = await axios.post(
       `${region}/${projectKey}/customers/${id}`,
       JSON.stringify({
-        version: version,
+        version,
         actions: [
           {
             action: 'setFirstName',
-            firstName: firstName,
+            firstName,
           },
           {
             action: 'setLasttName',
@@ -36,7 +36,7 @@ export const editCustomerData = async ({
           },
           {
             action: 'setDateOfBirth',
-            dateOfBirth: dateOfBirth,
+            dateOfBirth,
           },
         ],
       }),
@@ -47,7 +47,7 @@ export const editCustomerData = async ({
         },
       },
     );
-    console.log('editCustomerDataResponce', response.data)
+    console.log('editCustomerDataResponce', response.data);
     return response.data;
   } catch (error) {
     console.error(error);

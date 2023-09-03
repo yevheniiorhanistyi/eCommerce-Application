@@ -1,9 +1,10 @@
-import { Container, Modal, Paper, Typography } from '@mui/material';
+import { Container, Modal, Paper } from '@mui/material';
 
 import { enqueueSnackbar } from 'notistack';
-import styles from './EditDataModal.styles';
+import styles from './AddAddressModal.styles';
 import { TEditDataContent } from '../ModalProvider/type';
 import EditDataForm from '../EditDataForm/EditDataForm';
+import AddAddressForm from '../AddAddressForm/AddAddressForm';
 
 interface EditDataModalProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ interface EditDataModalProps {
   content: TEditDataContent;
 }
 
-const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
+const AddAddressModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
   const handleEditData = () => {
     enqueueSnackbar('Changes saved succesfully!', {
       variant: 'success',
@@ -27,11 +28,11 @@ const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
     >
       <Container maxWidth="sm" sx={styles.outerBox}>
         <Paper sx={styles.paper}>
-          <EditDataForm customer={content} onEditDataSuccess={handleEditData} />
+          <AddAddressForm customer={content} onEditDataSuccess={handleEditData} />
         </Paper>
       </Container>
     </Modal>
   );
 };
 
-export default EditDataModal;
+export default AddAddressModal;

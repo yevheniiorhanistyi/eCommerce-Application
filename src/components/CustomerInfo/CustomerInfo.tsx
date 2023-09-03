@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Container } from '@mui/material';
+import { Typography, Container, Box } from '@mui/material';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
 import { IGetCustomerAddress, IGetCustomerData } from '../../types/types';
@@ -7,6 +7,7 @@ import { IGetCustomerAddress, IGetCustomerData } from '../../types/types';
 import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
 import CustomerData from '../CustomerData/CustomerData';
+import AddIconButton from '../buttons/AddIconButton/AddIconButton';
 
 const CustomerInfo: React.FC = () => {
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
@@ -63,17 +64,27 @@ const CustomerInfo: React.FC = () => {
       <Typography sx={styles.addressesTitle} variant="h5">
         Personal data
       </Typography>
-      <CustomerData customer={customerData} logoIcon={<PermIdentityIcon />} fields={primaryCustomerFields} />
-      <Typography sx={styles.addressesTitle} variant="h5">
-        Shipping addresses:
-      </Typography>
+      <CustomerData
+        customer={customerData}
+        logoIcon={<PermIdentityIcon />}
+        fields={primaryCustomerFields}
+      />
+      <Box sx={styles.flexBox}>
+        <Typography sx={styles.addressesTitle} variant="h5">
+          Shipping addresses:
+        </Typography>
+        <AddIconButton content={{}}/>
+      </Box>
       <CustomerAddress
         addresses={shippingAddresses}
         defaultAddressId={customerData?.defaultShippingAddressId}
       />
-      <Typography sx={styles.addressesTitle} variant="h5">
-        Billing addresses:
-      </Typography>
+      <Box sx={styles.flexBox}>
+        <Typography sx={styles.addressesTitle} variant="h5">
+          Billing addresses:
+        </Typography>
+        <AddIconButton content={{}}/>
+      </Box>
       <CustomerAddress
         addresses={billingAddresses}
         defaultAddressId={customerData?.defaultBillingAddressId}

@@ -1,8 +1,10 @@
-import { List, ListItem, ListItemText } from '@mui/material';
+import { Box, List, ListItem, ListItemText } from '@mui/material';
 import { FC } from 'react';
 
 import styles from './CustomerAddress.styles';
 import { ICustomerAddressProps } from '../../types/types';
+import EditIconButton from '../buttons/EditIconButton/EditIconButton';
+import DeleteIconButton from '../buttons/DeleteIconButton/DeleteIconButton';
 
 const CustomerAddress: FC<ICustomerAddressProps> = ({
   addresses,
@@ -41,6 +43,9 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
           secondary={!address.postalCode ? '-' : address.postalCode}
           sx={styles.addressItemData}
         />
+        <EditIconButton content={{}} />
+        <Box sx={styles.separator} />
+        <DeleteIconButton />
       </ListItem>
     ))}
   </List>

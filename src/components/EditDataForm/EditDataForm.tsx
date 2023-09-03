@@ -7,6 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './EditDataForm.styles';
 import nameValidation from '../../validation/name.validation';
@@ -18,11 +19,10 @@ import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
 import editCustomerData from '../../services/editCustomerData/editCustomerData';
 import emailValidation from '../../validation/email.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const EditDataForm: React.FC = (
-    onEditDataSuccess,
-    customer
+  onEditDataSuccess,
+  customer,
 ) => {
   const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
@@ -40,13 +40,12 @@ const EditDataForm: React.FC = (
 
   const createValidationSchema = (
     email: string,
-  ) =>
-    Yup.object().shape({
-      firstName: nameValidation.required('First name is required'),
-      lastName: nameValidation.required('Last name is required'),
-      dateOfBirth: dateOfBirthlValidation,
-      email: emailValidation(modal),
-    });
+  ) => Yup.object().shape({
+    firstName: nameValidation.required('First name is required'),
+    lastName: nameValidation.required('Last name is required'),
+    dateOfBirth: dateOfBirthlValidation,
+    email: emailValidation(modal),
+  });
 
   const formik = useFormik({
     initialValues: data,
@@ -122,8 +121,8 @@ const EditDataForm: React.FC = (
               slotProps={{
                 textField: {
                   error:
-                    formik.touched.dateOfBirth &&
-                    Boolean(formik.errors.dateOfBirth),
+                    formik.touched.dateOfBirth
+                    && Boolean(formik.errors.dateOfBirth),
                   helperText:
                     formik.touched.dateOfBirth && formik.errors.dateOfBirth,
                 },
@@ -148,7 +147,7 @@ const EditDataForm: React.FC = (
           <CenteredDivider caption="Password" />
         </Grid>
         <Grid item sm={12} xs={12}>
-        <TextField
+          <TextField
             fullWidth
             type={showPassword ? 'text' : 'password'}
             name="password"
@@ -171,7 +170,7 @@ const EditDataForm: React.FC = (
           />
         </Grid>
         <Grid item sm={12} xs={12}>
-        <TextField
+          <TextField
             fullWidth
             type={showPassword ? 'text' : 'password'}
             name="password"
@@ -194,7 +193,7 @@ const EditDataForm: React.FC = (
           />
         </Grid>
         <Grid item sm={12} xs={12}>
-        <TextField
+          <TextField
             fullWidth
             type={showPassword ? 'text' : 'password'}
             name="password"
