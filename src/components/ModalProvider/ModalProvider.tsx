@@ -8,6 +8,7 @@ import {
 } from './type';
 import ErrorModal from '../ErrorModal/ErrorModal';
 import { IModalProviderProps } from '../../types/types';
+import EditDataModal from '../EditDataModal/EditDataModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -27,12 +28,18 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         title: '',
       },
     },
+    editInfo: {
+      isOpen: false,
+      content: {
+        title: '',
+      },
+    },
   });
 
   const openModal: TModalFunction = (modalName: TModalName) => {
     setModals((prevModals) => ({
       ...prevModals,
-      [modalName]: { ...prevModals[modalName], isOpen: true },
+      [modalName]: { ...prevModals[modalName], isOpen: true, },
     }));
   };
 
@@ -75,6 +82,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
 
   return (
     <ModalContext.Provider value={contextValue}>
+      <EditDataModal
+        isOpen={modals.editInfo.isOpen}
+        content={modals.editInfo.content}
+        onClose={() => closeModal('editInfo')}
+      />
       <ErrorModal
         open={modals.error.isOpen}
         content={modals.error.content}

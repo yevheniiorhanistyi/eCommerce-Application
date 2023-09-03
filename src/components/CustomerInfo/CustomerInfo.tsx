@@ -52,6 +52,10 @@ const CustomerInfo: React.FC = () => {
       title: 'Date of birth:',
       description: customerData?.dateOfBirth,
     },
+    {
+      title: 'Email:',
+      description: customerData?.email,
+    },
   ];
 
   return (
@@ -59,7 +63,7 @@ const CustomerInfo: React.FC = () => {
       <Typography sx={styles.addressesTitle} variant="h5">
         Personal data
       </Typography>
-      <CustomerData logoIcon={<PermIdentityIcon />} fields={primaryCustomerFields} />
+      <CustomerData customer={customerData} logoIcon={<PermIdentityIcon />} fields={primaryCustomerFields} />
       <Typography sx={styles.addressesTitle} variant="h5">
         Shipping addresses:
       </Typography>

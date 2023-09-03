@@ -90,6 +90,10 @@ export interface ISignInFormProps {
   onSignInSuccess: () => void;
 }
 
+export interface IEditDataSuccess {
+  onEditDataSuccess: () => void;
+}
+
 export interface ISignUpFormProps {
   onSignInSuccess: () => void;
 }
@@ -152,4 +156,10 @@ export interface ICustomerDataProps {
   logoIcon: ReactNode;
   fields: ICustomerDataField[];
   deleteIcon?: ReactNode;
+}
+
+export interface IEditDataForm {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string | null;
 }

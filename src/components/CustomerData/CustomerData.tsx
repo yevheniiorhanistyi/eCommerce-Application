@@ -7,13 +7,14 @@ import styles from './CustomerData.styles';
 const CustomerData: FC<ICustomerDataProps> = ({
   logoIcon,
   fields,
+  customer,
 }: ICustomerDataProps) => (
   <List>
     <ListItem sx={styles.listItem}>
       {fields.map((field: ICustomerDataField) => (
         <ListItemText key={field.title} primary={field.title} secondary={field.description} />
       ))}
-      <EditIconButton />
+      <EditIconButton content={customer}/>
     </ListItem>
   </List>
 );

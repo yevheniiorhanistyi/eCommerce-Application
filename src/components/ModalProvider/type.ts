@@ -1,6 +1,6 @@
 import { IImage } from '../../types/types';
 
-export type TModalName = 'error' | 'imageView';
+export type TModalName = 'error' | 'imageView' | 'editInfo';
 
 export type TErrorContent = {
   title: string;
@@ -12,9 +12,14 @@ export type TImageViewContent = {
   title: string;
 };
 
+export type TEditDataContent = {
+  title: string;
+};
+
 export type TContent = {
   error: TErrorContent;
   imageView: TImageViewContent;
+  editInfo: TEditDataContent;
 }[TModalName];
 
 export type TModal = {

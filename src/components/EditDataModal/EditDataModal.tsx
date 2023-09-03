@@ -1,28 +1,38 @@
-import { Box, Modal, Typography } from '@mui/material';
+import { Container, Modal, Paper, Typography } from '@mui/material';
 
+import { enqueueSnackbar } from 'notistack';
 import styles from './EditDataModal.styles';
+import { TEditDataContent } from '../ModalProvider/type';
+import EditDataForm from '../EditDataForm/EditDataForm';
 
-interface EditModalProps {
+interface EditDataModalProps {
   isOpen: boolean;
   onClose: () => void;
+  content: TEditDataContent;
 }
 
-const EditDataModal = ({ isOpen, onClose }: EditModalProps) => (
-  <Modal
-    open={isOpen}
-    onClose={onClose}
-    aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
-  >
-    <Box sx={styles.modal}>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Text in a modal
-      </Typography>
-      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </Typography>
-    </Box>
-  </Modal>
-);
+const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
+  
+  const handleEditData = () => {
+    enqueueSnackbar('Changes saved succesfully!', {
+      variant: 'success',
+    });
+  };
+
+  return (
+    <Modal
+      open={isOpen}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Container maxWidth="sm" sx={styles.outerBox}>
+        <Paper sx={styles.paper}>
+          <EditDataForm customer={content} onEditDataSuccess={handleEditData} />
+        </Paper>
+      </Container>
+    </Modal>
+  );
+};
 
 export default EditDataModal;
