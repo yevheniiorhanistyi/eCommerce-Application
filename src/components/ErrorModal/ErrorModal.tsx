@@ -1,11 +1,11 @@
 import { Box, Button, Modal, Typography } from '@mui/material';
-import { ModalContentType } from '../ModalProvider/type';
+import { TErrorContent } from '../ModalProvider/type';
 
 import styles from './ErrorModal.styles';
 
 type ErrorModalProps = {
   open: boolean;
-  content: ModalContentType;
+  content: TErrorContent;
   onClose: () => void;
 };
 
