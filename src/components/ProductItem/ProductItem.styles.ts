@@ -16,6 +16,7 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     height: '180px',
+    paddingTop: '10px',
   },
   cardMedia: {
     maxWidth: '100%',
