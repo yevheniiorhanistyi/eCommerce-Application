@@ -18,11 +18,21 @@ const CategoryAccordion: React.FC<CategoryAccordionProps> = ({
   isOpen,
   label,
   labelList,
+  selectedValues,
+  setSelectedValues,
 }: CategoryAccordionProps) => {
   const [expanded, setExpanded] = useState<boolean>(isOpen);
-
   const handleChange = () => {
     setExpanded(!expanded);
+  };
+
+  const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id } = event.target;
+    const updatedSelectedValues = selectedValues.includes(id)
+      ? selectedValues.filter((val) => val !== id)
+      : [...selectedValues, id];
+
+    setSelectedValues(updatedSelectedValues);
   };
 
   return (
@@ -33,7 +43,17 @@ const CategoryAccordion: React.FC<CategoryAccordionProps> = ({
       <AccordionDetails>
         <FormGroup>
           {labelList.map((item) => (
-            <FormControlLabel key={item} control={<Checkbox />} label={item} />
+            <FormControlLabel
+              key={item.label}
+              control={(
+                <Checkbox
+                  id={item.label}
+                  checked={selectedValues.includes(item.label)}
+                  onChange={handleChangeValue}
+                />
+              )}
+              label={item.label}
+            />
           ))}
         </FormGroup>
       </AccordionDetails>

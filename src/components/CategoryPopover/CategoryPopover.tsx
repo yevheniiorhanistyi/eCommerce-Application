@@ -6,26 +6,32 @@ import styles from './CategoryPopover.styles';
 
 interface CategoryPopoverProps {
   anchorEl: HTMLElement | null;
+  setAnchorElem: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
   children: ReactNode;
-  onClose: () => void;
-  handleClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const CategoryPopover: React.FC<CategoryPopoverProps> = ({
   anchorEl,
-  onClose,
-  handleClick,
+  setAnchorElem,
   children,
 }: CategoryPopoverProps) => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+
+  const handlePopoverClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorElem(event.currentTarget);
+  };
+
+  const handleClosePopover = () => {
+    setAnchorElem(null);
+  };
 
   return (
     <>
       <Button
         aria-describedby={id}
         variant="text"
-        onClick={handleClick}
+        onClick={handlePopoverClick}
         sx={styles.buttonOpen}
       >
         <TuneIcon color="action" sx={styles.buttonIcon} />
@@ -34,7 +40,7 @@ const CategoryPopover: React.FC<CategoryPopoverProps> = ({
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={onClose}
+        onClose={handleClosePopover}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',

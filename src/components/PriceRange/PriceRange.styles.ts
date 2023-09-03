@@ -14,6 +14,13 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     margin: '0 auto 10px',
+    '@media (max-width: 530px)': {
+      flexDirection: 'column',
+      '& .MuiOutlinedInput-root': {
+        width: '100%',
+        mb: '10px',
+      },
+    },
   },
   sliderBox: {
     padding: '0 15px',

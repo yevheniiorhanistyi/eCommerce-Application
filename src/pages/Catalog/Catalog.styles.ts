@@ -3,7 +3,6 @@ const styles = {
     display: 'flex',
     flexGrow: 1,
     justifyContent: 'center',
-    backgroundColor: '#eaeff1',
   },
   filterSidebarBox: {
     paddingTop: '96px',
