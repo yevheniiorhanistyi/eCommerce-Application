@@ -10,17 +10,9 @@ import {
   Link,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { IPrice } from '../../types/productInterfaces';
+import { ProductItemProps } from '../../types/productInterfaces';
 
 import styles from './ProductItem.styles';
-
-type ProductItemProps = {
-  keyProduct: string;
-  title: string;
-  description: string;
-  url: string;
-  prices: IPrice;
-};
 
 export const ProductItem: React.FC<ProductItemProps> = ({
   keyProduct,
@@ -96,7 +88,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
             `${originalPrice} ${prices.value.currencyCode}`
           )}
         </Typography>
-        <Rating name="size-small" size="small" />
+        <Rating name={`rating-${keyProduct}`} size="small" />
       </CardActions>
     </Card>
   );
