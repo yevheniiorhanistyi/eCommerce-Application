@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   buttonSearch: {
     width: '100%',
@@ -6,11 +8,10 @@ const styles = {
   buttonReset: {
     width: '100%',
     padding: '10px 5px',
-    mt: 0,
-    color: '#1976d2',
-    backgroundColor: '#f5f5f5',
+    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.grey[100],
     '&:hover': {
-      backgroundColor: '#f6f6f6',
+      backgroundColor: theme.palette.grey[200],
     },
   },
 };
