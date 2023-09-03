@@ -8,6 +8,8 @@ import {
 } from './type';
 import ErrorModal from '../ErrorModal/ErrorModal';
 import { IModalProviderProps } from '../../types/types';
+// eslint-disable-next-line import/no-cycle
+import ProductModal from '../ProductModal/ProductModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -25,6 +27,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       content: {
         images: [],
         title: '',
+        index: 0,
       },
     },
   });
@@ -53,16 +56,6 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     }));
   };
 
-  // const [modalOpen, setModalOpen] = useState(false);
-  // const [modalContent, setModalContent] = useState({
-  //   title: '',
-  //   text: '',
-  // });
-
-  // const openModal = () => setModalOpen(true);
-  // const closeModal = () => setModalOpen(false);
-  // const setContent = (content: ModalContentType) => setModalContent(content);
-
   const contextValue: ModalContextType = useMemo(
     () => ({
       modals,
@@ -79,6 +72,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         open={modals.error.isOpen}
         content={modals.error.content}
         onClose={() => closeModal('error')}
+      />
+      <ProductModal
+        open={modals.imageView.isOpen}
+        content={modals.imageView.content}
+        onClose={() => closeModal('imageView')}
       />
       {children}
     </ModalContext.Provider>
