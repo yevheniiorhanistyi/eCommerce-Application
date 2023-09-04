@@ -132,7 +132,7 @@ const Catalog: React.FC = () => {
                 setSelectedOption={setSelectedOption}
               />
             </Box>
-            {productList.length === 0 ? (
+            {productList.length === 0 && isLoading === false ? (
               <NoResultsMessage />
             ) : (
               <ProductList isLoading={isLoading} products={productList} />
