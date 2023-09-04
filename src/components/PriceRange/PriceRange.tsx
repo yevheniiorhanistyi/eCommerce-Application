@@ -30,14 +30,10 @@ const PriceRange: React.FC<PriceRangeProps> = ({
       } else {
         max = newValue;
       }
-      const updatedValue = [min, max];
       if (min > max) {
-        [updatedValue[0], updatedValue[1]] = [
-          updatedValue[1],
-          updatedValue[0],
-        ];
+        [min, max] = [max, min];
       }
-      setPrices(updatedValue);
+      setPrices([min, max]);
     }
   };
 

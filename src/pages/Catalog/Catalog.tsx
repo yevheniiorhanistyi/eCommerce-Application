@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Grid, Box, Container } from '@mui/material';
 import { IProduct } from '../../types/productInterfaces';
 import { getProductByParams } from '../../services/products/getProductByParams';
+import { useCategoryData } from '../../components/CategoryDataProvider/CategoryDataProvider';
+import languageCode from '../../utils/languageCode';
 import CategoryPopover from '../../components/CategoryPopover/CategoryPopover';
 import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
 import SortingSelect from '../../components/SortingSelect/SortingSelect';
@@ -11,8 +13,6 @@ import ProductList from '../../components/ProductList/ProductList';
 import NoResultsMessage from '../../components/NoResultsMessage/NoResultsMessage';
 
 import styles from './Catalog.styles';
-import languageCode from '../../utils/languageCode';
-import { useCategoryData } from '../../components/CategoryDataProvider/CategoryDataProvider';
 
 const Catalog: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
@@ -21,7 +21,6 @@ const Catalog: React.FC = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [searchValue, setSearchValue] = useState('');
   const [selectedOption, setSelectedOption] = useState('price asc');
-  const [selectedGender, setSelectedGender] = useState('');
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -32,7 +31,6 @@ const Catalog: React.FC = () => {
   const idCategory = categoryData.find(
     (item) => item.slug[languageCode] === categorySlug,
   )?.id;
-  console.log('categorySlug', categorySlug, idCategory);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,7 +47,7 @@ const Catalog: React.FC = () => {
           selectedSizes,
           selectedBrands,
           searchValue,
-          selectedGender,
+          idCategory,
           minPrice,
           maxPrice,
         ).then((res) => {
@@ -68,7 +66,7 @@ const Catalog: React.FC = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [
-    selectedGender,
+    idCategory,
     prices,
     selectedOption,
     selectedColors,
@@ -95,7 +93,6 @@ const Catalog: React.FC = () => {
               <Box sx={styles.filterSidebarBox}>
                 <FilterSidebar
                   prices={prices}
-                  selectedGender={selectedGender}
                   selectedColors={selectedColors}
                   selectedSizes={selectedSizes}
                   selectedBrands={selectedBrands}
@@ -103,7 +100,6 @@ const Catalog: React.FC = () => {
                   setSelectedBrands={setSelectedBrands}
                   setSelectedSizes={setSelectedSizes}
                   setSelectedColors={setSelectedColors}
-                  setSelectedGender={setSelectedGender}
                 />
               </Box>
             ) : (
@@ -119,7 +115,6 @@ const Catalog: React.FC = () => {
                 >
                   <FilterSidebar
                     prices={prices}
-                    selectedGender={selectedGender}
                     selectedColors={selectedColors}
                     selectedSizes={selectedSizes}
                     selectedBrands={selectedBrands}
@@ -127,7 +122,6 @@ const Catalog: React.FC = () => {
                     setSelectedBrands={setSelectedBrands}
                     setSelectedSizes={setSelectedSizes}
                     setSelectedColors={setSelectedColors}
-                    setSelectedGender={setSelectedGender}
                   />
                 </CategoryPopover>
               </Grid>
