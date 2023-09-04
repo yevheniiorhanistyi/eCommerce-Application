@@ -5,6 +5,7 @@ const styles = {
     p: 1,
     color: theme.palette.primary.main,
     backgroundColor: theme.palette.background.paper,
+    borderRadius: '4px',
     a: {
       color: theme.palette.primary.main,
       textDecoration: 'none',

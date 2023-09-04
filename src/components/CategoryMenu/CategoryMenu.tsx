@@ -24,6 +24,10 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
       defaultExpandIcon={<ChevronRightIcon />}
       sx={styles.treeView}
     >
+      <TreeItem
+        nodeId="500"
+        label={<Link to="/catalog">All categories</Link>}
+      />
       {topLevelCategories.map((category, index) => (
         <TreeItem
           nodeId={index.toString()}
