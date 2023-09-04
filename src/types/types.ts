@@ -196,3 +196,9 @@ export type FilterSidebarProps = {
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
   setPrices: React.Dispatch<React.SetStateAction<number[]>>;
 };
+
+export type TLanguage = 'en-US';
+
+export type LocalizedObject<T> = {
+  [key in TLanguage]: T;
+};
