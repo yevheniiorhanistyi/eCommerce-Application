@@ -25,7 +25,6 @@ const Catalog: React.FC = () => {
   const [prices, setPrices] = useState<number[]>([10, 800]);
 
   useEffect(() => {
-    console.log(searchValue);
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
       setAnchorElem(null);
