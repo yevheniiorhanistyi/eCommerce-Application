@@ -1,9 +1,20 @@
 import { Button } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { FC } from 'react';
 import styles from './DeleteIconButton.styles';
+import { IDeleteIconButtonProps } from '../../../types/types';
+import deleteAddress from '../../../services/profile/deleteAddress';
 
-const DeleteIconButton: React.FC = () => {
-  const handleClick = () => {};
+const DeleteIconButton: FC<IDeleteIconButtonProps> = ({
+  userId,
+  versionId,
+  addressId,
+  deleteSuccess,
+}: IDeleteIconButtonProps) => {
+  const handleClick = async () => {
+    await deleteAddress(addressId, userId, versionId);
+    deleteSuccess();
+  };
 
   return (
     <Button

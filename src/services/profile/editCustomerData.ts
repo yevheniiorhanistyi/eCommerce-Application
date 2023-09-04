@@ -8,16 +8,18 @@ const region = import.meta.env.VITE_REACT_APP_API_URL;
 const id = '50777a13-e6df-487b-b682-76c8297bdbdb';
 const version = 7;
 
-interface IEditCustomerDataProps {
+export interface IEditCustomerDataProps {
   firstName: string;
   lastName: string;
-  dateOfBirth: string | null;
+  dateOfBirth: any;
+  email: string;
 }
 
-export const editCustomerData = async ({
+const editCustomerData = async ({
   firstName,
   lastName,
   dateOfBirth,
+  email,
 }: IEditCustomerDataProps) => {
   try {
     const { token } = getTokenFromLocalStorage();
@@ -38,6 +40,10 @@ export const editCustomerData = async ({
             action: 'setDateOfBirth',
             dateOfBirth,
           },
+          {
+            action: 'changeEmail',
+            email,
+          },
         ],
       }),
       {
@@ -47,7 +53,6 @@ export const editCustomerData = async ({
         },
       },
     );
-    console.log('editCustomerDataResponce', response.data);
     return response.data;
   } catch (error) {
     console.error(error);

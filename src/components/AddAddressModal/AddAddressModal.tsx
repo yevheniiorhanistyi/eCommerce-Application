@@ -2,17 +2,25 @@ import { Container, Modal, Paper } from '@mui/material';
 
 import { enqueueSnackbar } from 'notistack';
 import styles from './AddAddressModal.styles';
-import { TEditDataContent } from '../ModalProvider/type';
-import EditDataForm from '../EditDataForm/EditDataForm';
 import AddAddressForm from '../AddAddressForm/AddAddressForm';
+import { IGetCustomerAddress } from '../../types/types';
 
-interface EditDataModalProps {
+interface AddAddressModalProps {
   isOpen: boolean;
+  content: {
+    address: IGetCustomerAddress;
+    userId: string;
+    isBilling: boolean;
+    versionId: number;
+  };
   onClose: () => void;
-  content: TEditDataContent;
 }
 
-const AddAddressModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
+const AddAddressModal = ({
+  isOpen,
+  content,
+  onClose,
+}: AddAddressModalProps) => {
   const handleEditData = () => {
     enqueueSnackbar('Changes saved succesfully!', {
       variant: 'success',
@@ -28,7 +36,13 @@ const AddAddressModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
     >
       <Container maxWidth="sm" sx={styles.outerBox}>
         <Paper sx={styles.paper}>
-          <AddAddressForm customer={content} onEditDataSuccess={handleEditData} />
+          <AddAddressForm
+            userId={content.userId}
+            content={content.address}
+            onEditDataSuccess={handleEditData}
+            isBilling={content.isBilling}
+            versionId={content.versionId}
+          />
         </Paper>
       </Container>
     </Modal>

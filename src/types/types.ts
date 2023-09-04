@@ -145,6 +145,9 @@ export interface IProductSliderProps {
 export interface ICustomerAddressProps {
   addresses: IGetCustomerAddress[];
   defaultAddressId: string | undefined;
+  userId: string;
+  versionId: number;
+  deleteSuccess: () => void;
 }
 
 export interface ICustomerDataField {
@@ -156,10 +159,27 @@ export interface ICustomerDataProps {
   logoIcon: ReactNode;
   fields: ICustomerDataField[];
   deleteIcon?: ReactNode;
+  customer?: IGetCustomerData;
+  addSuccess: () => void;
 }
 
 export interface IEditDataForm {
   firstName: string;
   lastName: string;
   dateOfBirth: string | null;
+}
+
+export interface IEditIconButtonProps {
+  userId: string;
+  isBilling?: boolean;
+  address?: IGetCustomerAddress;
+  versionId: number;
+  addSuccess: () => void;
+}
+
+export interface IDeleteIconButtonProps {
+  userId: string;
+  addressId: string;
+  versionId: number;
+  deleteSuccess: () => void;
 }

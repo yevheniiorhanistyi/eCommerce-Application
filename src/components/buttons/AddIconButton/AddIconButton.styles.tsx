@@ -25,7 +25,7 @@ const styles = {
       fontSize: 0,
     },
   },
-  addIcon: {
+  addButtonIcon: {
     '@media (max-width: 450px)': {
       display: 'none',
     },

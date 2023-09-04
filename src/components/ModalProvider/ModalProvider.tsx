@@ -2,14 +2,14 @@ import { createContext, useContext, useMemo, useState } from 'react';
 import {
   ModalContextType,
   ModalFunctionWithContent,
-  TContent,
+  TErrorContent,
   TModalFunction,
   TModalName,
 } from './type';
 import ErrorModal from '../ErrorModal/ErrorModal';
-import { IModalProviderProps } from '../../types/types';
+import { IGetCustomerData, IModalProviderProps } from '../../types/types';
 import EditDataModal from '../EditDataModal/EditDataModal';
-import AddAddressModal from '../EditDataModal/EditDataModal';
+import AddAddressModal from '../AddAddressModal/AddAddressModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -21,6 +21,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         title: '',
         text: '',
       },
+      onClose: () => {},
     },
     imageView: {
       isOpen: false,
@@ -28,18 +29,17 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         images: [],
         title: '',
       },
+      onClose: () => {},
     },
-    editInfo: {
+    customer: {
       isOpen: false,
-      content: {
-        title: '',
-      },
+      content: {},
+      onClose: () => {},
     },
-    addInfo: {
+    address: {
       isOpen: false,
-      content: {
-        title: '',
-      },
+      content: {} as any,
+      onClose: () => {},
     },
   });
 
@@ -50,7 +50,8 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     }));
   };
 
-  const closeModal: TModalFunction = (modalName: TModalName) => {
+  const closeModal: TModalFunction = (modalName: TModalName, value?: any) => {
+    modals[modalName].content?.onClose(value);
     setModals((prevModals) => ({
       ...prevModals,
       [modalName]: { ...prevModals[modalName], isOpen: false },
@@ -59,7 +60,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
 
   const setContent: ModalFunctionWithContent = (
     modalName: TModalName,
-    content: TContent,
+    content: any,
   ) => {
     setModals((prevModals) => ({
       ...prevModals,
@@ -90,19 +91,19 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
   return (
     <ModalContext.Provider value={contextValue}>
       <EditDataModal
-        isOpen={modals.addInfo.isOpen}
-        content={modals.addInfo.content}
-        onClose={() => closeModal('editInfo')}
+        isOpen={modals.customer.isOpen}
+        content={modals.customer.content as IGetCustomerData}
+        onClose={() => closeModal('customer', true)}
       />
       <AddAddressModal
-        isOpen={modals.editInfo.isOpen}
-        content={modals.editInfo.content}
-        onClose={() => closeModal('addInfo')}
+        isOpen={modals.address.isOpen}
+        content={modals.address.content as any}
+        onClose={() => closeModal('address', true)}
       />
       <ErrorModal
         open={modals.error.isOpen}
-        content={modals.error.content}
-        onClose={() => closeModal('error')}
+        content={modals.error.content as TErrorContent}
+        onClose={() => closeModal('error', true)}
       />
       {children}
     </ModalContext.Provider>

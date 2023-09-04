@@ -1,6 +1,6 @@
-import { IImage } from '../../types/types';
+import { ICustomerAddressBase, IGetCustomerData, IImage } from '../../types/types';
 
-export type TModalName = 'error' | 'imageView' | 'editInfo' | 'addInfo';
+export type TModalName = 'error' | 'imageView' | 'customer' | 'address';
 
 export type TErrorContent = {
   title: string;
@@ -12,29 +12,26 @@ export type TImageViewContent = {
   title: string;
 };
 
-export type TEditDataContent = {
-  title: string;
-};
-
 export type TContent = {
-  error: TErrorContent;
-  imageView: TImageViewContent;
-  editInfo: TEditDataContent;
-  addInfo: TEditDataContent;
+  error?: TErrorContent;
+  imageView?: TImageViewContent;
+  customer?: IGetCustomerData;
+  address?: ICustomerAddressBase,
 }[TModalName];
 
 export type TModal = {
   [K in TModalName]: {
     isOpen: boolean;
-    content: TContent;
+    content: any;
+    onClose?: () => void;
   };
 };
 
-export type TModalFunction = (modalName: TModalName) => void;
+export type TModalFunction = (modalName: TModalName, isClose: boolean) => void;
 
 export type ModalFunctionWithContent = (
   modalName: TModalName,
-  content: TContent,
+  content: any,
 ) => void;
 
 export type ModalContentType = {

@@ -1,20 +1,25 @@
-import { List, ListItem, ListItemText } from '@mui/material';
+import { Box, List, ListItem, ListItemText } from '@mui/material';
 import { FC } from 'react';
-import { ICustomerDataField, ICustomerDataProps } from '../../types/types';
+import { ICustomerDataField, ICustomerDataProps, IGetCustomerData } from '../../types/types';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import styles from './CustomerData.styles';
 
 const CustomerData: FC<ICustomerDataProps> = ({
-  logoIcon,
   fields,
   customer,
+  addSuccess,
 }: ICustomerDataProps) => (
   <List>
     <ListItem sx={styles.listItem}>
       {fields.map((field: ICustomerDataField) => (
-        <ListItemText key={field.title} primary={field.title} secondary={field.description} />
+        <ListItemText
+          key={field.title}
+          primary={field.title}
+          secondary={field.description}
+        />
       ))}
-      <EditIconButton content={customer} />
+      <Box sx={styles.separator} />
+      <EditIconButton userId={customer?.id as string} versionId={customer?.version as number} addSuccess={addSuccess} />
     </ListItem>
   </List>
 );

@@ -7,6 +7,12 @@ const styles = {
       alignItems: 'baseline',
     },
   },
+  separator: {
+    height: '20px',
+    width: '1px',
+    margin: '0 8px',
+    background: '#ebedf0',
+  },
 };
 
 export default styles;

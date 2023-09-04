@@ -1,15 +1,15 @@
-import { Container, Modal, Paper, Typography } from '@mui/material';
+import { Container, Modal, Paper } from '@mui/material';
 
 import { enqueueSnackbar } from 'notistack';
 import styles from './EditDataModal.styles';
-import { TEditDataContent } from '../ModalProvider/type';
 import EditDataForm from '../EditDataForm/EditDataForm';
+import { IGetCustomerData } from '../../types/types';
 
-interface EditDataModalProps {
+type EditDataModalProps = {
   isOpen: boolean;
+  content: IGetCustomerData;
   onClose: () => void;
-  content: TEditDataContent;
-}
+};
 
 const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
   const handleEditData = () => {
@@ -22,8 +22,6 @@ const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
     <Modal
       open={isOpen}
       onClose={onClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
       <Container maxWidth="sm" sx={styles.outerBox}>
         <Paper sx={styles.paper}>

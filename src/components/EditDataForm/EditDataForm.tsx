@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Button, TextField, Grid, InputAdornment, IconButton } from '@mui/material';
+import { FC, useState } from 'react';
+import {
+  Button,
+  TextField,
+  Grid,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -11,36 +18,42 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './EditDataForm.styles';
 import nameValidation from '../../validation/name.validation';
-import { IEditDataForm } from '../../types/types';
-import {
-  getCustomerData,
-} from '../../services/apiIntegration/customers';
 import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
-import editCustomerData from '../../services/editCustomerData/editCustomerData';
+import editCustomerData, {
+  IEditCustomerDataProps,
+} from '../../services/profile/editCustomerData';
 import emailValidation from '../../validation/email.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
 
-const EditDataForm: React.FC = (
-  onEditDataSuccess,
+type EditDataFormProps = {
+  onEditDataSuccess: any;
+  customer: any;
+};
+
+const EditDataForm: FC<EditDataFormProps> = ({
   customer,
-) => {
+}: EditDataFormProps) => {
   const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
 
   const [data, setData] = useState({
     firstName: customer.firstName,
     lastName: customer.lastName,
-    dateOfBirth: customer.dateOfBirth,
+    dateOfBirth: dayjs(customer.dateOfBirth),
+    email: customer.email,
+  });
+
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [isSubmitting, setSubmitting] = useState(false);
-  console.log(customer);
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const createValidationSchema = (
-    email: string,
-  ) => Yup.object().shape({
+  const createValidationSchema = () => Yup.object().shape({
     firstName: nameValidation.required('First name is required'),
     lastName: nameValidation.required('Last name is required'),
     dateOfBirth: dateOfBirthlValidation,
@@ -51,8 +64,8 @@ const EditDataForm: React.FC = (
     initialValues: data,
     validationSchema: createValidationSchema(),
     validateOnChange: true,
-    onSubmit: async (values) => {
-      const customerData = values as IEditDataForm;
+    onSubmit: async (values: IEditCustomerDataProps) => {
+      const customerData = values as IEditCustomerDataProps;
       setSubmitting(true);
       const isEdited = await editCustomerData(customerData);
       if (isEdited) {
@@ -65,6 +78,27 @@ const EditDataForm: React.FC = (
         });
       }
       setSubmitting(false);
+    },
+  });
+
+  const formikPassword = useFormik({
+    initialValues: passwordData,
+    validationSchema: createValidationSchema(),
+    validateOnChange: true,
+    onSubmit: async (values) => {
+      // const customerData = values as IEditCustomerDataProps;
+      // setSubmitting(true);
+      // const isEdited = await editCustomerData(customerData);
+      // if (isEdited) {
+      //   enqueueSnackbar('Changes saved succesfully!', {
+      //     variant: 'success',
+      //   });
+      // } else {
+      //   enqueueSnackbar('Saving failed, please try again later.', {
+      //     variant: 'error',
+      //   });
+      // }
+      // setSubmitting(false);
     },
   });
 
@@ -87,7 +121,9 @@ const EditDataForm: React.FC = (
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-            helperText={formik.touched.firstName && formik.errors.firstName}
+            helperText={
+              formik.touched.firstName && (formik.errors.firstName as string)
+            }
             required
           />
         </Grid>
@@ -100,7 +136,9 @@ const EditDataForm: React.FC = (
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-            helperText={formik.touched.lastName && formik.errors.lastName}
+            helperText={
+              formik.touched.lastName && (formik.errors.lastName as string)
+            }
             required
           />
         </Grid>
@@ -124,7 +162,8 @@ const EditDataForm: React.FC = (
                     formik.touched.dateOfBirth
                     && Boolean(formik.errors.dateOfBirth),
                   helperText:
-                    formik.touched.dateOfBirth && formik.errors.dateOfBirth,
+                    formik.touched.dateOfBirth
+                    && (formik.errors.dateOfBirth as string),
                 },
               }}
             />
@@ -139,7 +178,7 @@ const EditDataForm: React.FC = (
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            helperText={formik.touched.email && (formik.errors.email as string)}
             required
           />
         </Grid>
@@ -152,11 +191,17 @@ const EditDataForm: React.FC = (
             type={showPassword ? 'text' : 'password'}
             name="password"
             label="Current password"
-            value={formik.values.password}
+            value=""
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
+            error={
+              formikPassword.touched.currentPassword
+              && Boolean(formikPassword.errors.currentPassword)
+            }
+            helperText={
+              formikPassword.touched.currentPassword
+              && formikPassword.errors.currentPassword
+            }
             required
             InputProps={{
               endAdornment: (
@@ -175,11 +220,16 @@ const EditDataForm: React.FC = (
             type={showPassword ? 'text' : 'password'}
             name="password"
             label="New password"
-            value={formik.values.password}
+            value={formikPassword.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
+            error={
+              formikPassword.touched.password
+              && Boolean(formikPassword.errors.password)
+            }
+            helperText={
+              formikPassword.touched.password && formikPassword.errors.password
+            }
             required
             InputProps={{
               endAdornment: (
@@ -198,11 +248,17 @@ const EditDataForm: React.FC = (
             type={showPassword ? 'text' : 'password'}
             name="password"
             label="Repeat new password"
-            value={formik.values.password}
+            value={formikPassword.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
+            error={
+              formikPassword.touched.confirmPassword
+              && Boolean(formikPassword.errors.confirmPassword)
+            }
+            helperText={
+              formikPassword.touched.confirmPassword
+              && formikPassword.errors.confirmPassword
+            }
             required
             InputProps={{
               endAdornment: (
