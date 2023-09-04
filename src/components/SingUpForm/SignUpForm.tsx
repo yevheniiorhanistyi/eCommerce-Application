@@ -94,7 +94,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     nameFiled: string,
     validateFields = true,
   ) => Yup.object().shape({
-    street: validateFields ? notEmtyValidation : Yup.string(),
+    streetName: validateFields ? notEmtyValidation : Yup.string(),
     city: validateFields
       ? nameValidation.required('City is required')
       : Yup.string(),
@@ -380,7 +380,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth
-            name="addressShipping.street"
+            name="addressShipping.streetName"
             label="Street"
             value={formik.values.addressShipping.street}
             onChange={formik.handleChange}
@@ -501,7 +501,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
             <Grid item sm={12} xs={12}>
               <TextField
                 fullWidth
-                name="addressBilling.street"
+                name="addressBilling.streetName"
                 label="Street"
                 value={formik.values.addressBilling.street}
                 onChange={formik.handleChange}
