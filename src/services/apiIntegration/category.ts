@@ -8,7 +8,6 @@ const getCategory = async (
 ): Promise<Category[] | null> => {
   try {
     const responseCategory = await apiRoot.categories().get().execute();
-    console.log('responseCategory', responseCategory);
     if (responseCategory.statusCode === 200) {
       return responseCategory.body.results;
     }

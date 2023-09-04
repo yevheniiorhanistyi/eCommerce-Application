@@ -34,6 +34,10 @@ const router = createBrowserRouter([
         element: <Catalog />,
       },
       {
+        path: '/category/:key',
+        element: <Catalog />,
+      },
+      {
         path: '/profile',
         element: <Profile />,
       },

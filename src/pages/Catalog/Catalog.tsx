@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Grid, Box, Container } from '@mui/material';
 import { IProduct } from '../../types/productInterfaces';
 import { getProductByParams } from '../../services/products/getProductByParams';
@@ -10,6 +11,8 @@ import ProductList from '../../components/ProductList/ProductList';
 import NoResultsMessage from '../../components/NoResultsMessage/NoResultsMessage';
 
 import styles from './Catalog.styles';
+import languageCode from '../../utils/languageCode';
+import { useCategoryData } from '../../components/CategoryDataProvider/CategoryDataProvider';
 
 const Catalog: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
@@ -23,6 +26,13 @@ const Catalog: React.FC = () => {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [prices, setPrices] = useState<number[]>([10, 800]);
+  const { key } = useParams<{ key: string }>();
+  const categorySlug = key?.split(' ').pop();
+  const { categoryData } = useCategoryData();
+  const idCategory = categoryData.find(
+    (item) => item.slug[languageCode] === categorySlug,
+  )?.id;
+  console.log('categorySlug', categorySlug, idCategory);
 
   useEffect(() => {
     const handleResize = () => {
