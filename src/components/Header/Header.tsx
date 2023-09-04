@@ -120,7 +120,7 @@ const Header: React.FC = () => {
             >
               CATALOG
             </Button>
-            <Popper id={id} open={open} anchorEl={anchorEl}>
+            <Popper id={id} open={open} anchorEl={anchorEl} sx={styles.popper}>
               <CategoryMenu categoryData={categoryData} />
             </Popper>
             {pages.map((page) => (
