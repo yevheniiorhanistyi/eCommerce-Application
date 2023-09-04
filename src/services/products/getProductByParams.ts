@@ -13,6 +13,7 @@ export const getProductByParams = async (
   colors: string[],
   sizes: string[],
   brands: string[],
+  searchValue: string,
   categoryId: string | null = null,
   minPrice = 10,
   maxPrice = 120,
@@ -26,30 +27,33 @@ export const getProductByParams = async (
       const tokenStatusResponse = await validateTokenStatus(token);
       if (!tokenStatusResponse.active) token = (await getAnonymousToken()).token;
     }
-    const colorFilter = combineStringAndValues(
-      'variants.attributes.color.key',
-      colors,
-    );
-    const sizeFilter = combineStringAndValues(
-      'variants.attributes.size.key',
-      sizes,
-    );
-    const brandFilter = combineStringAndValues(
-      'variants.attributes.brand.key',
-      brands,
-    );
-    const queryParams: { filter: string[]; sort: string[] } = {
+
+    const filters = [
+      { key: 'variants.attributes.color.key', values: colors },
+      { key: 'variants.attributes.size.key', values: sizes },
+      { key: 'variants.attributes.brand.key', values: brands },
+    ];
+    const queryParams: {
+      filter: string[];
+      sort: string[];
+      'text.en-US': string;
+    } = {
       filter: [
         `variants.price.centAmount:range("${minPrice * 100}" to "${
           maxPrice * 100
         }")`,
       ],
       sort: [sortValue],
+      'text.en-US': `${searchValue}`,
     };
     if (categoryId !== '') queryParams.filter.push(`categories.id:"${categoryId}"`);
-    if (colors.length > 0) queryParams.filter.push(colorFilter);
-    if (sizes.length > 0) queryParams.filter.push(sizeFilter);
-    if (brands.length > 0) queryParams.filter.push(brandFilter);
+    filters.forEach((filter) => {
+      if (filter.values.length > 0) {
+        queryParams.filter.push(
+          combineStringAndValues(filter.key, filter.values),
+        );
+      }
+    });
     const response = await axios.get<IProductResponse>(
       `${baseUrl}/${projectKey}/product-projections/search`,
       {

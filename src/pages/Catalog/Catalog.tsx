@@ -25,6 +25,7 @@ const Catalog: React.FC = () => {
   const [prices, setPrices] = useState<number[]>([10, 800]);
 
   useEffect(() => {
+    console.log(searchValue);
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
       setAnchorElem(null);
@@ -38,6 +39,7 @@ const Catalog: React.FC = () => {
           selectedColors,
           selectedSizes,
           selectedBrands,
+          searchValue,
           selectedGender,
           minPrice,
           maxPrice,
@@ -63,6 +65,7 @@ const Catalog: React.FC = () => {
     selectedColors,
     selectedSizes,
     selectedBrands,
+    searchValue,
   ]);
 
   const filterSize = windowWidth > 940 ? 3 : 12;
