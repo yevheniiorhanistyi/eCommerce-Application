@@ -187,7 +187,6 @@ export type PriceRangeProps = {
 };
 
 export type FilterSidebarProps = {
-  selectedGender: string;
   selectedColors: string[];
   selectedSizes: string[];
   prices: number[];
@@ -195,6 +194,5 @@ export type FilterSidebarProps = {
   setSelectedBrands: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedSizes: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
-  setSelectedGender: React.Dispatch<React.SetStateAction<string>>;
   setPrices: React.Dispatch<React.SetStateAction<number[]>>;
 };
