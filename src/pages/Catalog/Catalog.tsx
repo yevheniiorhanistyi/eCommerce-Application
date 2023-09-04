@@ -38,6 +38,7 @@ const Catalog: React.FC = () => {
           selectedColors,
           selectedSizes,
           selectedBrands,
+          searchValue,
           selectedGender,
           minPrice,
           maxPrice,
@@ -63,6 +64,7 @@ const Catalog: React.FC = () => {
     selectedColors,
     selectedSizes,
     selectedBrands,
+    searchValue,
   ]);
 
   const filterSize = windowWidth > 940 ? 3 : 12;
@@ -132,7 +134,7 @@ const Catalog: React.FC = () => {
                 setSelectedOption={setSelectedOption}
               />
             </Box>
-            {productList.length === 0 ? (
+            {productList.length === 0 && isLoading === false ? (
               <NoResultsMessage />
             ) : (
               <ProductList isLoading={isLoading} products={productList} />
