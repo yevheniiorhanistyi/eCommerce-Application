@@ -44,30 +44,6 @@ const Main: React.FC = () => (
             Sign Up
           </Link>
         </ListItem>
-        <ListItem>
-          <Link
-            align="center"
-            underline="hover"
-            sx={styles.link}
-            component={RouterLink}
-            variant="h5"
-            to="/category/kids other_kids"
-          >
-            kids other_kids
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link
-            align="center"
-            underline="hover"
-            sx={styles.link}
-            component={RouterLink}
-            variant="h5"
-            to="/category/womens-clothing other_women"
-          >
-            womens-clothing other_women
-          </Link>
-        </ListItem>
       </List>
     </Paper>
   </Container>
