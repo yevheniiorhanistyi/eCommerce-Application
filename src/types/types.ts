@@ -197,6 +197,11 @@ export type FilterSidebarProps = {
   setPrices: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
+export interface IProtectedComponentProps {
+  isLoggedIn: boolean;
+  children: React.ReactNode;
+}
+
 export type TLanguage = 'en-US';
 
 export type LocalizedObject<T> = {

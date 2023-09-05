@@ -1,12 +1,21 @@
+import { Navigate } from 'react-router-dom';
+
 import { Container } from '@mui/material';
 import CustomerInfo from '../../components/CustomerInfo/CustomerInfo';
 
 import styles from './Profile.styles';
+import { useAuth } from '../../components/AuthProvider/AuthProvider';
 
-const Page: React.FC = () => (
-  <Container fixed maxWidth="md" sx={styles.innerBox}>
-    <CustomerInfo />
-  </Container>
-);
+const Profile: React.FC = () => {
+  const { isAuthenticated } = useAuth();
 
-export default Page;
+  return isAuthenticated ? (
+    <Container fixed maxWidth="md" sx={styles.innerBox}>
+      <CustomerInfo />
+    </Container>
+  ) : (
+    <Navigate to="/" />
+  );
+};
+
+export default Profile;
