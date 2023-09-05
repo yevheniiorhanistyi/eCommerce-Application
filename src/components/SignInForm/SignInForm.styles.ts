@@ -6,6 +6,11 @@ const styles = {
   field: {
     mb: '20px',
   },
+  helperText: {
+    fontSize: '14px',
+    fontWeight: '400',
+    textTransform: 'initial',
+  },
 };
 
 export default styles;

@@ -1,7 +1,7 @@
 const styles = {
   card: {
     maxWidth: 280,
-    margin: '0 4px 15px',
+    marginBottom: '15px',
   },
   cardActionArea: {
     height: '370px',
@@ -16,6 +16,7 @@ const styles = {
     justifyContent: 'center',
     width: '100%',
     height: '180px',
+    paddingTop: '10px',
   },
   cardMedia: {
     maxWidth: '100%',

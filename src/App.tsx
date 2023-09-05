@@ -17,6 +17,7 @@ import Profile from './pages/Profile/Profile';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import PrimaryLayout from './layouts/PrimaryLayout';
+import { CategoryDataProvider } from './components/CategoryDataProvider/CategoryDataProvider';
 
 const App: React.FC = () => (
   <SnackbarProvider maxSnack={3}>
@@ -24,21 +25,24 @@ const App: React.FC = () => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ModalProvider>
-          <Box data-testid="app" className="App">
-            <BrowserRouter>
+          <CategoryDataProvider>
+            <Box data-testid="app" className="App">
+              <BrowserRouter>
               <Routes>
                 <Route element={<PrimaryLayout />}>
                   <Route path="/" element={<Main />} />
-                  <Route path="/profile" element={<Profile />} />
                   <Route path="/signin" element={<SignIn />} />
                   <Route path="/signup" element={<SignUp />} />
                   <Route path="/product/:key" element={<DetailedProductPage />} />
                   <Route path="/catalog" element={<Catalog />} />
+                  <Route path="/category/:key" element={<Catalog />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="/*" element={<NotFound404 />} />
-                </Route>
+                  </Route>
               </Routes>
             </BrowserRouter>
           </Box>
+          </CategoryDataProvider>
         </ModalProvider>
       </ThemeProvider>
     </AuthProvider>

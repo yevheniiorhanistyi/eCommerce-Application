@@ -1,89 +1,78 @@
 import { useState } from 'react';
 import {
-  Select,
-  MenuItem,
-  FormControl,
   Box,
   OutlinedInput,
   InputAdornment,
-  Slider,
-  Button,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { PriceRangeProps } from '../../types/types';
 
 import styles from './PriceRange.styles';
 
-const PriceRange: React.FC = () => {
-  const minPrice = 10;
-  const maxPrice = 800;
-  const [value, setValue] = useState<number[]>([minPrice, maxPrice]);
+const PriceRange: React.FC<PriceRangeProps> = ({
+  prices,
+  setPrices,
+}: PriceRangeProps) => {
+  const minPrice = prices[0];
+  const maxPrice = prices[1];
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
-  };
-
-  const handleInputChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputsPrice = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(event.target.value);
     if (!isNaN(newValue)) {
-      const updatedValue = [...value];
+      let [min, max] = [...prices];
+
       if (index === 0) {
-        updatedValue[index] = Math.min(Math.max(newValue, -1), value[1]);
+        min = newValue;
       } else {
-        updatedValue[index] = Math.min(
-          Math.max(newValue, value[0]),
-          maxPrice,
-        );
+        max = newValue;
       }
-      setValue(updatedValue);
+      if (min > max) {
+        [min, max] = [max, min];
+      }
+      setPrices([min, max]);
     }
   };
 
+  const [expanded, setExpanded] = useState<boolean>(true);
+
+  const handleChangeAccordion = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <FormControl sx={styles.formControl}>
-      <Select
-        value=""
-        displayEmpty
-        inputProps={{ 'aria-label': 'Without label' }}
-      >
-        <MenuItem value="" sx={styles.menuItem}>
-          Price
-        </MenuItem>
+    <Accordion expanded={expanded} onChange={handleChangeAccordion}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography sx={{ width: '33%', flexShrink: 0 }}>Price</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
         <Box sx={styles.contentBox}>
           <Box sx={styles.inputBox}>
             <OutlinedInput
-              endAdornment={<InputAdornment position="end">$</InputAdornment>}
-              value={value[0]}
-              onChange={handleInputChange(0)}
+              endAdornment={<InputAdornment position="end">€</InputAdornment>}
+              value={minPrice}
+              onChange={onChangeInputsPrice(0)}
               sx={styles.outlinedInput}
               inputProps={{
-                'aria-label': 'Price',
+                'aria-label': 'Min price',
               }}
             />
             <OutlinedInput
-              endAdornment={<InputAdornment position="end">$</InputAdornment>}
-              value={value[1]}
-              onChange={handleInputChange(1)}
+              endAdornment={<InputAdornment position="end">€</InputAdornment>}
+              value={maxPrice}
+              onChange={onChangeInputsPrice(1)}
               sx={styles.outlinedInput}
               inputProps={{
-                'aria-label': 'Price',
+                'aria-label': 'Max price',
               }}
             />
           </Box>
-          <Box sx={styles.sliderBox}>
-            <Slider
-              getAriaLabel={() => 'Price range'}
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              min={minPrice}
-              max={maxPrice}
-            />
-          </Box>
-          <Button sx={styles.button} variant="contained">
-            Save
-          </Button>
         </Box>
-      </Select>
-    </FormControl>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 

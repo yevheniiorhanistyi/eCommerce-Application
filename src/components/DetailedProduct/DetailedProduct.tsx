@@ -53,9 +53,15 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
 
   const renderImageView = (data: IProductDisplayData) => {
     if (data.images.length === 1) {
-      return <ProductImage url={data.images[0].url} alt={data.title} />;
+      return (
+        <ProductImage
+          url={data.images[0].url}
+          alt={data.title}
+          images={data.images}
+        />
+      );
     }
-    return <ProductSlider images={data.images} keyProduct={data.title} />;
+    return <ProductSlider images={data.images} title={data.title} />;
   };
 
   if (productData === null) {

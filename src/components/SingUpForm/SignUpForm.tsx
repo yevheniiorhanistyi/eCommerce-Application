@@ -91,7 +91,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
     nameFiled: string,
     validateFields = true,
   ) => Yup.object().shape({
-    street: validateFields ? notEmtyValidation : Yup.string(),
+    streetName: validateFields ? notEmtyValidation : Yup.string(),
     city: validateFields
       ? nameValidation.required('City is required')
       : Yup.string(),
@@ -161,8 +161,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
           });
           onSignInSuccess();
         } catch (error) {
-          modal.openModal();
-          modal.setContent({
+          modal.openModal('error');
+          modal.setContent('error', {
             title: 'Sorry',
             text: 'Sing in failed, please try again later',
           });
@@ -170,8 +170,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
           formik.resetForm();
         }
       } else {
-        modal.openModal();
-        modal.setContent({
+        modal.openModal('error');
+        modal.setContent('error', {
           title: 'Sorry',
           text: 'Registration failed, please try again later',
         });
@@ -377,7 +377,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth
-            name="addressShipping.street"
+            name="addressShipping.streetName"
             label="Street"
             value={formik.values.addressShipping.streetName}
             onChange={formik.handleChange}
@@ -498,7 +498,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
             <Grid item sm={12} xs={12}>
               <TextField
                 fullWidth
-                name="addressBilling.street"
+                name="addressBilling.streetName"
                 label="Street"
                 value={formik.values.addressBilling.streetName}
                 onChange={formik.handleChange}

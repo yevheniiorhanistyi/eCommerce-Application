@@ -31,8 +31,8 @@ const SignInForm: React.FC<ISignInFormProps> = ({
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const showErrorModal = (error: Error) => {
-    setContent({ title: 'Oops 😕', text: error.message });
-    openModal();
+    setContent('error', { title: 'Oops 😕', text: error.message });
+    openModal('error');
   };
 
   const handleMouseDownPassword = (
@@ -85,7 +85,9 @@ const SignInForm: React.FC<ISignInFormProps> = ({
                 error={touched.email && Boolean(errors.email)}
               />
               {touched.email && errors.email ? (
-                <FormHelperText error>{errors.email}</FormHelperText>
+                <FormHelperText sx={styles.helperText} error>
+                  {errors.email}
+                </FormHelperText>
               ) : null}
             </FormControl>
             <FormControl fullWidth variant="outlined" required>
@@ -118,7 +120,9 @@ const SignInForm: React.FC<ISignInFormProps> = ({
                 label="Password"
               />
               {touched.password && errors.password ? (
-                <FormHelperText error>{errors.password}</FormHelperText>
+                <FormHelperText sx={styles.helperText} error>
+                  {errors.password}
+                </FormHelperText>
               ) : null}
             </FormControl>
           </Box>
