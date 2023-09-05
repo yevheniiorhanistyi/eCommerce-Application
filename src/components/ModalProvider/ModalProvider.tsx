@@ -2,14 +2,18 @@ import { createContext, useContext, useMemo, useState } from 'react';
 import {
   ModalContextType,
   ModalFunctionWithContent,
+  TAddressContent,
+  TContent,
+  TCustomerContent,
   TErrorContent,
   TModalFunction,
   TModalName,
+  TReturnClose,
 } from './type';
 import ErrorModal from '../ErrorModal/ErrorModal';
-import { IGetCustomerData, IModalProviderProps } from '../../types/types';
 import EditDataModal from '../EditDataModal/EditDataModal';
 import AddAddressModal from '../AddAddressModal/AddAddressModal';
+import { IModalProviderProps } from '../../types/types';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -33,12 +37,19 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     },
     customer: {
       isOpen: false,
-      content: {},
+      content: {
+        userId: '',
+      },
       onClose: () => {},
     },
     address: {
       isOpen: false,
-      content: {} as any,
+      content: {
+        userId: '',
+        isBilling: false,
+        versionId: 0,
+        onClose: (value: TReturnClose) => {},
+      },
       onClose: () => {},
     },
   });
@@ -50,8 +61,13 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     }));
   };
 
-  const closeModal: TModalFunction = (modalName: TModalName, value?: any) => {
-    modals[modalName].content?.onClose(value);
+  const closeModal: TModalFunction = (
+    modalName: TModalName,
+    value: TReturnClose,
+  ) => {
+    if (modalName === 'address' && value) {
+      modals[modalName].content?.onClose(value);
+    }
     setModals((prevModals) => ({
       ...prevModals,
       [modalName]: { ...prevModals[modalName], isOpen: false },
@@ -60,23 +76,13 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
 
   const setContent: ModalFunctionWithContent = (
     modalName: TModalName,
-    content: any,
+    content: TContent,
   ) => {
     setModals((prevModals) => ({
       ...prevModals,
       [modalName]: { ...prevModals[modalName], content },
     }));
   };
-
-  // const [modalOpen, setModalOpen] = useState(false);
-  // const [modalContent, setModalContent] = useState({
-  //   title: '',
-  //   text: '',
-  // });
-
-  // const openModal = () => setModalOpen(true);
-  // const closeModal = () => setModalOpen(false);
-  // const setContent = (content: ModalContentType) => setModalContent(content);
 
   const contextValue: ModalContextType = useMemo(
     () => ({
@@ -92,12 +98,12 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     <ModalContext.Provider value={contextValue}>
       <EditDataModal
         isOpen={modals.customer.isOpen}
-        content={modals.customer.content as IGetCustomerData}
+        content={modals.customer.content as TCustomerContent}
         onClose={() => closeModal('customer', true)}
       />
       <AddAddressModal
         isOpen={modals.address.isOpen}
-        content={modals.address.content as any}
+        content={modals.address.content as TAddressContent}
         onClose={() => closeModal('address', true)}
       />
       <ErrorModal

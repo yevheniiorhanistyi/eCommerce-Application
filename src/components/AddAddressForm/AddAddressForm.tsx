@@ -28,7 +28,7 @@ import getCountries from '../../services/apiIntegration/getCountries';
 import addAddress from '../../services/profile/addAddress';
 import createPostalCodeValidationSingle from '../../validation/postalCodeSingle.validation';
 
-interface AddAddressModalProps {
+interface AddAddressModalFormProps {
   onEditDataSuccess: any;
   content: IGetCustomerAddress;
   userId: string;
@@ -36,11 +36,11 @@ interface AddAddressModalProps {
   isBilling: boolean;
 }
 
-const AddAddressForm: FC<AddAddressModalProps> = ({
+const AddAddressForm: FC<AddAddressModalFormProps> = ({
   userId,
   isBilling,
   versionId,
-}: AddAddressModalProps) => {
+}: AddAddressModalFormProps) => {
   const modal = useModal();
   const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -97,10 +97,8 @@ const AddAddressForm: FC<AddAddressModalProps> = ({
           modal.closeModal('address', true);
         }
       } catch (error) {
-        modal.openModal('error', false);
-        modal.setContent('error', {
-          title: 'Sorry',
-          text: 'Adding address failed, please try again later',
+        enqueueSnackbar('Adding address failed, please try again later', {
+          variant: 'error',
         });
       } finally {
         formik.resetForm();

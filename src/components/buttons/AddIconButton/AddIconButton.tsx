@@ -7,7 +7,7 @@ import { IEditIconButtonProps } from '../../../types/types';
 
 const AddIconButton: FC<IEditIconButtonProps> = ({
   userId,
-  isBilling,
+  isBilling = false,
   versionId,
   addSuccess,
 }: IEditIconButtonProps) => {
