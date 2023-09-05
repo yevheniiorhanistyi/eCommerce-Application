@@ -11,6 +11,7 @@ import {
   Container,
   Button,
   MenuItem,
+  Popper,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import StoreIcon from '@mui/icons-material/Store';
@@ -20,17 +21,27 @@ import SignUpButton from '../buttons/SignUpButton/SignUpButton';
 import SignOutButton from '../buttons/SignOutButton/SignOutButton';
 import ProfileButton from '../buttons/ProfileButton/ProfileButton';
 
+import CategoryMenu from '../CategoryMenu/CategoryMenu';
+import { useAuth } from '../AuthProvider/AuthProvider';
+
 import { removeTokenFromLocalStorage } from '../../utils/authUtils';
 
 import styles from './Header.styles';
-import { useAuth } from '../AuthProvider/AuthProvider';
+import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
 
 const Header: React.FC = () => {
   const { isAuthenticated, setAuthentication } = useAuth();
-  const pages = [
-    { title: 'Catalog', route: '/catalog' },
-    { title: 'About Us', route: '/' },
-  ];
+  const pages = [{ title: 'About Us', route: '/' }];
+
+  const { categoryData } = useCategoryData();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
 
   const handleSignOut = () => {
     setAuthentication(false);
@@ -85,6 +96,7 @@ const Header: React.FC = () => {
               onClose={handleCloseNavMenu}
               sx={styles.menubar}
             >
+              <CategoryMenu categoryData={categoryData} />
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                   <Link style={{ textDecoration: 'none' }} to={page.route}>
@@ -101,6 +113,16 @@ const Header: React.FC = () => {
             </Typography>
           </Link>
           <Box sx={styles.navMenuBox}>
+            <Button
+              aria-describedby={id}
+              onClick={handleClick}
+              sx={styles.closeNavMenu}
+            >
+              CATALOG
+            </Button>
+            <Popper id={id} open={open} anchorEl={anchorEl} sx={styles.popper}>
+              <CategoryMenu categoryData={categoryData} />
+            </Popper>
             {pages.map((page) => (
               <Button
                 key={page.title}

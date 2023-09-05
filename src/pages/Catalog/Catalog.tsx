@@ -13,6 +13,7 @@ import ProductList from '../../components/ProductList/ProductList';
 import NoResultsMessage from '../../components/NoResultsMessage/NoResultsMessage';
 
 import styles from './Catalog.styles';
+import BreadcrumbsCategory from '../../components/BreadcrumbsCategory/BreadcrumbsCategory';
 
 const Catalog: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
@@ -81,6 +82,7 @@ const Catalog: React.FC = () => {
   return (
     <Box sx={styles.outerBox}>
       <Container component="main" maxWidth="lg">
+        <BreadcrumbsCategory paramLink={key} />
         <Grid
           direction="row"
           justifyContent="center"

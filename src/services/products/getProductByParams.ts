@@ -46,7 +46,7 @@ export const getProductByParams = async (
       sort: [sortValue],
       'text.en-US': `${searchValue}`,
     };
-    if (categoryId !== '') queryParams.filter.push(`categories.id:"${categoryId}"`);
+    if (categoryId) queryParams.filter.push(`categories.id:"${categoryId}"`);
     filters.forEach((filter) => {
       if (filter.values.length > 0) {
         queryParams.filter.push(

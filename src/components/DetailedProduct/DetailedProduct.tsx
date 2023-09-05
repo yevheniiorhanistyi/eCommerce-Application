@@ -20,7 +20,7 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
   IProductDisplayData | null | ''
   >('');
   const imageViewRef = useRef<HTMLDivElement>(null);
-  const [imageViewWidth, setImageViewWidth] = useState(0);
+  const [imageViewWidth, setImageViewWidth] = useState(544);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,8 +35,7 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageViewRef.current]);
+  }, [productData]);
 
   useEffect(() => {
     const fetchData = async () => {
