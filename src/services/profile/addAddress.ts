@@ -11,7 +11,7 @@ export interface AddAddressProps {
   isBilling: boolean;
 }
 
-const addAddress = async (
+export const addAddress = async (
   address: ICustomerAddressBase,
   userId: string,
   versionId: number,

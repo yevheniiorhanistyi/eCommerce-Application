@@ -11,7 +11,7 @@ export const getProject = async (
     const project = await apiRoot.get().execute();
     return project.body;
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,

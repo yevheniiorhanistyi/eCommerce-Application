@@ -3,7 +3,6 @@ import { Container, Modal, Paper } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
 import styles from './AddAddressModal.styles';
 import AddAddressForm from '../AddAddressForm/AddAddressForm';
-import { IGetCustomerAddress } from '../../types/types';
 import { TAddressContent } from '../ModalProvider/type';
 
 interface AddAddressModalProps {

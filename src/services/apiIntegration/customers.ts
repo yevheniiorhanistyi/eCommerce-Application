@@ -14,6 +14,7 @@ import {
 } from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
+import { FamilyRestroomRounded } from '@mui/icons-material';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
@@ -41,7 +42,7 @@ export const getCustomers = async (
     const customers = await apiRoot.customers().get().execute();
     return customers.body;
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,
@@ -66,7 +67,7 @@ export const checkEmailCustomer = async (
       .execute();
     return Boolean(customerToFind.body.count);
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,
@@ -137,7 +138,7 @@ export const createCustomer = async (
     }
     return false;
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,

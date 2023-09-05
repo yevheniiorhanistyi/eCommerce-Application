@@ -25,12 +25,12 @@ import {
 import { useModal } from '../ModalProvider/ModalProvider';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import getCountries from '../../services/apiIntegration/getCountries';
-import addAddress from '../../services/profile/addAddress';
+import { addAddress } from '../../services/profile/addAddress';
 import createPostalCodeValidationSingle from '../../validation/postalCodeSingle.validation';
 
 interface AddAddressModalFormProps {
   onEditDataSuccess: any;
-  content: IGetCustomerAddress;
+  content: IGetCustomerAddress | undefined;
   userId: string;
   versionId: number;
   isBilling: boolean;
