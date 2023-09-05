@@ -201,3 +201,9 @@ export interface IProtectedComponentProps {
   isLoggedIn: boolean;
   children: React.ReactNode;
 }
+
+export type TLanguage = 'en-US';
+
+export type LocalizedObject<T> = {
+  [key in TLanguage]: T;
+};
