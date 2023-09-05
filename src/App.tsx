@@ -1,9 +1,5 @@
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import { AuthProvider } from './components/AuthProvider/AuthProvider';
 import { ModalProvider } from './components/ModalProvider/ModalProvider';
@@ -28,20 +24,23 @@ const App: React.FC = () => (
           <CategoryDataProvider>
             <Box data-testid="app" className="App">
               <BrowserRouter>
-              <Routes>
-                <Route element={<PrimaryLayout />}>
-                  <Route path="/" element={<Main />} />
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/product/:key" element={<DetailedProductPage />} />
-                  <Route path="/catalog" element={<Catalog />} />
-                  <Route path="/category/:key" element={<Catalog />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/*" element={<NotFound404 />} />
+                <Routes>
+                  <Route element={<PrimaryLayout />}>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route
+                      path="/product/:key"
+                      element={<DetailedProductPage />}
+                    />
+                    <Route path="/catalog" element={<Catalog />} />
+                    <Route path="/category/:key" element={<Catalog />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/*" element={<NotFound404 />} />
                   </Route>
-              </Routes>
-            </BrowserRouter>
-          </Box>
+                </Routes>
+              </BrowserRouter>
+            </Box>
           </CategoryDataProvider>
         </ModalProvider>
       </ThemeProvider>
