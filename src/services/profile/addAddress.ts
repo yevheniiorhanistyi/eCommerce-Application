@@ -18,7 +18,7 @@ export const addAddress = async (
   isBilling: boolean,
 ) => {
   try {
-    const { token } = getTokenFromLocalStorage();
+    const token = getTokenFromLocalStorage();
     const newCustomer = await axios.post(
       `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({

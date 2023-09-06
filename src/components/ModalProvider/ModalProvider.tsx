@@ -4,7 +4,6 @@ import {
   ModalFunctionWithContent,
   TAddressContent,
   TContent,
-  TCustomerContent,
   TErrorContent,
   TModalFunction,
   TModalName,

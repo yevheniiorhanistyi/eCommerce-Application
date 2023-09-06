@@ -36,19 +36,12 @@ const EditDataForm: FC<EditDataFormProps> = ({
   customer,
 }: EditDataFormProps) => {
   const modal = useModal();
-  const [showPassword, setShowPassword] = useState(false);
 
   const [data, setData] = useState({
     firstName: customer.firstName,
     lastName: customer.lastName,
     dateOfBirth: dayjs(new Date(customer.dateOfBirth)),
     email: customer.email,
-  });
-
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    password: '',
-    confirmPassword: '',
   });
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -86,32 +79,6 @@ const EditDataForm: FC<EditDataFormProps> = ({
       modal.closeModal('customer', true);
     },
   });
-
-  const formikPassword = useFormik({
-    initialValues: passwordData,
-    validationSchema: createValidationSchema(),
-    validateOnChange: true,
-    onSubmit: async (values) => {
-      // const customerData = values as IEditCustomerDataProps;
-      // setSubmitting(true);
-      // const isEdited = await editCustomerData(customerData);
-      // if (isEdited) {
-      //   enqueueSnackbar('Changes saved succesfully!', {
-      //     variant: 'success',
-      //   });
-      // } else {
-      //   enqueueSnackbar('Saving failed, please try again later.', {
-      //     variant: 'error',
-      //   });
-      // }
-      // setSubmitting(false);
-      modal.closeModal('customer', false);
-    },
-  });
-
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
 
   return (
     <form onSubmit={formik.handleSubmit} noValidate>
@@ -187,95 +154,6 @@ const EditDataForm: FC<EditDataFormProps> = ({
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && (formik.errors.email as string)}
             required
-          />
-        </Grid>
-        <Grid item sm={12} xs={12}>
-          <CenteredDivider caption="Password" />
-        </Grid>
-        <Grid item sm={12} xs={12}>
-          <TextField
-            fullWidth
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            label="Current password"
-            value=""
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formikPassword.touched.currentPassword
-              && Boolean(formikPassword.errors.currentPassword)
-            }
-            helperText={
-              formikPassword.touched.currentPassword
-              && formikPassword.errors.currentPassword
-            }
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleTogglePassword} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item sm={12} xs={12}>
-          <TextField
-            fullWidth
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            label="New password"
-            value={formikPassword.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formikPassword.touched.password
-              && Boolean(formikPassword.errors.password)
-            }
-            helperText={
-              formikPassword.touched.password && formikPassword.errors.password
-            }
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleTogglePassword} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item sm={12} xs={12}>
-          <TextField
-            fullWidth
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            label="Repeat new password"
-            value={formikPassword.values.confirmPassword}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formikPassword.touched.confirmPassword
-              && Boolean(formikPassword.errors.confirmPassword)
-            }
-            helperText={
-              formikPassword.touched.confirmPassword
-              && formikPassword.errors.confirmPassword
-            }
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleTogglePassword} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
           />
         </Grid>
       </Grid>

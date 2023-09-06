@@ -3,14 +3,14 @@ import { getTokenFromLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
-const id = '50777a13-e6df-487b-b682-76c8297bdbdb';
-const version = 7;
 
 export interface IEditCustomerDataProps {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
   email: string;
+  versionId: number;
+  userId: string;
 }
 
 const editCustomerData = async ({
@@ -18,21 +18,23 @@ const editCustomerData = async ({
   lastName,
   dateOfBirth,
   email,
+  versionId,
+  userId,
 }: IEditCustomerDataProps) => {
   try {
-    const { token } = getTokenFromLocalStorage();
+    const token = getTokenFromLocalStorage();
     const response = await axios.post(
-      `${region}/${projectKey}/customers/${id}`,
+      `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({
-        version,
+        version: versionId,
         actions: [
           {
             action: 'setFirstName',
             firstName,
           },
           {
-            action: 'setLasttName',
-            LasttName: lastName,
+            action: 'setLastName',
+            LastName: lastName,
           },
           {
             action: 'setDateOfBirth',
