@@ -25,7 +25,7 @@ const ProductImage: React.FC<IProductImageProps> = ({
   };
 
   const handleClick = () => {
-    modal.openModal('imageView');
+    modal.openModal('imageView', false);
     if (images) {
       const contentModal = {
         images,
