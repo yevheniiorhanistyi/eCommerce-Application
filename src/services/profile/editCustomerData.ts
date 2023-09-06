@@ -22,7 +22,7 @@ const editCustomerData = async ({
   userId,
 }: IEditCustomerDataProps) => {
   try {
-    const token = getTokenFromLocalStorage();
+    const { token } = getTokenFromLocalStorage();
     const response = await axios.post(
       `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({
@@ -34,7 +34,7 @@ const editCustomerData = async ({
           },
           {
             action: 'setLastName',
-            LastName: lastName,
+            lastName,
           },
           {
             action: 'setDateOfBirth',

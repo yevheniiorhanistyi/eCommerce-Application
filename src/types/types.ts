@@ -171,7 +171,6 @@ export interface IEditDataForm {
 
 export interface IEditIconButtonProps {
   customer: IGetCustomerData;
-  isBilling?: boolean;
   addSuccess: () => void;
 }
 

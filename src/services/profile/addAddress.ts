@@ -18,7 +18,7 @@ export const addAddress = async (
   isBilling: boolean,
 ) => {
   try {
-    const token = getTokenFromLocalStorage();
+    const { token } = getTokenFromLocalStorage();
     const newCustomer = await axios.post(
       `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({
@@ -44,9 +44,13 @@ export const addAddress = async (
           version: newCustomer.data.version,
           actions: [
             {
-              action: isBilling ? 'addBillingAddressId' : 'addShippingAddressId',
+              action: isBilling
+                ? 'addBillingAddressId'
+                : 'addShippingAddressId',
               addressId:
-                newCustomer.data.addresses[newCustomer.data.addresses.length - 1].id,
+                newCustomer.data.addresses[
+                  newCustomer.data.addresses.length - 1
+                ].id,
             },
           ],
         }),

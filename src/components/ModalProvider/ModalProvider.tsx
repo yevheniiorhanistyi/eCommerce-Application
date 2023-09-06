@@ -2,9 +2,7 @@ import { createContext, useContext, useMemo, useState } from 'react';
 import {
   ModalContextType,
   ModalFunctionWithContent,
-  TAddressContent,
   TContent,
-  TErrorContent,
   TModalFunction,
   TModalName,
   TReturnClose,
@@ -92,6 +90,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       closeModal,
       setContent,
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [modals],
   );
 
@@ -104,12 +103,12 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       />
       <AddAddressModal
         isOpen={modals.address.isOpen}
-        content={modals.address.content as TAddressContent}
+        content={modals.address.content}
         onClose={() => closeModal('address', true)}
       />
       <ErrorModal
         open={modals.error.isOpen}
-        content={modals.error.content as TErrorContent}
+        content={modals.error.content}
         onClose={() => closeModal('error', true)}
       />
       {children}

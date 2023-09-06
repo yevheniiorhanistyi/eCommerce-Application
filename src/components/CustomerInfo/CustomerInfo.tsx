@@ -48,7 +48,9 @@ const CustomerInfo: React.FC = () => {
     fetchCustomerData();
   };
 
-  const onEditSuccess = () => {};
+  const onEditSuccess = () => {
+    fetchCustomerData();
+  };
 
   const primaryCustomerFields = [
     {

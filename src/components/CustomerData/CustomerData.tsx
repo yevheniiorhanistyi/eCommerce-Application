@@ -1,10 +1,6 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 import { FC } from 'react';
-import {
-  ICustomerDataField,
-  ICustomerDataProps,
-  IGetCustomerData,
-} from '../../types/types';
+import { ICustomerDataField, ICustomerDataProps } from '../../types/types';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import styles from './CustomerData.styles';
 

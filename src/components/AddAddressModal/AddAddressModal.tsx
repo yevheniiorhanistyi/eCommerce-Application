@@ -1,6 +1,5 @@
 import { Container, Modal, Paper } from '@mui/material';
 
-import { enqueueSnackbar } from 'notistack';
 import styles from './AddAddressModal.styles';
 // eslint-disable-next-line import/no-cycle
 import AddAddressForm from '../AddAddressForm/AddAddressForm';

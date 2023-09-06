@@ -46,7 +46,12 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
           sx={styles.addressItemData}
         />
         <Box sx={styles.separator} />
-        <DeleteIconButton userId={userId} versionId={versionId} addressId={address.id} deleteSuccess={deleteSuccess} />
+        <DeleteIconButton
+          userId={userId}
+          versionId={versionId}
+          addressId={address.id}
+          deleteSuccess={deleteSuccess}
+        />
       </ListItem>
     ))}
   </List>

@@ -7,6 +7,7 @@ import { IEditIconButtonProps } from '../../../types/types';
 
 const EditIconButton: FC<IEditIconButtonProps> = ({
   customer,
+  addSuccess,
 }: IEditIconButtonProps) => {
   const modal = useModal();
 
@@ -14,6 +15,11 @@ const EditIconButton: FC<IEditIconButtonProps> = ({
     modal.openModal('customer', false);
     modal.setContent('customer', {
       customer,
+      onClose: (isSuccess: boolean) => {
+        if (isSuccess) {
+          addSuccess();
+        }
+      },
     });
   };
 

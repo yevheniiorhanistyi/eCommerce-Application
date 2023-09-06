@@ -1,11 +1,5 @@
 import { FC, useState } from 'react';
-import {
-  Button,
-  TextField,
-  Grid,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
+import { Button, TextField, Grid } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -14,7 +8,6 @@ import dayjs from 'dayjs';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './EditDataForm.styles';
 import nameValidation from '../../validation/name.validation';
@@ -37,12 +30,12 @@ const EditDataForm: FC<EditDataFormProps> = ({
 }: EditDataFormProps) => {
   const modal = useModal();
 
-  const [data, setData] = useState({
+  const data = {
     firstName: customer.firstName,
     lastName: customer.lastName,
     dateOfBirth: dayjs(new Date(customer.dateOfBirth)),
     email: customer.email,
-  });
+  };
 
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -64,6 +57,8 @@ const EditDataForm: FC<EditDataFormProps> = ({
       const customerData = {
         ...values,
         dateOfBirth: formatDateToYYYYMMDD(values.dateOfBirth.toDate()),
+        versionId: customer.version,
+        userId: customer.id,
       };
       const isEdited = await editCustomerData(customerData);
       if (isEdited) {
