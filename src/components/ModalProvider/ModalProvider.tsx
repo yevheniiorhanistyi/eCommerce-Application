@@ -15,6 +15,8 @@ import AddAddressModal from '../AddAddressModal/AddAddressModal';
 import { IModalProviderProps } from '../../types/types';
 // eslint-disable-next-line import/no-cycle
 import ProductModal from '../ProductModal/ProductModal';
+// eslint-disable-next-line import/no-cycle
+import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -55,6 +57,13 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       },
       onClose: () => {},
     },
+    password: {
+      isOpen: false,
+      content: {
+        onClose: (value: TReturnClose) => {},
+      },
+      onClose: () => {},
+    },
   });
 
   const openModal: TModalFunction = (modalName: TModalName) => {
@@ -68,7 +77,12 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     modalName: TModalName,
     value: TReturnClose,
   ) => {
-    if ((modalName === 'address' || modalName === 'customer') && value) {
+    if (
+      (modalName === 'address'
+        || modalName === 'customer'
+        || modalName === 'password')
+      && value
+    ) {
       modals[modalName].content?.onClose(value);
     }
     setModals((prevModals) => ({
@@ -109,6 +123,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         isOpen={modals.address.isOpen}
         content={modals.address.content}
         onClose={() => closeModal('address', true)}
+      />
+      <EditPasswordModal
+        isOpen={modals.password.isOpen}
+        content={modals.password.content}
+        onClose={() => closeModal('password', true)}
       />
       <ErrorModal
         open={modals.error.isOpen}
