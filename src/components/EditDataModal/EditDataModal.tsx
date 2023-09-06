@@ -1,35 +1,36 @@
 import { Container, Modal, Paper } from '@mui/material';
 
-import { enqueueSnackbar } from 'notistack';
 import styles from './EditDataModal.styles';
+// eslint-disable-next-line import/no-cycle
 import EditDataForm from '../EditDataForm/EditDataForm';
-import { IGetCustomerData } from '../../types/types';
+import { TCustomerContent } from '../ModalProvider/type';
 
 type EditDataModalProps = {
   isOpen: boolean;
-  content: IGetCustomerData;
+  content: TCustomerContent;
   onClose: () => void;
 };
 
 const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
   const handleEditData = () => {
-    enqueueSnackbar('Changes saved succesfully!', {
-      variant: 'success',
-    });
+    onClose();
   };
 
-  return (
-    <Modal
-      open={isOpen}
-      onClose={onClose}
-    >
-      <Container maxWidth="sm" sx={styles.outerBox}>
-        <Paper sx={styles.paper}>
-          <EditDataForm customer={content} onEditDataSuccess={handleEditData} />
-        </Paper>
-      </Container>
-    </Modal>
-  );
+  if (content.customer) {
+    return (
+      <Modal open={isOpen} onClose={onClose}>
+        <Container maxWidth="sm" sx={styles.outerBox}>
+          <Paper sx={styles.paper}>
+            <EditDataForm
+              customer={content.customer}
+              onEditDataSuccess={handleEditData}
+            />
+          </Paper>
+        </Container>
+      </Modal>
+    );
+  }
+  return null;
 };
 
 export default EditDataModal;

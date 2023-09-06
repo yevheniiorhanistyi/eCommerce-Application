@@ -1,7 +1,5 @@
 import axios from 'axios';
-import {
-  getTokenFromLocalStorage,
-} from '../../utils/authUtils';
+import { getTokenFromLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
@@ -11,7 +9,7 @@ const version = 7;
 export interface IEditCustomerDataProps {
   firstName: string;
   lastName: string;
-  dateOfBirth: any;
+  dateOfBirth: string;
   email: string;
 }
 
@@ -56,7 +54,7 @@ const editCustomerData = async ({
     return response.data;
   } catch (error) {
     console.error(error);
-    throw error;
+    return null;
   }
 };
 

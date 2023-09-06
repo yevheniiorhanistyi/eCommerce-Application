@@ -19,18 +19,20 @@ import CenteredDivider from '../CenteredDivider/CenteredDivider';
 import styles from './EditDataForm.styles';
 import nameValidation from '../../validation/name.validation';
 import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
-import editCustomerData, {
-  IEditCustomerDataProps,
-} from '../../services/profile/editCustomerData';
+import editCustomerData from '../../services/profile/editCustomerData';
 import emailValidation from '../../validation/email.validation';
+// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
+import { IGetCustomerData } from '../../types/types';
+import { formatDateToYYYYMMDD } from '../../utils/formatDate';
 
 type EditDataFormProps = {
-  onEditDataSuccess: any;
-  customer: any;
+  onEditDataSuccess: () => void;
+  customer: IGetCustomerData;
 };
 
 const EditDataForm: FC<EditDataFormProps> = ({
+  onEditDataSuccess,
   customer,
 }: EditDataFormProps) => {
   const modal = useModal();
@@ -39,7 +41,7 @@ const EditDataForm: FC<EditDataFormProps> = ({
   const [data, setData] = useState({
     firstName: customer.firstName,
     lastName: customer.lastName,
-    dateOfBirth: dayjs(customer.dateOfBirth),
+    dateOfBirth: dayjs(new Date(customer.dateOfBirth)),
     email: customer.email,
   });
 
@@ -57,16 +59,19 @@ const EditDataForm: FC<EditDataFormProps> = ({
     firstName: nameValidation.required('First name is required'),
     lastName: nameValidation.required('Last name is required'),
     dateOfBirth: dateOfBirthlValidation,
-    email: emailValidation(modal),
+    email: emailValidation(modal, customer.email),
   });
 
   const formik = useFormik({
     initialValues: data,
     validationSchema: createValidationSchema(),
     validateOnChange: true,
-    onSubmit: async (values: IEditCustomerDataProps) => {
-      const customerData = values as IEditCustomerDataProps;
+    onSubmit: async (values) => {
       setSubmitting(true);
+      const customerData = {
+        ...values,
+        dateOfBirth: formatDateToYYYYMMDD(values.dateOfBirth.toDate()),
+      };
       const isEdited = await editCustomerData(customerData);
       if (isEdited) {
         enqueueSnackbar('Changes saved succesfully!', {
@@ -78,6 +83,7 @@ const EditDataForm: FC<EditDataFormProps> = ({
         });
       }
       setSubmitting(false);
+      modal.closeModal('customer', true);
     },
   });
 
@@ -99,6 +105,7 @@ const EditDataForm: FC<EditDataFormProps> = ({
       //   });
       // }
       // setSubmitting(false);
+      modal.closeModal('customer', false);
     },
   });
 

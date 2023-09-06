@@ -1,6 +1,10 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 import { FC } from 'react';
-import { ICustomerDataField, ICustomerDataProps, IGetCustomerData } from '../../types/types';
+import {
+  ICustomerDataField,
+  ICustomerDataProps,
+  IGetCustomerData,
+} from '../../types/types';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import styles from './CustomerData.styles';
 
@@ -19,7 +23,7 @@ const CustomerData: FC<ICustomerDataProps> = ({
         />
       ))}
       <Box sx={styles.separator} />
-      <EditIconButton userId={customer?.id as string} versionId={customer?.version as number} addSuccess={addSuccess} />
+      <EditIconButton customer={customer} addSuccess={addSuccess} />
     </ListItem>
   </List>
 );

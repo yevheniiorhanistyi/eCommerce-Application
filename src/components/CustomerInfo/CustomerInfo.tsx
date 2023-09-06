@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Container, Box } from '@mui/material';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
-import {
-  IGetCustomerAddress,
-  IGetCustomerData,
-} from '../../types/types';
+import { IGetCustomerAddress, IGetCustomerData } from '../../types/types';
 
 import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
@@ -51,6 +48,8 @@ const CustomerInfo: React.FC = () => {
     fetchCustomerData();
   };
 
+  const onEditSuccess = () => {};
+
   const primaryCustomerFields = [
     {
       title: 'First name:',
@@ -79,12 +78,18 @@ const CustomerInfo: React.FC = () => {
         customer={customerData as IGetCustomerData}
         logoIcon={<PermIdentityIcon />}
         fields={primaryCustomerFields}
+        addSuccess={onEditSuccess}
       />
       <Box sx={styles.flexBox}>
         <Typography sx={styles.addressesTitle} variant="h5">
           Shipping addresses:
         </Typography>
-        <AddIconButton userId={customerData?.id as string} isBilling={false} versionId={customerData?.version as number} addSuccess={onAddSuccess} />
+        <AddIconButton
+          userId={customerData?.id as string}
+          isBilling={false}
+          versionId={customerData?.version as number}
+          addSuccess={onAddSuccess}
+        />
       </Box>
       <CustomerAddress
         addresses={shippingAddresses}
@@ -97,7 +102,12 @@ const CustomerInfo: React.FC = () => {
         <Typography sx={styles.addressesTitle} variant="h5">
           Billing addresses:
         </Typography>
-        <AddIconButton userId={customerData?.id as string} isBilling versionId={customerData?.version as number} addSuccess={onAddSuccess} />
+        <AddIconButton
+          userId={customerData?.id as string}
+          isBilling
+          versionId={customerData?.version as number}
+          addSuccess={onAddSuccess}
+        />
       </Box>
       <CustomerAddress
         addresses={billingAddresses}

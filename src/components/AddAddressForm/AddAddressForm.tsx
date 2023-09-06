@@ -16,11 +16,7 @@ import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import styles from './AddAddressForm.styles';
 import nameValidation from '../../validation/name.validation';
-import {
-  ICountry,
-  ICustomerAddressBase,
-  IGetCustomerAddress,
-} from '../../types/types';
+import { ICountry, ICustomerAddressBase } from '../../types/types';
 
 // eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';

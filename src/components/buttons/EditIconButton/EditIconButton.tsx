@@ -6,14 +6,14 @@ import { useModal } from '../../ModalProvider/ModalProvider';
 import { IEditIconButtonProps } from '../../../types/types';
 
 const EditIconButton: FC<IEditIconButtonProps> = ({
-  userId,
+  customer,
 }: IEditIconButtonProps) => {
   const modal = useModal();
 
   const handleClick = () => {
     modal.openModal('customer', false);
     modal.setContent('customer', {
-      userId,
+      customer,
     });
   };
 
