@@ -32,7 +32,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({
 
   const showErrorModal = (error: Error) => {
     setContent('error', { title: 'Oops 😕', text: error.message });
-    openModal('error');
+    openModal('error', false);
   };
 
   const handleMouseDownPassword = (

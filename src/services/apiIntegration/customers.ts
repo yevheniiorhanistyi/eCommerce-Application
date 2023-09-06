@@ -41,7 +41,7 @@ export const getCustomers = async (
     const customers = await apiRoot.customers().get().execute();
     return customers.body;
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,
@@ -66,7 +66,7 @@ export const checkEmailCustomer = async (
       .execute();
     return Boolean(customerToFind.body.count);
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,
@@ -137,7 +137,7 @@ export const createCustomer = async (
     }
     return false;
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,

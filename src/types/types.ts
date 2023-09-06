@@ -90,6 +90,10 @@ export interface ISignInFormProps {
   onSignInSuccess: () => void;
 }
 
+export interface IEditDataSuccess {
+  onEditDataSuccess: () => void;
+}
+
 export interface ISignUpFormProps {
   onSignInSuccess: () => void;
 }
@@ -179,6 +183,47 @@ export interface IProductSliderProps {
 export interface ICustomerAddressProps {
   addresses: IGetCustomerAddress[];
   defaultAddressId: string | undefined;
+  userId: string;
+  versionId: number;
+  deleteSuccess: () => void;
+}
+
+export interface ICustomerDataField {
+  title: string | undefined;
+  description: string | undefined;
+}
+
+export interface ICustomerDataProps {
+  logoIcon: ReactNode;
+  fields: ICustomerDataField[];
+  deleteIcon?: ReactNode;
+  customer: IGetCustomerData;
+  addSuccess: () => void;
+}
+
+export interface IEditDataForm {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string | null;
+}
+
+export interface IEditIconButtonProps {
+  customer: IGetCustomerData;
+  addSuccess: () => void;
+}
+
+export interface IAddIconButtonProps {
+  userId: string;
+  isBilling: boolean;
+  versionId: number;
+  addSuccess: () => void;
+}
+
+export interface IDeleteIconButtonProps {
+  userId: string;
+  addressId: string;
+  versionId: number;
+  deleteSuccess: () => void;
 }
 
 export type PriceRangeProps = {

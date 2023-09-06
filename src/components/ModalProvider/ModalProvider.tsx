@@ -5,8 +5,13 @@ import {
   TContent,
   TModalFunction,
   TModalName,
+  TReturnClose,
 } from './type';
 import ErrorModal from '../ErrorModal/ErrorModal';
+// eslint-disable-next-line import/no-cycle
+import EditDataModal from '../EditDataModal/EditDataModal';
+// eslint-disable-next-line import/no-cycle
+import AddAddressModal from '../AddAddressModal/AddAddressModal';
 import { IModalProviderProps } from '../../types/types';
 // eslint-disable-next-line import/no-cycle
 import ProductModal from '../ProductModal/ProductModal';
@@ -21,6 +26,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         title: '',
         text: '',
       },
+      onClose: () => {},
     },
     imageView: {
       isOpen: false,
@@ -29,6 +35,24 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         title: '',
         index: 0,
       },
+      onClose: () => {},
+    },
+    customer: {
+      isOpen: false,
+      content: {
+        customer: null,
+      },
+      onClose: () => {},
+    },
+    address: {
+      isOpen: false,
+      content: {
+        userId: '',
+        isBilling: false,
+        versionId: 0,
+        onClose: (value: TReturnClose) => {},
+      },
+      onClose: () => {},
     },
   });
 
@@ -39,7 +63,13 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     }));
   };
 
-  const closeModal: TModalFunction = (modalName: TModalName) => {
+  const closeModal: TModalFunction = (
+    modalName: TModalName,
+    value: TReturnClose,
+  ) => {
+    if (modalName === 'address' && value) {
+      modals[modalName].content?.onClose(value);
+    }
     setModals((prevModals) => ({
       ...prevModals,
       [modalName]: { ...prevModals[modalName], isOpen: false },
@@ -63,15 +93,26 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       closeModal,
       setContent,
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [modals],
   );
 
   return (
     <ModalContext.Provider value={contextValue}>
+      <EditDataModal
+        isOpen={modals.customer.isOpen}
+        content={modals.customer.content}
+        onClose={() => closeModal('customer', true)}
+      />
+      <AddAddressModal
+        isOpen={modals.address.isOpen}
+        content={modals.address.content}
+        onClose={() => closeModal('address', true)}
+      />
       <ErrorModal
         open={modals.error.isOpen}
         content={modals.error.content}
-        onClose={() => closeModal('error')}
+        onClose={() => closeModal('error', true)}
       />
       <ProductModal
         open={modals.imageView.isOpen}

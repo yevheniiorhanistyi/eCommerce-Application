@@ -18,7 +18,7 @@ const getProduct = async (
     }
     return null;
   } catch (e) {
-    modal.openModal('error');
+    modal.openModal('error', false);
     modal.setContent('error', {
       title: constants.modal.title,
       text: constants.modal.text,

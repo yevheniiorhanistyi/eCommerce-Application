@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Container } from '@mui/material';
+import { Typography, Container, Box } from '@mui/material';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
 import { IGetCustomerAddress, IGetCustomerData } from '../../types/types';
 
 import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
+import CustomerData from '../CustomerData/CustomerData';
+import AddIconButton from '../buttons/AddIconButton/AddIconButton';
 
 const CustomerInfo: React.FC = () => {
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
@@ -16,61 +19,104 @@ const CustomerInfo: React.FC = () => {
   >([]);
 
   useEffect(() => {
-    const fetchCustomerData = async () => {
-      const customer = await getCustomerData();
-      setCustomerData(customer);
-
-      const customerBillingAddresses: IGetCustomerAddress[] = [];
-      const customerShippingAddresses: IGetCustomerAddress[] = [];
-
-      customer.addresses?.forEach((address) => {
-        if (customer.billingAddressIds.includes(address.id)) {
-          customerBillingAddresses.push(address);
-        } else {
-          customerShippingAddresses.push(address);
-        }
-      });
-      setShippingAddresses(customerShippingAddresses);
-      setBillingAddresses(customerBillingAddresses);
-    };
-
     fetchCustomerData();
-  }, []);
+  }, [customerData]);
+
+  const fetchCustomerData = async () => {
+    const customer = await getCustomerData();
+    setCustomerData(customer);
+
+    const customerBillingAddresses: IGetCustomerAddress[] = [];
+    const customerShippingAddresses: IGetCustomerAddress[] = [];
+
+    customer.addresses?.forEach((address) => {
+      if (customer.billingAddressIds.includes(address.id)) {
+        customerBillingAddresses.push(address);
+      } else {
+        customerShippingAddresses.push(address);
+      }
+    });
+    setShippingAddresses(customerShippingAddresses);
+    setBillingAddresses(customerBillingAddresses);
+  };
+
+  const onDeleteSuccess = () => {
+    fetchCustomerData();
+  };
+
+  const onAddSuccess = () => {
+    fetchCustomerData();
+  };
+
+  const onEditSuccess = () => {
+    fetchCustomerData();
+  };
+
+  const primaryCustomerFields = [
+    {
+      title: 'First name:',
+      description: customerData?.firstName,
+    },
+    {
+      title: 'Second name:',
+      description: customerData?.lastName,
+    },
+    {
+      title: 'Date of birth:',
+      description: customerData?.dateOfBirth,
+    },
+    {
+      title: 'Email:',
+      description: customerData?.email,
+    },
+  ];
 
   return (
     <Container sx={styles.innerContainer}>
-      <Typography variant="h2">
-        Nice to see you,&#x20;
-        {customerData?.firstName}
-        !
-      </Typography>
-      <Container sx={styles.mainCustomerInfo} disableGutters>
-        <Typography>
-          First name:&#x20;
-          {customerData?.firstName}
-        </Typography>
-        <Typography>
-          Last Name:&#x20;
-          {customerData?.lastName}
-        </Typography>
-        <Typography>
-          Date of birth:&#x20;
-          {customerData?.dateOfBirth}
-        </Typography>
-      </Container>
       <Typography sx={styles.addressesTitle} variant="h5">
-        Shipping addresses:
+        Personal data
       </Typography>
+      <CustomerData
+        customer={customerData as IGetCustomerData}
+        logoIcon={<PermIdentityIcon />}
+        fields={primaryCustomerFields}
+        addSuccess={onEditSuccess}
+      />
+      <Box sx={styles.flexBox}>
+        <Typography sx={styles.addressesTitle} variant="h5">
+          Shipping addresses:
+        </Typography>
+        <AddIconButton
+          userId={customerData?.id as string}
+          isBilling={false}
+          versionId={customerData?.version as number}
+          addSuccess={onAddSuccess}
+        />
+      </Box>
       <CustomerAddress
         addresses={shippingAddresses}
         defaultAddressId={customerData?.defaultShippingAddressId}
+        versionId={customerData?.version as number}
+        userId={customerData?.id as string}
+        deleteSuccess={onDeleteSuccess}
       />
-      <Typography sx={styles.addressesTitle} variant="h5">
-        Billing addresses:
-      </Typography>
+      <Box sx={styles.flexBox}>
+        <Typography sx={styles.addressesTitle} variant="h5">
+          Billing addresses:
+        </Typography>
+        <AddIconButton
+          userId={customerData?.id as string}
+          isBilling
+          versionId={customerData?.version as number}
+          addSuccess={onAddSuccess}
+        />
+      </Box>
       <CustomerAddress
         addresses={billingAddresses}
         defaultAddressId={customerData?.defaultBillingAddressId}
+        versionId={customerData?.version as number}
+        userId={customerData?.id as string}
+        deleteSuccess={onDeleteSuccess}
       />
     </Container>
   );

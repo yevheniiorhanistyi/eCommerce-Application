@@ -1,12 +1,16 @@
-import { List, ListItem, ListItemText } from '@mui/material';
+import { Box, List, ListItem, ListItemText } from '@mui/material';
 import { FC } from 'react';
 
 import styles from './CustomerAddress.styles';
 import { ICustomerAddressProps } from '../../types/types';
+import DeleteIconButton from '../buttons/DeleteIconButton/DeleteIconButton';
 
 const CustomerAddress: FC<ICustomerAddressProps> = ({
   addresses,
   defaultAddressId,
+  userId,
+  versionId,
+  deleteSuccess,
 }: ICustomerAddressProps) => (
   <List>
     {addresses.map((address, index) => (
@@ -40,6 +44,13 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
           primary="Postal code"
           secondary={!address.postalCode ? '-' : address.postalCode}
           sx={styles.addressItemData}
+        />
+        <Box sx={styles.separator} />
+        <DeleteIconButton
+          userId={userId}
+          versionId={versionId}
+          addressId={address.id}
+          deleteSuccess={deleteSuccess}
         />
       </ListItem>
     ))}

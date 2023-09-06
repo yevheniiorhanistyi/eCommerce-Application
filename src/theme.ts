@@ -38,9 +38,8 @@ const theme = createTheme({
     },
     caption: {
       fontSize: 'inherit',
-      fontWeight: 700,
+      fontWeight: 400,
       lineHeight: 1.167,
-      textTransform: 'uppercase',
       marginBottom: '0.35em',
     },
   },
