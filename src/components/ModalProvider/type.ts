@@ -19,6 +19,7 @@ export type TImageViewContent = {
 
 export type TCustomerContent = {
   customer: IGetCustomerData | null;
+  onClose: (isSuccess: boolean) => void;
 };
 
 export type TAddressContent = {

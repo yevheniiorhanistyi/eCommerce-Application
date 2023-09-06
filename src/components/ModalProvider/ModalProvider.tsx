@@ -41,6 +41,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       isOpen: false,
       content: {
         customer: null,
+        onClose: (value: TReturnClose) => {},
       },
       onClose: () => {},
     },
@@ -67,7 +68,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     modalName: TModalName,
     value: TReturnClose,
   ) => {
-    if (modalName === 'address' && value) {
+    if ((modalName === 'address' || modalName === 'customer') && value) {
       modals[modalName].content?.onClose(value);
     }
     setModals((prevModals) => ({
