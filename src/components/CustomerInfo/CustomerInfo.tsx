@@ -20,7 +20,7 @@ const CustomerInfo: React.FC = () => {
 
   useEffect(() => {
     fetchCustomerData();
-  }, []);
+  }, [customerData]);
 
   const fetchCustomerData = async () => {
     const customer = await getCustomerData();
