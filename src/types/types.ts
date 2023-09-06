@@ -208,8 +208,7 @@ export interface IEditDataForm {
 }
 
 export interface IEditIconButtonProps {
-  customer: IGetCustomerData;
-  addSuccess: () => void;
+  callback: () => void;
 }
 
 export interface IAddIconButtonProps {
