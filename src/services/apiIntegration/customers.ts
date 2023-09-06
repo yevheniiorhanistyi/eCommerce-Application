@@ -27,6 +27,7 @@ export const getCustomerData = async (): Promise<IGetCustomerData> => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);

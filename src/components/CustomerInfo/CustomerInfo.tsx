@@ -99,6 +99,8 @@ const CustomerInfo: React.FC = () => {
         versionId={customerData?.version as number}
         userId={customerData?.id as string}
         deleteSuccess={onDeleteSuccess}
+        editSuccess={onEditSuccess}
+        customer={customerData as IGetCustomerData}
       />
       <Box sx={styles.flexBox}>
         <Typography sx={styles.addressesTitle} variant="h5">
@@ -117,6 +119,8 @@ const CustomerInfo: React.FC = () => {
         versionId={customerData?.version as number}
         userId={customerData?.id as string}
         deleteSuccess={onDeleteSuccess}
+        editSuccess={onEditSuccess}
+        customer={customerData as IGetCustomerData}
       />
     </Container>
   );

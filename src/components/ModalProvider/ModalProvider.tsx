@@ -7,14 +7,17 @@ import {
   TModalName,
   TReturnClose,
 } from './type';
+
+import { IModalProviderProps } from '../../types/types';
 import ErrorModal from '../ErrorModal/ErrorModal';
 // eslint-disable-next-line import/no-cycle
 import EditDataModal from '../EditDataModal/EditDataModal';
 // eslint-disable-next-line import/no-cycle
 import AddAddressModal from '../AddAddressModal/AddAddressModal';
-import { IModalProviderProps } from '../../types/types';
 // eslint-disable-next-line import/no-cycle
 import ProductModal from '../ProductModal/ProductModal';
+// eslint-disable-next-line import/no-cycle
+import EditAddressModal from '../EditAddressModal/EditAddressModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -50,6 +53,15 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       content: {
         userId: '',
         isBilling: false,
+        versionId: 0,
+        onClose: (value: TReturnClose) => {},
+      },
+      onClose: () => {},
+    },
+    editAddress: {
+      isOpen: false,
+      content: {
+        userId: '',
         versionId: 0,
         onClose: (value: TReturnClose) => {},
       },
@@ -100,6 +112,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
 
   return (
     <ModalContext.Provider value={contextValue}>
+      <EditAddressModal
+        isOpen={modals.customer.isOpen}
+        content={modals.customer.content}
+        onClose={() => closeModal('editAddress', true)}
+      />
       <EditDataModal
         isOpen={modals.customer.isOpen}
         content={modals.customer.content}

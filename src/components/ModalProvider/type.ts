@@ -4,7 +4,7 @@ import {
   IImage,
 } from '../../types/types';
 
-export type TModalName = 'error' | 'imageView' | 'customer' | 'address';
+export type TModalName = 'error' | 'imageView' | 'customer' | 'address' | 'editAddress';
 
 export type TErrorContent = {
   title: string;
@@ -30,11 +30,19 @@ export type TAddressContent = {
   onClose: (isSuccess: boolean) => void;
 };
 
+export type TEditAddressContent = {
+  address?: IGetCustomerAddress;
+  userId: string;
+  versionId: number;
+  onClose: (isSuccess: boolean) => void;
+};
+
 export type TContent = {
   error?: TErrorContent;
   imageView?: TImageViewContent;
   customer?: TCustomerContent;
   address?: TAddressContent;
+  editAddress?: TEditAddressContent;
 }[TModalName];
 
 export type TModal = {

@@ -186,6 +186,8 @@ export interface ICustomerAddressProps {
   userId: string;
   versionId: number;
   deleteSuccess: () => void;
+  editSuccess: () => void;
+  customer: IGetCustomerData;
 }
 
 export interface ICustomerDataField {
@@ -209,6 +211,7 @@ export interface IEditDataForm {
 
 export interface IEditIconButtonProps {
   callback: () => void;
+  index?: number;
 }
 
 export interface IAddIconButtonProps {
