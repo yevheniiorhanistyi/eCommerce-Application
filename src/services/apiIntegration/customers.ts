@@ -14,7 +14,6 @@ import {
 } from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';
 import { getTokenFromLocalStorage } from '../../utils/authUtils';
-import { FamilyRestroomRounded } from '@mui/icons-material';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;

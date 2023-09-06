@@ -1,4 +1,9 @@
-import { ICustomerAddressBase, IGetCustomerAddress, IGetCustomerData, IImage } from '../../types/types';
+import {
+  ICustomerAddressBase,
+  IGetCustomerAddress,
+  IGetCustomerData,
+  IImage,
+} from '../../types/types';
 
 export type TModalName = 'error' | 'imageView' | 'customer' | 'address';
 
@@ -13,7 +18,7 @@ export type TImageViewContent = {
 };
 
 export type TCustomerContent = {
-  userId: string;
+  customer: IGetCustomerData | null;
 };
 
 export type TAddressContent = {
@@ -28,7 +33,7 @@ export type TContent = {
   error?: TErrorContent;
   imageView?: TImageViewContent;
   customer?: TCustomerContent;
-  address?: TAddressContent,
+  address?: TAddressContent;
 }[TModalName];
 
 export type TModal = {
@@ -39,10 +44,7 @@ export type TModal = {
   };
 };
 
-export type TModalFunction = (
-  modalName: TModalName,
-  isClose: boolean
-) => void;
+export type TModalFunction = (modalName: TModalName, isClose: boolean) => void;
 
 export type ModalFunctionWithContent = (
   modalName: TModalName,

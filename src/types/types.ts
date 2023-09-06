@@ -159,7 +159,7 @@ export interface ICustomerDataProps {
   logoIcon: ReactNode;
   fields: ICustomerDataField[];
   deleteIcon?: ReactNode;
-  customer?: IGetCustomerData;
+  customer: IGetCustomerData;
   addSuccess: () => void;
 }
 
@@ -170,9 +170,14 @@ export interface IEditDataForm {
 }
 
 export interface IEditIconButtonProps {
-  userId: string;
+  customer: IGetCustomerData;
   isBilling?: boolean;
-  address?: IGetCustomerAddress;
+  addSuccess: () => void;
+}
+
+export interface IAddIconButtonProps {
+  userId: string;
+  isBilling: boolean;
   versionId: number;
   addSuccess: () => void;
 }

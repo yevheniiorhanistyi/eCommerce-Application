@@ -11,7 +11,9 @@ import {
   TReturnClose,
 } from './type';
 import ErrorModal from '../ErrorModal/ErrorModal';
+// eslint-disable-next-line import/no-cycle
 import EditDataModal from '../EditDataModal/EditDataModal';
+// eslint-disable-next-line import/no-cycle
 import AddAddressModal from '../AddAddressModal/AddAddressModal';
 import { IModalProviderProps } from '../../types/types';
 
@@ -38,7 +40,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     customer: {
       isOpen: false,
       content: {
-        userId: '',
+        customer: null,
       },
       onClose: () => {},
     },
@@ -98,7 +100,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     <ModalContext.Provider value={contextValue}>
       <EditDataModal
         isOpen={modals.customer.isOpen}
-        content={modals.customer.content as TCustomerContent}
+        content={modals.customer.content}
         onClose={() => closeModal('customer', true)}
       />
       <AddAddressModal

@@ -22,6 +22,7 @@ import {
   IGetCustomerAddress,
 } from '../../types/types';
 
+// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import getCountries from '../../services/apiIntegration/getCountries';
@@ -29,8 +30,6 @@ import { addAddress } from '../../services/profile/addAddress';
 import createPostalCodeValidationSingle from '../../validation/postalCodeSingle.validation';
 
 interface AddAddressModalFormProps {
-  onEditDataSuccess: any;
-  content: IGetCustomerAddress | undefined;
   userId: string;
   versionId: number;
   isBilling: boolean;
@@ -89,7 +88,12 @@ const AddAddressForm: FC<AddAddressModalFormProps> = ({
       const address = values as ICustomerAddressBase;
       setSubmitting(true);
       try {
-        const isCreated = await addAddress(address, userId, versionId, isBilling);
+        const isCreated = await addAddress(
+          address,
+          userId,
+          versionId,
+          isBilling,
+        );
         if (isCreated) {
           enqueueSnackbar('You have successfully add new address!', {
             variant: 'success',

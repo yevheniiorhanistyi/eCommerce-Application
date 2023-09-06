@@ -3,14 +3,14 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import styles from './AddIconButton.styles';
 import { useModal } from '../../ModalProvider/ModalProvider';
-import { IEditIconButtonProps } from '../../../types/types';
+import { IAddIconButtonProps } from '../../../types/types';
 
-const AddIconButton: FC<IEditIconButtonProps> = ({
+const AddIconButton: FC<IAddIconButtonProps> = ({
   userId,
   isBilling = false,
   versionId,
   addSuccess,
-}: IEditIconButtonProps) => {
+}: IAddIconButtonProps) => {
   const modal = useModal();
 
   const handleClick = () => {
