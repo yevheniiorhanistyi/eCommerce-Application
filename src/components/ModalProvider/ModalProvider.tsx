@@ -117,7 +117,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       <ProductModal
         open={modals.imageView.isOpen}
         content={modals.imageView.content}
-        onClose={() => closeModal('imageView')}
+        onClose={() => closeModal('imageView', true)}
       />
       {children}
     </ModalContext.Provider>
