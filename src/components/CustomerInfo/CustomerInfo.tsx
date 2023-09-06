@@ -8,6 +8,7 @@ import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
 import CustomerData from '../CustomerData/CustomerData';
 import AddIconButton from '../buttons/AddIconButton/AddIconButton';
+import PassworData from '../PasswordData/PasswordData';
 
 const CustomerInfo: React.FC = () => {
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
@@ -82,6 +83,10 @@ const CustomerInfo: React.FC = () => {
         fields={primaryCustomerFields}
         addSuccess={onEditSuccess}
       />
+      <Typography sx={styles.addressesTitle} variant="h5">
+        Password
+      </Typography>
+      <PassworData addSuccess={onEditSuccess} />
       <Box sx={styles.flexBox}>
         <Typography sx={styles.addressesTitle} variant="h5">
           Shipping addresses:
