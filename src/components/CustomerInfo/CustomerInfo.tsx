@@ -86,7 +86,10 @@ const CustomerInfo: React.FC = () => {
       <Typography sx={styles.addressesTitle} variant="h5">
         Password
       </Typography>
-      <PassworData addSuccess={onEditSuccess} />
+      <PassworData
+        customer={customerData as IGetCustomerData}
+        addSuccess={onEditSuccess}
+      />
       <Box sx={styles.flexBox}>
         <Typography sx={styles.addressesTitle} variant="h5">
           Shipping addresses:

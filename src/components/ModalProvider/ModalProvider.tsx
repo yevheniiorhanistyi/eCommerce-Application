@@ -60,6 +60,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     password: {
       isOpen: false,
       content: {
+        customer: null,
         onClose: (value: TReturnClose) => {},
       },
       onClose: () => {},

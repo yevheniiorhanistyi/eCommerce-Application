@@ -36,6 +36,7 @@ export type TAddressContent = {
 };
 
 export type TPasswordContent = {
+  customer: IGetCustomerData | null;
   onClose: (isSuccess: boolean) => void;
 };
 

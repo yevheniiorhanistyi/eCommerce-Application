@@ -17,13 +17,18 @@ import { useModal } from '../ModalProvider/ModalProvider';
 import passwordValidation from '../../validation/password.validation';
 import confirmFiled from '../../validation/confirmFiled';
 import styles from './EditPasswordForm.styles';
+import { IGetCustomerData } from '../../types/types';
+import changePassword from '../../services/profile/changePassword';
+import { authenticateClient } from '../../services/authenticate/authenticateClient';
 
 type EditPasswordFormProps = {
   onEditDataSuccess: () => void;
+  customer: IGetCustomerData;
 };
 
 const EditPasswordForm: FC<EditPasswordFormProps> = ({
   onEditDataSuccess,
+  customer,
 }: EditPasswordFormProps) => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -78,22 +83,35 @@ const EditPasswordForm: FC<EditPasswordFormProps> = ({
     validateOnChange: true,
     onSubmit: async (values) => {
       setSubmitting(true);
-      // const customerData = {
-      //   ...values,
-      //   dateOfBirth: formatDateToYYYYMMDD(values.dateOfBirth.toDate()),
-      //   versionId: customer.version,
-      //   userId: customer.id,
-      // };
-      // const isEdited = await editCustomerData(customerData);
-      // if (isEdited) {
-      //   enqueueSnackbar('Changes saved succesfully!', {
-      //     variant: 'success',
-      //   });
-      // } else {
-      //   enqueueSnackbar('Saving failed, please try again later.', {
-      //     variant: 'error',
-      //   });
-      // }
+      const changePasswordData = {
+        ...values,
+        versionId: customer.version,
+        userId: customer.id,
+      };
+      const isEdited = await changePassword(changePasswordData);
+      if (isEdited) {
+        enqueueSnackbar('Changes saved succesfully!', {
+          variant: 'success',
+        });
+        try {
+          await authenticateClient({
+            email: customer.email,
+            password: values.newPassword,
+          });
+        } catch (error) {
+          modal.openModal('error', false);
+          modal.setContent('error', {
+            title: 'Sorry',
+            text: 'Sing in failed, please try again later',
+          });
+        } finally {
+          formik.resetForm();
+        }
+      } else {
+        enqueueSnackbar('Saving failed, please try again later.', {
+          variant: 'error',
+        });
+      }
       setSubmitting(false);
       modal.closeModal('password', true);
     },

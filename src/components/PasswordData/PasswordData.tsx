@@ -1,14 +1,17 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 import { FC } from 'react';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
-import styles from './PasswordData.styles';
 import { useModal } from '../ModalProvider/ModalProvider';
+import { IGetCustomerData } from '../../types/types';
+import styles from './PasswordData.styles';
 
 interface IPassworDataProps {
+  customer: IGetCustomerData;
   addSuccess: () => void;
 }
 
 const PassworData: FC<IPassworDataProps> = ({
+  customer,
   addSuccess,
 }: IPassworDataProps) => {
   const modal = useModal();
@@ -21,6 +24,7 @@ const PassworData: FC<IPassworDataProps> = ({
           callback={() => {
             modal.openModal('password', false);
             modal.setContent('password', {
+              customer,
               onClose: (isSuccess: boolean) => {
                 if (isSuccess) {
                   addSuccess();

@@ -20,15 +20,21 @@ const EditPasswordModal = ({
   const handleEditData = () => {
     onClose();
   };
-  return (
-    <Modal open={isOpen} onClose={onClose}>
-      <Container maxWidth="sm" sx={styles.outerBox}>
-        <Paper sx={styles.paper}>
-          <EditPasswordForm onEditDataSuccess={handleEditData} />
-        </Paper>
-      </Container>
-    </Modal>
-  );
+  if (content.customer) {
+    return (
+      <Modal open={isOpen} onClose={onClose}>
+        <Container maxWidth="sm" sx={styles.outerBox}>
+          <Paper sx={styles.paper}>
+            <EditPasswordForm
+              customer={content.customer}
+              onEditDataSuccess={handleEditData}
+            />
+          </Paper>
+        </Container>
+      </Modal>
+    );
+  }
+  return null;
 };
 
 export default EditPasswordModal;
