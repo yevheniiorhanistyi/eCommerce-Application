@@ -23,6 +23,9 @@ const styles = {
   closeNavMenu: { my: 2, color: 'white', display: 'block' },
   menuBox: { flexGrow: 0 },
   menu: { mt: '45px' },
+  popper: {
+    zIndex: 1,
+  },
 };
 
 export default styles;

@@ -12,6 +12,7 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@mui/icons-material": "^5.14.3",
+    "@mui/lab": "^5.0.0-alpha.142",
     "@mui/material": "^5.14.4",
     "@mui/x-date-pickers": "^6.11.1",
     "@types/node": "^16.18.39",

@@ -13,6 +13,8 @@ import EditDataModal from '../EditDataModal/EditDataModal';
 // eslint-disable-next-line import/no-cycle
 import AddAddressModal from '../AddAddressModal/AddAddressModal';
 import { IModalProviderProps } from '../../types/types';
+// eslint-disable-next-line import/no-cycle
+import ProductModal from '../ProductModal/ProductModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -31,6 +33,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       content: {
         images: [],
         title: '',
+        index: 0,
       },
       onClose: () => {},
     },
@@ -111,6 +114,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         open={modals.error.isOpen}
         content={modals.error.content}
         onClose={() => closeModal('error', true)}
+      />
+      <ProductModal
+        open={modals.imageView.isOpen}
+        content={modals.imageView.content}
+        onClose={() => closeModal('imageView', true)}
       />
       {children}
     </ModalContext.Provider>

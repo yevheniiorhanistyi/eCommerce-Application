@@ -14,6 +14,7 @@ export type TErrorContent = {
 export type TImageViewContent = {
   images: IImage[];
   title: string;
+  index: number;
 };
 
 export type TCustomerContent = {

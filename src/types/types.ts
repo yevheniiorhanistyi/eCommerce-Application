@@ -107,6 +107,39 @@ export interface IAnonymousTokenResponse {
   isAuthenticated: boolean;
 }
 
+export interface ITokenStatusResponse {
+  active: boolean;
+}
+
+export interface ISortingSelect {
+  selectedOption: string;
+}
+
+type CategoryItem = {
+  label: string;
+  value: string;
+};
+
+export type CategoryAccordionProps = {
+  isOpen: boolean;
+  label: string;
+  selectedValues: string[];
+  setSelectedValues: React.Dispatch<React.SetStateAction<string[]>>;
+  labelList: CategoryItem[];
+};
+
+interface IGender {
+  label: string;
+  id: string;
+}
+
+export interface IGenderCategoryProps {
+  isOpen: boolean;
+  genderList: IGender[];
+  selectedGender: string;
+  setSelectedGender: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export interface IAuthContextType {
   isAuthenticated: boolean;
   setAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
@@ -135,11 +168,16 @@ export interface IProductDisplayData {
 export interface IProductImageProps {
   url: string;
   alt: string;
+  isButtondDisabled?: boolean;
+  index?: number;
+  images?: IImage[];
 }
 
 export interface IProductSliderProps {
   images: IImage[];
-  keyProduct: string;
+  title: string;
+  isButtondDisabled?: boolean;
+  startIndex?: number;
 }
 
 export interface ICustomerAddressProps {
@@ -187,3 +225,30 @@ export interface IDeleteIconButtonProps {
   versionId: number;
   deleteSuccess: () => void;
 }
+
+export type PriceRangeProps = {
+  prices: number[];
+  setPrices: React.Dispatch<React.SetStateAction<number[]>>;
+};
+
+export type FilterSidebarProps = {
+  selectedColors: string[];
+  selectedSizes: string[];
+  prices: number[];
+  selectedBrands: string[];
+  setSelectedBrands: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedSizes: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedColors: React.Dispatch<React.SetStateAction<string[]>>;
+  setPrices: React.Dispatch<React.SetStateAction<number[]>>;
+};
+
+export interface IProtectedComponentProps {
+  isLoggedIn: boolean;
+  children: React.ReactNode;
+}
+
+export type TLanguage = 'en-US';
+
+export type LocalizedObject<T> = {
+  [key in TLanguage]: T;
+};
