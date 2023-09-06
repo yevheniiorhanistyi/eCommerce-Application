@@ -5,6 +5,7 @@ import { checkEmailCustomer } from '../services/apiIntegration/customers';
 // A properly formatted email address
 const emailValidation = (
   modal: ModalContextType,
+  exception = '',
 ): Yup.StringSchema<string, Yup.AnyObject, undefined, ''> => Yup.string()
   .trim()
   .email('Enter a valid email (e.g., user@example.com)')
@@ -16,7 +17,7 @@ const emailValidation = (
     async (value) => {
       if (value) {
         const isUnique = await checkEmailCustomer(value, modal);
-        return isUnique !== null ? !isUnique : true;
+        return isUnique !== null && exception !== value ? !isUnique : true;
       }
       return true;
     },
