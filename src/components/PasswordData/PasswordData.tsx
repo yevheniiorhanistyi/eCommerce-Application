@@ -19,7 +19,7 @@ const PassworData: FC<IPassworDataProps> = ({
   return (
     <List>
       <ListItem sx={styles.listItem}>
-        <ListItemText primary="Curent Password" secondary="*************" />
+        <ListItemText primary="Curent Password" secondary="✱✱✱✱✱✱✱✱✱✱✱✱" />
         <Box sx={styles.separator} />
         <EditIconButton
           callback={() => {

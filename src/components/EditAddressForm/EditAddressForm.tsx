@@ -18,7 +18,6 @@ import nameValidation from '../../validation/name.validation';
 import {
   ICountry,
   ICustomerAddressBase,
-  IGetCustomerData,
 } from '../../types/types';
 
 // eslint-disable-next-line import/no-cycle
@@ -30,16 +29,16 @@ import editAddress from '../../services/profile/editAdress';
 import styles from './EditAddressForm.styles';
 
 interface EditAddressFormProps {
-  customer: IGetCustomerData;
+  address: ICustomerAddressBase;
   onEditDataSuccess: () => void;
 }
 
 const EditAddressForm: FC<EditAddressFormProps> = ({
-  customer,
+  address,
   onEditDataSuccess,
 }: EditAddressFormProps) => {
+  console.log('formAddress', address);
   const modal = useModal();
-  const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
@@ -72,10 +71,10 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
   });
 
   const formData: ICustomerAddressBase = {
-    streetName: '',
-    city: '',
-    postalCode: '',
-    country: '',
+    streetName: address.address.streetName,
+    city: address.address.city,
+    postalCode: address.address.postalCode,
+    country: address.address.country,
   };
 
   const formik = useFormik({
@@ -84,12 +83,9 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
     validateOnChange: true,
     onSubmit: async (values) => {
       setSubmitting(true);
-      const addressId = 0; // TODO
       const editAddressData = {
         ...values,
-        addressId,
-        versionId: customer.version,
-        userId: customer.id,
+        address,
       };
       try {
         const isEdited = await editAddress(editAddressData);
@@ -202,7 +198,6 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
             }
             helperText={formik.touched.postalCode && formik.errors.postalCode}
             required
-            disabled={!isContrySelected}
           />
         </Grid>
       </Grid>

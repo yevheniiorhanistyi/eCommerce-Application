@@ -211,7 +211,7 @@ export interface IEditDataForm {
 
 export interface IEditIconButtonProps {
   callback: () => void;
-  index?: number;
+  address?: ICustomerAddressBase;
 }
 
 export interface IAddIconButtonProps {

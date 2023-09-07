@@ -6,7 +6,7 @@ import { IEditIconButtonProps } from '../../../types/types';
 
 const EditIconButton: FC<IEditIconButtonProps> = ({
   callback,
-  index,
+  address,
 }: IEditIconButtonProps) => {
   const handleClick = () => {
     callback();

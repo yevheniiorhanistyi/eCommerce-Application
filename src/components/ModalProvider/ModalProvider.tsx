@@ -69,11 +69,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     },
     editAddress: {
       isOpen: false,
-      content: {
-        userId: '',
-        versionId: 0,
-        onClose: (value: TReturnClose) => {},
-      },
+      address: null,
       onClose: () => {},
     },
   });
@@ -128,8 +124,8 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
   return (
     <ModalContext.Provider value={contextValue}>
       <EditAddressModal
-        isOpen={modals.customer.isOpen}
-        content={modals.customer.content}
+        isOpen={modals.editAddress.isOpen}
+        address={modals.editAddress.address}
         onClose={() => closeModal('editAddress', true)}
       />
       <EditDataModal

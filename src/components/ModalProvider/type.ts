@@ -43,8 +43,6 @@ export type TPasswordContent = {
 
 export type TEditAddressContent = {
   address?: IGetCustomerAddress;
-  userId: string;
-  versionId: number;
   onClose: (isSuccess: boolean) => void;
 };
 

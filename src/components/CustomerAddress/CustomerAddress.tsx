@@ -54,9 +54,10 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
           />
           <EditIconButton
             callback={() => {
+              console.log(customer);
               modal.openModal('editAddress', false);
               modal.setContent('editAddress', {
-                customer,
+                address,
                 onClose: (isSuccess: boolean) => {
                   if (isSuccess) {
                     editSuccess();
@@ -64,7 +65,6 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
                 },
               });
             }}
-            index={index}
           />
           <Box sx={styles.separator} />
           <DeleteIconButton
