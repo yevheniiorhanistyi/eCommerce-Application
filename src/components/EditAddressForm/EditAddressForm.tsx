@@ -94,13 +94,13 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
       try {
         const isEdited = await editAddress(editAddressData);
         if (isEdited) {
-          enqueueSnackbar('You have successfully add new address!', {
+          enqueueSnackbar('You have successfully edit address!', {
             variant: 'success',
           });
           modal.closeModal('editAddress', true);
         }
       } catch (error) {
-        enqueueSnackbar('Adding address failed, please try again later', {
+        enqueueSnackbar('Editing address failed, please try again later', {
           variant: 'error',
         });
       } finally {

@@ -9,6 +9,7 @@ import CustomerAddress from '../CustomerAddress/CustomerAddress';
 import CustomerData from '../CustomerData/CustomerData';
 import AddIconButton from '../buttons/AddIconButton/AddIconButton';
 import PassworData from '../PasswordData/PasswordData';
+import setDefaultAddress from '../../services/profile/setDefaultAddress';
 
 const CustomerInfo: React.FC = () => {
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
@@ -50,6 +51,16 @@ const CustomerInfo: React.FC = () => {
   };
 
   const onEditSuccess = () => {
+    fetchCustomerData();
+  };
+
+  const setAsDefault = async (addressId: string, isBillingAddress: boolean) => {
+    await setDefaultAddress({
+      userId: customerData?.id as string,
+      versionId: customerData?.version as number,
+      addressId,
+      isBillingAddress,
+    });
     fetchCustomerData();
   };
 
@@ -109,6 +120,8 @@ const CustomerInfo: React.FC = () => {
         deleteSuccess={onDeleteSuccess}
         editSuccess={onEditSuccess}
         customer={customerData as IGetCustomerData}
+        setAsDefault={setAsDefault}
+        isBillingAddress={false}
       />
       <Box sx={styles.flexBox}>
         <Typography sx={styles.addressesTitle} variant="h5">
@@ -129,6 +142,8 @@ const CustomerInfo: React.FC = () => {
         deleteSuccess={onDeleteSuccess}
         editSuccess={onEditSuccess}
         customer={customerData as IGetCustomerData}
+        setAsDefault={setAsDefault}
+        isBillingAddress
       />
     </Container>
   );

@@ -185,6 +185,8 @@ export interface ICustomerAddressProps {
   deleteSuccess: () => void;
   editSuccess: () => void;
   customer: IGetCustomerData;
+  setAsDefault: (addressId: string, isBillingAddress: boolean) => void;
+  isBillingAddress: boolean;
 }
 
 export interface ICustomerDataField {
@@ -207,8 +209,8 @@ export interface IEditDataForm {
 }
 
 export interface IEditIconButtonProps {
+  children?: string;
   callback: () => void;
-  address?: ICustomerAddressBase;
 }
 
 export interface IAddIconButtonProps {

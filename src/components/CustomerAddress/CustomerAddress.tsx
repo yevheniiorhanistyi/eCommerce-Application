@@ -7,6 +7,7 @@ import DeleteIconButton from '../buttons/DeleteIconButton/DeleteIconButton';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import { useModal } from '../ModalProvider/ModalProvider';
 import { TReturnClose } from '../ModalProvider/type';
+import SetDefaultButton from '../buttons/SetDefaultButton/SetDefaultButton';
 
 const CustomerAddress: FC<ICustomerAddressProps> = ({
   addresses,
@@ -15,7 +16,8 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
   versionId,
   editSuccess,
   deleteSuccess,
-  customer,
+  setAsDefault,
+  isBillingAddress,
 }: ICustomerAddressProps) => {
   const modal = useModal();
 
@@ -77,6 +79,13 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
             versionId={versionId}
             addressId={address.id as string}
             deleteSuccess={deleteSuccess}
+          />
+          <Box sx={styles.separator} />
+
+          <SetDefaultButton
+            callback={() => {
+              setAsDefault(address.id as string, isBillingAddress);
+            }}
           />
         </ListItem>
       ))}
