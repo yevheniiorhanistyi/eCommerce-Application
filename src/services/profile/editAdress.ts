@@ -29,14 +29,18 @@ const editAddress = async ({
       `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({
         version: versionId,
-        action: 'changeAddress',
-        addressId,
-        address: {
-          streetName,
-          city,
-          postalCode,
-          country,
-        },
+        actions: [
+          {
+            action: 'changeAddress',
+            addressId,
+            address: {
+              streetName,
+              city,
+              postalCode,
+              country,
+            },
+          },
+        ],
       }),
       {
         headers: {

@@ -39,8 +39,8 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
   onEditDataSuccess,
 }: EditAddressFormProps) => {
   const modal = useModal();
-  const [isContrySelected, setIsContrySelected] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [isContrySelected, setIsContrySelected] = useState(true);
+  const [selectedCountry, setSelectedCountry] = useState(address.country);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -90,13 +90,14 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
         versionId,
         addressId: address.id as string,
       };
+
       try {
         const isEdited = await editAddress(editAddressData);
         if (isEdited) {
           enqueueSnackbar('You have successfully add new address!', {
             variant: 'success',
           });
-          modal.closeModal('address', true);
+          modal.closeModal('editAddress', true);
         }
       } catch (error) {
         enqueueSnackbar('Adding address failed, please try again later', {

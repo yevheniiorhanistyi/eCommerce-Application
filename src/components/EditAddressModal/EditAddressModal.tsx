@@ -12,7 +12,11 @@ type EditAddressModalProps = {
   onClose: () => void;
 };
 
-const EditAddressModal = ({ isOpen, content, onClose }: EditAddressModalProps) => {
+const EditAddressModal = ({
+  isOpen,
+  content,
+  onClose,
+}: EditAddressModalProps) => {
   const handleEditData = () => {
     onClose();
   };

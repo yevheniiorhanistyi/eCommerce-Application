@@ -10,5 +10,4 @@ const createPostalCodeValidationSingle = (fieldName: string): Yup.StringSchema<s
     return false;
   })
   .required('Postcode is required');
-
 export default createPostalCodeValidationSingle;

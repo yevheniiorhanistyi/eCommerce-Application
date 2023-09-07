@@ -93,7 +93,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     modalName: TModalName,
     value: TReturnClose,
   ) => {
-    if (modalName === 'address' && value) {
+    if (modalName) {
       modals[modalName].onClose(value);
     }
     setModals((prevModals) => ({
