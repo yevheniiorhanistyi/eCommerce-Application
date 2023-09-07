@@ -15,7 +15,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import nameValidation from '../../validation/name.validation';
-import { ICountry, ICustomerAddressBase } from '../../types/types';
+import {
+  ICountry,
+  ICustomerAddressBase,
+  IGetCustomerData,
+} from '../../types/types';
 
 // eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
@@ -26,14 +30,13 @@ import editAddress from '../../services/profile/editAdress';
 import styles from './EditAddressForm.styles';
 
 interface EditAddressFormProps {
-  userId: string;
-  versionId: number;
-  // customer: ICustomer;
+  customer: IGetCustomerData;
+  onEditDataSuccess: () => void;
 }
 
-const AddAddressForm: FC<EditAddressFormProps> = ({
-  userId,
-  versionId,
+const EditAddressForm: FC<EditAddressFormProps> = ({
+  customer,
+  onEditDataSuccess,
 }: EditAddressFormProps) => {
   const modal = useModal();
   const [isContrySelected, setIsContrySelected] = useState(false);
@@ -82,15 +85,15 @@ const AddAddressForm: FC<EditAddressFormProps> = ({
     onSubmit: async (values) => {
       setSubmitting(true);
       const addressId = 0; // TODO
-      const address = {
+      const editAddressData = {
         ...values,
         addressId,
-        versionId,
-        userId,
+        versionId: customer.version,
+        userId: customer.id,
       };
       try {
-        const isCEdited = await editAddress(address);
-        if (isCEdited) {
+        const isEdited = await editAddress(editAddressData);
+        if (isEdited) {
           enqueueSnackbar('You have successfully add new address!', {
             variant: 'success',
           });
@@ -215,4 +218,4 @@ const AddAddressForm: FC<EditAddressFormProps> = ({
   );
 };
 
-export default AddAddressForm;
+export default EditAddressForm;
