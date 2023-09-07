@@ -5,17 +5,13 @@ import styles from './EditDataModal.styles';
 import EditDataForm from '../EditDataForm/EditDataForm';
 import { TCustomerContent } from '../ModalProvider/type';
 
-type EditDataModalProps = {
+interface IEditDataModalProps {
   isOpen: boolean;
   content: TCustomerContent;
   onClose: () => void;
-};
+}
 
-const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
-  const handleEditData = () => {
-    onClose();
-  };
-
+const EditDataModal = ({ isOpen, content, onClose }: IEditDataModalProps) => {
   if (content.customer) {
     return (
       <Modal open={isOpen} onClose={onClose}>
@@ -23,7 +19,6 @@ const EditDataModal = ({ isOpen, content, onClose }: EditDataModalProps) => {
           <Paper sx={styles.paper}>
             <EditDataForm
               customer={content.customer}
-              onEditDataSuccess={handleEditData}
             />
           </Paper>
         </Container>

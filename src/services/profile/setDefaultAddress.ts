@@ -4,25 +4,19 @@ import { getTokenFromLocalStorage } from '../../utils/authUtils';
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
 
-interface IEditAddressProps {
-  country: string;
-  city: string;
-  streetName: string;
-  postalCode: string;
+interface ISetDefaultAddressProps {
+  isBillingAddress: boolean;
   addressId: string;
   userId: string;
   versionId: number;
 }
 
-const editAddress = async ({
+const setDefaultAddress = async ({
   userId,
   versionId,
-  country,
-  city,
-  streetName,
-  postalCode,
   addressId,
-}: IEditAddressProps) => {
+  isBillingAddress,
+}: ISetDefaultAddressProps) => {
   try {
     const { token } = getTokenFromLocalStorage();
     const response = await axios.post(
@@ -31,14 +25,8 @@ const editAddress = async ({
         version: versionId,
         actions: [
           {
-            action: 'changeAddress',
+            action: isBillingAddress ? 'setDefaultBillingAddress' : 'setDefaultShippingAddress',
             addressId,
-            address: {
-              streetName,
-              city,
-              postalCode,
-              country,
-            },
           },
         ],
       }),
@@ -56,4 +44,4 @@ const editAddress = async ({
   }
 };
 
-export default editAddress;
+export default setDefaultAddress;
