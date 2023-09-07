@@ -31,7 +31,7 @@ import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
 
 const Header: React.FC = () => {
   const { isAuthenticated, setAuthentication } = useAuth();
-  const pages = [{ title: 'About Us', route: '/' }];
+  const pages = [{ title: 'About Us', route: '/about' }];
 
   const { categoryData } = useCategoryData();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
