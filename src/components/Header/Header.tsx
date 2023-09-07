@@ -20,6 +20,7 @@ import SignInButton from '../buttons/SignInButton/SignInButton';
 import SignUpButton from '../buttons/SignUpButton/SignUpButton';
 import SignOutButton from '../buttons/SignOutButton/SignOutButton';
 import ProfileButton from '../buttons/ProfileButton/ProfileButton';
+import BasketButton from '../buttons/BasketButton/BasketButton';
 
 import CategoryMenu from '../CategoryMenu/CategoryMenu';
 import { useAuth } from '../AuthProvider/AuthProvider';
@@ -137,6 +138,7 @@ const Header: React.FC = () => {
           </Box>
 
           <Box sx={styles.menuBox}>
+            <BasketButton />
             {isAuthenticated ? (
               <>
                 <ProfileButton />
