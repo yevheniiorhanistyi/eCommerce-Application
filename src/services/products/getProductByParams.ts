@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { getTokenFromLocalStorage } from '../../utils/authUtils';
-import { IProductResponse } from '../../types/productInterfaces';
-import { getAnonymousToken } from '../authenticate/getAnonymousToken';
-import { validateTokenStatus } from '../authenticate/validateTokenStatus';
+import getActiveToken from '../authenticate/getActiveToken';
 import combineStringAndValues from '../../utils/combineStringAndValues';
+import { IProductResponse } from '../../types/productInterfaces';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
@@ -19,14 +17,7 @@ export const getProductByParams = async (
   maxPrice = 120,
 ) => {
   try {
-    let { token } = getTokenFromLocalStorage();
-    if (!token) {
-      const anonymousToken = await getAnonymousToken();
-      token = anonymousToken.token;
-    } else {
-      const tokenStatusResponse = await validateTokenStatus(token);
-      if (!tokenStatusResponse.active) token = (await getAnonymousToken()).token;
-    }
+    const { token } = await getActiveToken();
 
     const filters = [
       { key: 'variants.attributes.color.key', values: colors },

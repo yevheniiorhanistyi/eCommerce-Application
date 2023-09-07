@@ -13,14 +13,14 @@ import {
   ICustomerAddressBase,
 } from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';
-import { getTokenFromLocalStorage } from '../../utils/authUtils';
+import getActiveToken from '../authenticate/getActiveToken';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const getCustomerData = async (): Promise<IGetCustomerData> => {
   try {
-    const { token } = getTokenFromLocalStorage();
+    const { token } = await getActiveToken();
     const response = await axios.get(`${region}/${projectKey}/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
