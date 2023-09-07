@@ -4,12 +4,6 @@ import { getTokenFromLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
-export interface AddAddressProps {
-  address: ICustomerAddressBase;
-  userId: string;
-  versionId: number;
-  isBilling: boolean;
-}
 
 export const addAddress = async (
   address: ICustomerAddressBase,

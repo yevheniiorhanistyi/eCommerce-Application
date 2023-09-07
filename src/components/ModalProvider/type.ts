@@ -9,7 +9,8 @@ export type TModalName =
   | 'imageView'
   | 'customer'
   | 'address'
-  | 'password';
+  | 'password'
+  | 'editAddress';
 
 export type TErrorContent = {
   title: string;
@@ -40,12 +41,20 @@ export type TPasswordContent = {
   onClose: (isSuccess: boolean) => void;
 };
 
+export type TEditAddressContent = {
+  address?: IGetCustomerAddress;
+  userId: string;
+  versionId: number;
+  onClose: (isSuccess: boolean) => void;
+};
+
 export type TContent = {
   error?: TErrorContent;
   imageView?: TImageViewContent;
   customer?: TCustomerContent;
   address?: TAddressContent;
   password?: TPasswordContent;
+  editAddress?: TEditAddressContent;
 }[TModalName];
 
 export type TModal = {
