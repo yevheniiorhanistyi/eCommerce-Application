@@ -88,24 +88,30 @@ const EditPasswordForm: FC<EditPasswordFormProps> = ({
         versionId: customer.version,
         userId: customer.id,
       };
-      const isEdited = await changePassword(changePasswordData);
-      if (isEdited) {
-        enqueueSnackbar('Changes saved succesfully!', {
-          variant: 'success',
-        });
-        try {
-          await authenticateClient({
-            email: customer.email,
-            password: values.newPassword,
+      const stateChange = await changePassword(changePasswordData);
+      if (stateChange) {
+        if (typeof stateChange === 'string') {
+          enqueueSnackbar(stateChange, {
+            variant: 'error',
           });
-        } catch (error) {
-          modal.openModal('error', false);
-          modal.setContent('error', {
-            title: 'Sorry',
-            text: 'Sing in failed, please try again later',
+        } else {
+          enqueueSnackbar('Changes saved succesfully!', {
+            variant: 'success',
           });
-        } finally {
-          formik.resetForm();
+          try {
+            await authenticateClient({
+              email: customer.email,
+              password: values.newPassword,
+            });
+          } catch (error) {
+            modal.openModal('error', false);
+            modal.setContent('error', {
+              title: 'Sorry',
+              text: 'Sing in failed, please try again later',
+            });
+          } finally {
+            formik.resetForm();
+          }
         }
       } else {
         enqueueSnackbar('Saving failed, please try again later.', {
