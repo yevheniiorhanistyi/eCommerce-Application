@@ -9,9 +9,9 @@ interface IEditAddressProps {
   city: string;
   streetName: string;
   postalCode: string;
-  addressId: number | undefined;
-  userId: string | undefined;
-  versionId: number | undefined;
+  addressId: string;
+  userId: string;
+  versionId: number;
 }
 
 const editAddress = async ({

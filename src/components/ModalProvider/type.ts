@@ -1,5 +1,5 @@
 import {
-  IGetCustomerAddress,
+  ICustomerAddressBase,
   IGetCustomerData,
   IImage,
 } from '../../types/types';
@@ -12,39 +12,37 @@ export type TModalName =
   | 'password'
   | 'editAddress';
 
-export type TErrorContent = {
+export interface TErrorContent {
   title: string;
   text: string;
-};
+}
 
-export type TImageViewContent = {
+export interface TImageViewContent {
   images: IImage[];
   title: string;
   index: number;
-};
+}
 
-export type TCustomerContent = {
+export interface TCustomerContent {
   customer: IGetCustomerData | null;
-  onClose: (isSuccess: boolean) => void;
-};
+}
 
-export type TAddressContent = {
-  address?: IGetCustomerAddress;
+export interface TAddressContent {
+  address?: ICustomerAddressBase;
   userId: string;
   isBilling: boolean;
   versionId: number;
-  onClose: (isSuccess: boolean) => void;
-};
+}
 
-export type TPasswordContent = {
+export interface TPasswordContent {
   customer: IGetCustomerData | null;
-  onClose: (isSuccess: boolean) => void;
-};
+}
 
-export type TEditAddressContent = {
-  address?: IGetCustomerAddress;
-  onClose: (isSuccess: boolean) => void;
-};
+export interface TEditAddressContent {
+  address: ICustomerAddressBase | null;
+  userId: string | null;
+  versionId: number | null;
+}
 
 export type TContent = {
   error?: TErrorContent;
@@ -59,7 +57,7 @@ export type TModal = {
   [K in TModalName]: {
     isOpen: boolean;
     content: TContent;
-    onClose?: () => void;
+    onClose?: (value: TReturnClose) => void
   };
 };
 
@@ -68,6 +66,7 @@ export type TModalFunction = (modalName: TModalName, isClose: boolean) => void;
 export type ModalFunctionWithContent = (
   modalName: TModalName,
   content: TContent,
+  onClose?: (value: TReturnClose) => void
 ) => void;
 
 export type ModalContextType = {

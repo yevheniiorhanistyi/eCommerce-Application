@@ -15,10 +15,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import nameValidation from '../../validation/name.validation';
-import {
-  ICountry,
-  ICustomerAddressBase,
-} from '../../types/types';
+import { ICountry, ICustomerAddressBase } from '../../types/types';
 
 // eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
@@ -30,15 +27,19 @@ import styles from './EditAddressForm.styles';
 
 interface EditAddressFormProps {
   address: ICustomerAddressBase;
+  userId: string;
+  versionId: number;
   onEditDataSuccess: () => void;
 }
 
 const EditAddressForm: FC<EditAddressFormProps> = ({
   address,
+  userId,
+  versionId,
   onEditDataSuccess,
 }: EditAddressFormProps) => {
-  console.log('formAddress', address);
   const modal = useModal();
+  const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
@@ -71,10 +72,10 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
   });
 
   const formData: ICustomerAddressBase = {
-    streetName: address.address.streetName,
-    city: address.address.city,
-    postalCode: address.address.postalCode,
-    country: address.address.country,
+    streetName: address.streetName,
+    city: address.city,
+    postalCode: address.postalCode,
+    country: address.country,
   };
 
   const formik = useFormik({
@@ -85,7 +86,9 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
       setSubmitting(true);
       const editAddressData = {
         ...values,
-        address,
+        userId,
+        versionId,
+        addressId: address.id as string,
       };
       try {
         const isEdited = await editAddress(editAddressData);
@@ -198,6 +201,7 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
             }
             helperText={formik.touched.postalCode && formik.errors.postalCode}
             required
+            disabled={!isContrySelected}
           />
         </Grid>
       </Grid>

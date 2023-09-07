@@ -2,9 +2,15 @@ import { createContext, useContext, useMemo, useState } from 'react';
 import {
   ModalContextType,
   ModalFunctionWithContent,
+  TAddressContent,
   TContent,
+  TCustomerContent,
+  TEditAddressContent,
+  TErrorContent,
+  TImageViewContent,
   TModalFunction,
   TModalName,
+  TPasswordContent,
   TReturnClose,
 } from './type';
 
@@ -30,8 +36,8 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       content: {
         title: '',
         text: '',
-      },
-      onClose: () => {},
+      } as TErrorContent,
+      onClose: (value: TReturnClose) => {},
     },
     imageView: {
       isOpen: false,
@@ -39,16 +45,15 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         images: [],
         title: '',
         index: 0,
-      },
-      onClose: () => {},
+      } as TImageViewContent,
+      onClose: (value: TReturnClose) => {},
     },
     customer: {
       isOpen: false,
       content: {
         customer: null,
-        onClose: (value: TReturnClose) => {},
-      },
-      onClose: () => {},
+      } as TCustomerContent,
+      onClose: (value: TReturnClose) => {},
     },
     address: {
       isOpen: false,
@@ -56,21 +61,24 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         userId: '',
         isBilling: false,
         versionId: 0,
-        onClose: (value: TReturnClose) => {},
-      },
-      onClose: () => {},
+      } as TAddressContent,
+      onClose: (value: TReturnClose) => {},
     },
     password: {
       isOpen: false,
       content: {
         customer: null,
-        onClose: (value: TReturnClose) => {},
-      },
+      } as TPasswordContent,
+      onClose: (value: TReturnClose) => {},
     },
     editAddress: {
       isOpen: false,
-      address: null,
-      onClose: () => {},
+      content: {
+        address: null,
+        userId: null,
+        versionId: null,
+      } as TEditAddressContent,
+      onClose: (value: TReturnClose) => {},
     },
   });
 
@@ -85,14 +93,8 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     modalName: TModalName,
     value: TReturnClose,
   ) => {
-    if (
-      (modalName === 'address'
-        || modalName === 'customer'
-        || modalName === 'password'
-        || modalName === 'editAddress')
-      && value
-    ) {
-      modals[modalName].content?.onClose(value);
+    if (modalName === 'address' && value) {
+      modals[modalName].onClose(value);
     }
     setModals((prevModals) => ({
       ...prevModals,
@@ -103,10 +105,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
   const setContent: ModalFunctionWithContent = (
     modalName: TModalName,
     content: TContent,
+    onClose?: (value: TReturnClose) => void,
   ) => {
     setModals((prevModals) => ({
       ...prevModals,
-      [modalName]: { ...prevModals[modalName], content },
+      [modalName]: { ...prevModals[modalName], content, onClose },
     }));
   };
 
@@ -125,7 +128,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     <ModalContext.Provider value={contextValue}>
       <EditAddressModal
         isOpen={modals.editAddress.isOpen}
-        address={modals.editAddress.address}
+        content={modals.editAddress.content}
         onClose={() => closeModal('editAddress', true)}
       />
       <EditDataModal

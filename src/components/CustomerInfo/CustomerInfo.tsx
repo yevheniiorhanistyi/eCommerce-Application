@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Container, Box } from '@mui/material';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
-import { IGetCustomerAddress, IGetCustomerData } from '../../types/types';
+import { ICustomerAddressBase, IGetCustomerData } from '../../types/types';
 
 import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
@@ -13,10 +13,10 @@ import PassworData from '../PasswordData/PasswordData';
 const CustomerInfo: React.FC = () => {
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
   const [shippingAddresses, setShippingAddresses] = useState<
-  IGetCustomerAddress[]
+  ICustomerAddressBase[]
   >([]);
   const [billingAddresses, setBillingAddresses] = useState<
-  IGetCustomerAddress[]
+  ICustomerAddressBase[]
   >([]);
 
   useEffect(() => {
@@ -27,11 +27,11 @@ const CustomerInfo: React.FC = () => {
     const customer = await getCustomerData();
     setCustomerData(customer);
 
-    const customerBillingAddresses: IGetCustomerAddress[] = [];
-    const customerShippingAddresses: IGetCustomerAddress[] = [];
+    const customerBillingAddresses: ICustomerAddressBase[] = [];
+    const customerShippingAddresses: ICustomerAddressBase[] = [];
 
     customer.addresses?.forEach((address) => {
-      if (customer.billingAddressIds.includes(address.id)) {
+      if (customer.billingAddressIds.includes(address.id as string)) {
         customerBillingAddresses.push(address);
       } else {
         customerShippingAddresses.push(address);

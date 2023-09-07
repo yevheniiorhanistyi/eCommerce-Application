@@ -18,10 +18,7 @@ export interface ICustomerAddressBase {
   city: string;
   postalCode: string;
   country: string;
-}
-
-export interface IGetCustomerAddress extends ICustomerAddressBase {
-  id: string;
+  id?: string;
 }
 
 export interface IGetCustomerData extends ICustomerBase {
@@ -38,7 +35,7 @@ export interface IGetCustomerData extends ICustomerBase {
     isPlatformClient: boolean;
   };
   dateOfBirth: string;
-  addresses: IGetCustomerAddress[];
+  addresses: ICustomerAddressBase[];
   shippingAddressIds: string[];
   billingAddressIds: string[];
   isEmailVerified: boolean;
@@ -181,7 +178,7 @@ export interface IProductSliderProps {
 }
 
 export interface ICustomerAddressProps {
-  addresses: IGetCustomerAddress[];
+  addresses: ICustomerAddressBase[];
   defaultAddressId: string | undefined;
   userId: string;
   versionId: number;

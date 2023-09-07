@@ -6,6 +6,7 @@ import { ICustomerAddressProps } from '../../types/types';
 import DeleteIconButton from '../buttons/DeleteIconButton/DeleteIconButton';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import { useModal } from '../ModalProvider/ModalProvider';
+import { TReturnClose } from '../ModalProvider/type';
 
 const CustomerAddress: FC<ICustomerAddressProps> = ({
   addresses,
@@ -54,23 +55,27 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
           />
           <EditIconButton
             callback={() => {
-              console.log(customer);
               modal.openModal('editAddress', false);
-              modal.setContent('editAddress', {
-                address,
-                onClose: (isSuccess: boolean) => {
+              modal.setContent(
+                'editAddress',
+                {
+                  address,
+                  userId,
+                  versionId,
+                },
+                (isSuccess: TReturnClose): void => {
                   if (isSuccess) {
                     editSuccess();
                   }
                 },
-              });
+              );
             }}
           />
           <Box sx={styles.separator} />
           <DeleteIconButton
             userId={userId}
             versionId={versionId}
-            addressId={address.id}
+            addressId={address.id as string}
             deleteSuccess={deleteSuccess}
           />
         </ListItem>

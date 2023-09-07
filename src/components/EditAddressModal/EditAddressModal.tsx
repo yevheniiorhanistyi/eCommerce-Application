@@ -3,27 +3,30 @@ import { Container, Modal, Paper } from '@mui/material';
 import styles from './EditAddressModal.styles';
 // eslint-disable-next-line import/no-cycle
 import EditAddressForm from '../EditAddressForm/EditAddressForm';
+import { TEditAddressContent } from '../ModalProvider/type';
 import { ICustomerAddressBase } from '../../types/types';
 
 type EditAddressModalProps = {
   isOpen: boolean;
-  address: ICustomerAddressBase;
+  content: TEditAddressContent;
   onClose: () => void;
 };
 
-const EditAddressModal = ({ isOpen, address, onClose }: EditAddressModalProps) => {
+const EditAddressModal = ({ isOpen, content, onClose }: EditAddressModalProps) => {
   const handleEditData = () => {
     onClose();
   };
 
-  if (address) {
+  if ((content as TEditAddressContent).address) {
     return (
       <Modal open={isOpen} onClose={onClose}>
         <Container maxWidth="sm" sx={styles.outerBox}>
           <Paper sx={styles.paper}>
             <EditAddressForm
-              address={address}
+              address={content.address as ICustomerAddressBase}
               onEditDataSuccess={handleEditData}
+              userId={content.userId as string}
+              versionId={content.versionId as number}
             />
           </Paper>
         </Container>
