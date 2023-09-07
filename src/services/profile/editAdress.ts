@@ -9,19 +9,19 @@ interface IEditAddressProps {
   city: string;
   streetName: string;
   postalCode: string;
-  addressId: number;
-  userId: string;
-  versionId: number;
+  addressId: number | undefined;
+  userId: string | undefined;
+  versionId: number | undefined;
 }
 
 const editAddress = async ({
+  userId,
+  versionId,
   country,
   city,
   streetName,
   postalCode,
   addressId,
-  userId,
-  versionId,
 }: IEditAddressProps) => {
   try {
     const { token } = getTokenFromLocalStorage();
