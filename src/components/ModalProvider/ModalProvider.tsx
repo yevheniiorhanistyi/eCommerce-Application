@@ -7,14 +7,19 @@ import {
   TModalName,
   TReturnClose,
 } from './type';
+
+import { IModalProviderProps } from '../../types/types';
 import ErrorModal from '../ErrorModal/ErrorModal';
 // eslint-disable-next-line import/no-cycle
 import EditDataModal from '../EditDataModal/EditDataModal';
 // eslint-disable-next-line import/no-cycle
 import AddAddressModal from '../AddAddressModal/AddAddressModal';
-import { IModalProviderProps } from '../../types/types';
 // eslint-disable-next-line import/no-cycle
 import ProductModal from '../ProductModal/ProductModal';
+// eslint-disable-next-line import/no-cycle
+import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
+// eslint-disable-next-line import/no-cycle
+import EditAddressModal from '../EditAddressModal/EditAddressModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -55,6 +60,22 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       },
       onClose: () => {},
     },
+    password: {
+      isOpen: false,
+      content: {
+        customer: null,
+        onClose: (value: TReturnClose) => {},
+      },
+    },
+    editAddress: {
+      isOpen: false,
+      content: {
+        userId: '',
+        versionId: 0,
+        onClose: (value: TReturnClose) => {},
+      },
+      onClose: () => {},
+    },
   });
 
   const openModal: TModalFunction = (modalName: TModalName) => {
@@ -68,7 +89,13 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     modalName: TModalName,
     value: TReturnClose,
   ) => {
-    if ((modalName === 'address' || modalName === 'customer') && value) {
+    if (
+      (modalName === 'address'
+        || modalName === 'customer'
+        || modalName === 'password'
+        || modalName === 'editAddress')
+      && value
+    ) {
       modals[modalName].content?.onClose(value);
     }
     setModals((prevModals) => ({
@@ -100,6 +127,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
 
   return (
     <ModalContext.Provider value={contextValue}>
+      <EditAddressModal
+        isOpen={modals.customer.isOpen}
+        content={modals.customer.content}
+        onClose={() => closeModal('editAddress', true)}
+      />
       <EditDataModal
         isOpen={modals.customer.isOpen}
         content={modals.customer.content}
@@ -109,6 +141,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         isOpen={modals.address.isOpen}
         content={modals.address.content}
         onClose={() => closeModal('address', true)}
+      />
+      <EditPasswordModal
+        isOpen={modals.password.isOpen}
+        content={modals.password.content}
+        onClose={() => closeModal('password', true)}
       />
       <ErrorModal
         open={modals.error.isOpen}
