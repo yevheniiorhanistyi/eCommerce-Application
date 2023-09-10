@@ -7,7 +7,7 @@ import styles from './CartButton.styles';
 const CartButton: React.FC = () => (
   <Tooltip title="Cart">
     <Badge overlap="circular" badgeContent={3} color="error">
-      <Link to="/" style={{ textDecoration: 'none' }}>
+      <Link to="/cart" style={{ textDecoration: 'none' }}>
         <IconButton sx={styles.button}>
           <ShoppingCartIcon />
         </IconButton>
