@@ -86,7 +86,7 @@ const CustomerInfo: React.FC = () => {
     },
   ];
 
-  return !isLoading ? (
+  return isLoading ? (
     <Container sx={styles.innerContainer}>
       <CustomerDataLoader />
     </Container>
