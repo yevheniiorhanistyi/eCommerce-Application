@@ -10,8 +10,10 @@ import CustomerData from '../CustomerData/CustomerData';
 import AddIconButton from '../buttons/AddIconButton/AddIconButton';
 import PassworData from '../PasswordData/PasswordData';
 import setDefaultAddress from '../../services/profile/setDefaultAddress';
+import CustomerDataLoader from '../CustomerDataLoader/CustomerDataLoader';
 
 const CustomerInfo: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
   const [shippingAddresses, setShippingAddresses] = useState<
   ICustomerAddressBase[]
@@ -40,6 +42,7 @@ const CustomerInfo: React.FC = () => {
     });
     setShippingAddresses(customerShippingAddresses);
     setBillingAddresses(customerBillingAddresses);
+    setIsLoading(false);
   };
 
   const onDeleteSuccess = () => {
@@ -83,7 +86,11 @@ const CustomerInfo: React.FC = () => {
     },
   ];
 
-  return (
+  return !isLoading ? (
+    <Container sx={styles.innerContainer}>
+      <CustomerDataLoader />
+    </Container>
+  ) : (
     <Container sx={styles.innerContainer}>
       <Typography sx={styles.addressesTitle} variant="h5">
         Personal data
