@@ -4,6 +4,7 @@ import { ICustomerDataField, ICustomerDataProps } from '../../types/types';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import styles from './CustomerData.styles';
 import { useModal } from '../ModalProvider/ModalProvider';
+import { TReturnClose } from '../ModalProvider/type';
 
 const CustomerData: FC<ICustomerDataProps> = ({
   fields,
@@ -25,14 +26,17 @@ const CustomerData: FC<ICustomerDataProps> = ({
         <EditIconButton
           callback={() => {
             modal.openModal('customer', false);
-            modal.setContent('customer', {
-              customer,
-              onClose: (isSuccess: boolean) => {
+            modal.setContent(
+              'customer',
+              {
+                customer,
+              },
+              (isSuccess: TReturnClose) => {
                 if (isSuccess) {
                   addSuccess();
                 }
               },
-            });
+            );
           }}
         />
       </ListItem>
