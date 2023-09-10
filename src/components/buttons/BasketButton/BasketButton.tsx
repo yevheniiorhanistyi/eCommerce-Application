@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
+import { Tooltip, IconButton, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import styles from './BasketButton.styles';
 
 const BasketButton: React.FC = () => (
-  <Link to="/" style={{ textDecoration: 'none' }}>
-    <IconButton sx={styles.button}>
-      <ShoppingCartIcon />
-    </IconButton>
-  </Link>
+  <Tooltip title="Basket">
+    <Badge overlap="circular" badgeContent={3} color="error">
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <IconButton sx={styles.button}>
+          <ShoppingCartIcon />
+        </IconButton>
+      </Link>
+    </Badge>
+  </Tooltip>
 );
 
 export default BasketButton;
