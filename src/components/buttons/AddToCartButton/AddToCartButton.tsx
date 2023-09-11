@@ -1,33 +1,70 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useAuth } from '../../AuthProvider/AuthProvider';
+import addProductToCart from '../../../services/cart/addProductToCart';
+import getCartById from '../../../services/cart/getCartById';
+import { IProductDisplayData } from '../../../types/types';
+import getIdCartActive from '../../../services/cart/getIdActive';
+import removeProductFromCart from '../../../services/cart/removeProductFromCart';
 
 interface AddToCartButtonProps {
-  idProduct: string;
+  product: IProductDisplayData;
 }
 
 const AddToCartButton: FC<AddToCartButtonProps> = ({
-  idProduct,
+  product,
 }: AddToCartButtonProps) => {
   const [isAddedProduct, setIsAddProduct] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const [idCartActive, setIdCartActive] = useState('');
 
-  const hendleClick = () => {
+  useEffect(() => {
+    fetchCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchCart = async () => {
+    const idCart = await getIdCartActive(isAuthenticated);
+    setIdCartActive(idCart);
+  };
+
+  const hendleClick = async () => {
     setIsDisabled(true);
     if (isAddedProduct) {
-      removeWithCart();
+      await removeWithCart();
     } else {
-      addToCard();
+      await addToCard();
     }
     setIsDisabled(false);
   };
 
-  const removeWithCart = () => {
+  const removeWithCart = async () => {
+    const cart = await getCartById(idCartActive);
+    if (cart) {
+      const removeProductFromCartData = {
+        cartId: cart.id,
+        cartVersion: cart.version,
+        productId: product.productId,
+      };
+      await removeProductFromCart(removeProductFromCartData);
+    }
     setIsAddProduct(false);
   };
 
-  const addToCard = () => {
+  const addToCard = async () => {
+    const cart = await getCartById(idCartActive);
+    if (cart) {
+      const addProductToCartData = {
+        cartId: cart.id,
+        cartVersion: cart.version,
+        productId: product.productId,
+        variantId: product.variantId,
+      };
+      await addProductToCart(addProductToCartData);
+    }
     setIsAddProduct(true);
   };
 
