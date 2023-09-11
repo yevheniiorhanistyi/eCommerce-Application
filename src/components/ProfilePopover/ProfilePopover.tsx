@@ -21,8 +21,8 @@ import AvatarButton from '../buttons/ProfileButton/ProfileButton';
 import styles from './ProfilePopover.styles';
 
 const ProfilePopover = () => {
-  const { isAuthenticated, setAuthentication } = useAuth();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const { isAuthenticated, setAuthentication } = useAuth();
   const { firstName, lastName, email } = getUserData();
   const fullName = `${firstName} ${lastName}`;
 
