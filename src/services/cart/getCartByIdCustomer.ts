@@ -6,21 +6,16 @@ import getActiveToken from '../authenticate/getActiveToken';
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-const replicateCart = async (id: string): Promise<Cart | null> => {
+const getCartByIdCustomer = async (
+  idCustomer: string,
+): Promise<Cart | null> => {
   const { token } = await getActiveToken();
   try {
-    const response = await axios.post(
-      `${baseUrl}/${projectKey}/carts/replicate`,
-      JSON.stringify({
-        reference: {
-          id,
-          typeId: 'cart',
-        },
-      }),
+    const response = await axios.get(
+      `${baseUrl}/${projectKey}/carts/customer-id=${idCustomer}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
         },
       },
     );
@@ -31,4 +26,4 @@ const replicateCart = async (id: string): Promise<Cart | null> => {
   }
 };
 
-export default replicateCart;
+export default getCartByIdCustomer;

@@ -6,16 +6,13 @@ import getActiveToken from '../authenticate/getActiveToken';
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-const replicateCart = async (id: string): Promise<Cart | null> => {
+const createCart = async (): Promise<Cart | null> => {
   const { token } = await getActiveToken();
   try {
     const response = await axios.post(
-      `${baseUrl}/${projectKey}/carts/replicate`,
+      `${baseUrl}/${projectKey}/me/carts`,
       JSON.stringify({
-        reference: {
-          id,
-          typeId: 'cart',
-        },
+        currency: 'EUR',
       }),
       {
         headers: {
@@ -31,4 +28,4 @@ const replicateCart = async (id: string): Promise<Cart | null> => {
   }
 };
 
-export default replicateCart;
+export default createCart;
