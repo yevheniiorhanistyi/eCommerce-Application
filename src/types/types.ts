@@ -166,6 +166,8 @@ export interface IImage {
 }
 
 export interface IProductDisplayData {
+  productId: string;
+  variantId: number;
   title: string;
   description: string;
   images: IImage[];

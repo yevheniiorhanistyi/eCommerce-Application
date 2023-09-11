@@ -91,7 +91,7 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
         <Box sx={styles.tittleBlock}>
           <Typography variant="h2">{productData.title}</Typography>
           <PriceProduct productData={productData} />
-          <AddToCartButton idProduct="" />
+          <AddToCartButton product={productData} />
         </Box>
       </Grid>
       <Grid item sm={12} xs={12}>

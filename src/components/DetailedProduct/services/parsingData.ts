@@ -10,6 +10,8 @@ const parsingPrice = (price: IPriceValue): string => `${(price.centAmount / 10 *
 const parsingData = (data: Product | null): IProductDisplayData | null => {
   if (data) {
     let result = {
+      productId: data.id,
+      variantId: data.masterData.current.masterVariant.id,
       title: data.masterData.current.name[languageCode],
       description: data.masterData.current.description
         ? data.masterData.current.description[languageCode]
