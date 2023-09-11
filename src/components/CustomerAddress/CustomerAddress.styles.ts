@@ -5,6 +5,9 @@ const styles = {
       flexDirection: 'column',
       alignItems: 'baseline',
     },
+    '&:hover > :last-child': {
+      opacity: 1,
+    },
   },
   addressItemData: {
     display: 'flex',

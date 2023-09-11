@@ -17,7 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import StoreIcon from '@mui/icons-material/Store';
 
 import ProfilePopover from '../ProfilePopover/ProfilePopover';
-import BasketButton from '../buttons/BasketButton/BasketButton';
+import CartButton from '../buttons/CartButton/CartButton';
 import NotificationsButton from '../buttons/NotificationsButton/NotificationsButton';
 
 import CategoryMenu from '../CategoryMenu/CategoryMenu';
@@ -129,7 +129,7 @@ const Header: React.FC = () => {
 
           <Box display="flex" alignItems="center">
             <NotificationsButton />
-            <BasketButton />
+            <CartButton />
             <ProfilePopover />
           </Box>
         </Toolbar>

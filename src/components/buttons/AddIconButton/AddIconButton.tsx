@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import styles from './AddIconButton.styles';
 import { useModal } from '../../ModalProvider/ModalProvider';
 import { IAddIconButtonProps } from '../../../types/types';
+import { TReturnClose } from '../../ModalProvider/type';
 
 const AddIconButton: FC<IAddIconButtonProps> = ({
   userId,
@@ -19,11 +20,10 @@ const AddIconButton: FC<IAddIconButtonProps> = ({
       userId,
       isBilling,
       versionId,
-      onClose: (isSuccess: boolean) => {
-        if (isSuccess) {
-          addSuccess();
-        }
-      },
+    }, (isSuccess: TReturnClose) => {
+      if (isSuccess) {
+        addSuccess();
+      }
     });
   };
 
