@@ -1,5 +1,20 @@
 import { ReactNode } from 'react';
 
+export interface IProfileButtonProps {
+  handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export interface IAuthButtonProps {
+  text: string;
+  icon?: React.ReactNode | null;
+}
+
+export interface IUserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export interface ICustomerBase {
   email: string;
   password: string;
@@ -72,10 +87,6 @@ export interface ITokenResponse {
   refresh_token: string;
   scope: string;
   token_type: string;
-}
-
-export interface ISignOutButtonProps {
-  onSignOutSuccess: () => void;
 }
 
 export interface ICenteredDividerProps {

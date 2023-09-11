@@ -17,6 +17,8 @@ import { Formik, Form } from 'formik';
 import SignInSchema from './SignInSchema';
 
 import { authenticateClient } from '../../services/authenticate/authenticateClient';
+import { getCustomerData } from '../../services/apiIntegration/customers';
+import { setUserData } from '../../utils/userDataUtils';
 import { useModal } from '../ModalProvider/ModalProvider';
 
 import styles from './SignInForm.styles';
@@ -51,6 +53,8 @@ const SignInForm: React.FC<ISignInFormProps> = ({
       onSubmit={async (values, { resetForm }) => {
         try {
           await authenticateClient(values);
+          const { firstName, lastName, email } = await getCustomerData();
+          setUserData({ firstName, lastName, email });
           onSignInSuccess();
         } catch (error) {
           if (error instanceof Error) showErrorModal(error);
