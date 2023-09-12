@@ -6,7 +6,7 @@ import { useAuth } from '../../AuthProvider/AuthProvider';
 import addProductToCart from '../../../services/cart/addProductToCart';
 import getCartById from '../../../services/cart/getCartById';
 import { IProductDisplayData } from '../../../types/types';
-import getIdCartActive from '../../../services/cart/getIdActive';
+import getIdCartActive from '../../../services/cart/getIdCartActive';
 import removeProductFromCart from '../../../services/cart/removeProductFromCart';
 
 interface AddToCartButtonProps {
@@ -31,17 +31,17 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
     setIdCartActive(idCart);
   };
 
-  const hendleClick = async () => {
+  const handleClick = async () => {
     setIsDisabled(true);
     if (isAddedProduct) {
-      await removeWithCart();
+      await removeFromCart();
     } else {
       await addToCard();
     }
     setIsDisabled(false);
   };
 
-  const removeWithCart = async () => {
+  const removeFromCart = async () => {
     const cart = await getCartById(idCartActive);
     if (cart) {
       const removeProductFromCartData = {
@@ -75,7 +75,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
       startIcon={
         isAddedProduct ? <ShoppingCartCheckoutIcon /> : <AddShoppingCartIcon />
       }
-      onClick={hendleClick}
+      onClick={handleClick}
       disabled={isDisabled}
     >
       {isAddedProduct ? 'Remove from Сart' : 'Add to Cart'}
