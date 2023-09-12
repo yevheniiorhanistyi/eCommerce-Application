@@ -7,6 +7,7 @@ const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const getProductByParams = async (
+  offset: number,
   sortValue: string,
   colors: string[],
   sizes: string[],
@@ -28,6 +29,8 @@ export const getProductByParams = async (
       filter: string[];
       sort: string[];
       'text.en-US': string;
+      limit: number;
+      offset: number;
     } = {
       filter: [
         `variants.price.centAmount:range("${minPrice * 100}" to "${
@@ -36,6 +39,8 @@ export const getProductByParams = async (
       ],
       sort: [sortValue],
       'text.en-US': `${searchValue}`,
+      limit: 6,
+      offset,
     };
     if (categoryId) queryParams.filter.push(`categories.id:"${categoryId}"`);
     filters.forEach((filter) => {
@@ -55,7 +60,8 @@ export const getProductByParams = async (
         params: queryParams,
       },
     );
-    return response.data.results;
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;

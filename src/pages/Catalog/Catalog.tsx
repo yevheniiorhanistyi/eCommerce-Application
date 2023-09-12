@@ -11,6 +11,7 @@ import SortingSelect from '../../components/SortingSelect/SortingSelect';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import ProductList from '../../components/ProductList/ProductList';
 import NoResultsMessage from '../../components/NoResultsMessage/NoResultsMessage';
+import AppPagination from '../../components/AppPagination/AppPagination';
 
 import styles from './Catalog.styles';
 import BreadcrumbsCategory from '../../components/BreadcrumbsCategory/BreadcrumbsCategory';
@@ -18,6 +19,9 @@ import BreadcrumbsCategory from '../../components/BreadcrumbsCategory/Breadcrumb
 const Catalog: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalElements, setTotalElements] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [offset, setOffset] = useState(0);
   const [anchorElem, setAnchorElem] = useState<HTMLElement | null>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [searchValue, setSearchValue] = useState('');
@@ -43,6 +47,7 @@ const Catalog: React.FC = () => {
       setIsLoading(true);
       try {
         getProductByParams(
+          offset,
           selectedOption,
           selectedColors,
           selectedSizes,
@@ -51,8 +56,9 @@ const Catalog: React.FC = () => {
           idCategory,
           minPrice,
           maxPrice,
-        ).then((res) => {
-          setProductList(res);
+        ).then((response) => {
+          setProductList(response.results);
+          setTotalElements(response.total);
           setIsLoading(false);
         });
       } catch (error) {
@@ -67,6 +73,7 @@ const Catalog: React.FC = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [
+    offset,
     idCategory,
     prices,
     selectedOption,
@@ -145,6 +152,14 @@ const Catalog: React.FC = () => {
             ) : (
               <ProductList isLoading={isLoading} products={productList} />
             )}
+            {!isLoading && productList.length > 0 ? (
+              <AppPagination
+                currentPage={currentPage}
+                totalElements={totalElements}
+                setCurrentPage={setCurrentPage}
+                setOffset={setOffset}
+              />
+            ) : null}
           </Grid>
         </Grid>
       </Container>
