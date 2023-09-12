@@ -1,3 +1,4 @@
+import { Cart } from '@commercetools/platform-sdk';
 import { ReactNode } from 'react';
 
 export interface IProfileButtonProps {
@@ -266,3 +267,7 @@ export type TLanguage = 'en-US';
 export type LocalizedObject<T> = {
   [key in TLanguage]: T;
 };
+
+export interface INonEmptyCardAProps {
+  cartData: Cart;
+}
