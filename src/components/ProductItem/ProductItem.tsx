@@ -7,12 +7,16 @@ import {
   CardActionArea,
   Box,
   Rating,
+  Button,
   Link,
 } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Link as RouterLink } from 'react-router-dom';
 import { ProductItemProps } from '../../types/productInterfaces';
 
 import styles from './ProductItem.styles';
+import theme from '../../theme';
 
 export const ProductItem: React.FC<ProductItemProps> = ({
   keyProduct,
@@ -89,6 +93,29 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           )}
         </Typography>
         <Rating name={`rating-${keyProduct}`} size="small" />
+        <Button
+          aria-label="Button add to cart"
+          startIcon={<AddShoppingCartIcon />}
+          sx={{
+            fontSize: '0.8rem',
+            padding: '8px 20px',
+            color: theme.palette.primary.main,
+          }}
+          variant="outlined"
+        >
+          Add to Cart
+        </Button>
+        {/* <Button
+          aria-label="Button remove from cart"
+          startIcon={<DeleteIcon />}
+          sx={{
+            fontSize: '0.8rem',
+            padding: '8px 20px',
+          }}
+          variant="contained"
+        >
+          Remove from Cart
+        </Button> */}
       </CardActions>
     </Card>
   );
