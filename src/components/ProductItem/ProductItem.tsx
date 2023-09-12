@@ -11,12 +11,12 @@ import {
   Link,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { Link as RouterLink } from 'react-router-dom';
+import calculatePrices from '../../utils/calculatePrices';
 import { ProductItemProps } from '../../types/productInterfaces';
 
 import styles from './ProductItem.styles';
-import theme from '../../theme';
 
 export const ProductItem: React.FC<ProductItemProps> = ({
   keyProduct,
@@ -25,16 +25,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
   url,
   prices,
 }: ProductItemProps) => {
-  const fractionDigits = 2;
-  const discountedPrice = prices.discounted?.value
-    ? (prices.discounted.value.centAmount / 10 ** fractionDigits).toFixed(
-      fractionDigits,
-    )
-    : '';
-  const originalPrice = prices.value
-    ? (prices.value.centAmount / 10 ** fractionDigits).toFixed(fractionDigits)
-    : '';
-  const hasDiscount = discountedPrice && discountedPrice !== originalPrice;
+  const { originalPrice, hasDiscount, discountedPrice } = calculatePrices(prices);
 
   return (
     <Card sx={styles.card}>
@@ -99,15 +90,14 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           sx={{
             fontSize: '0.8rem',
             padding: '8px 20px',
-            color: theme.palette.primary.main,
           }}
-          variant="outlined"
+          variant="contained"
         >
           Add to Cart
         </Button>
         {/* <Button
           aria-label="Button remove from cart"
-          startIcon={<DeleteIcon />}
+          startIcon={<ShoppingCartCheckoutIcon />}
           sx={{
             fontSize: '0.8rem',
             padding: '8px 20px',
