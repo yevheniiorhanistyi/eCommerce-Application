@@ -1,18 +1,12 @@
 import { Box, Pagination } from '@mui/material';
-import React from 'react';
+import { IAppPaginationProps } from '../../types/types';
 
-interface IAppPaginationProps {
-  totalElements: number;
-  currentPage: number;
-  setOffset: React.Dispatch<React.SetStateAction<number>>;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const AppPagination: React.FC<IAppPaginationProps> = ({
+export const AppPagination: React.FC<IAppPaginationProps> = ({
+  searchParams,
   totalElements,
   currentPage,
   setCurrentPage,
-  setOffset,
+  setSearchParams,
 }: IAppPaginationProps) => {
   const elementsPerPage = 6;
   const totalPages = Math.ceil(totalElements / elementsPerPage);
@@ -20,7 +14,7 @@ const AppPagination: React.FC<IAppPaginationProps> = ({
   const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
     const newOffset = ((page - 1) * 6) % totalElements;
     setCurrentPage(page - 1);
-    setOffset(newOffset);
+    setSearchParams({ ...searchParams, offset: newOffset });
   };
 
   return (
