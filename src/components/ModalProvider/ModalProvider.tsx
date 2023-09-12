@@ -93,9 +93,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     modalName: TModalName,
     value: TReturnClose,
   ) => {
-    if (modalName) {
-      modals[modalName].onClose(value);
-    }
+    modals[modalName].onClose(value);
     setModals((prevModals) => ({
       ...prevModals,
       [modalName]: { ...prevModals[modalName], isOpen: false },
@@ -105,7 +103,7 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
   const setContent: ModalFunctionWithContent = (
     modalName: TModalName,
     content: TContent,
-    onClose?: (value: TReturnClose) => void,
+    onClose: (value: TReturnClose) => void = () => {},
   ) => {
     setModals((prevModals) => ({
       ...prevModals,
