@@ -4,9 +4,9 @@ import { Cart } from '@commercetools/platform-sdk';
 import NonEmptyCart from '../../components/NonEmptyCard/NonEmptyCart';
 import styles from './Cart.styles';
 import { useAuth } from '../../components/AuthProvider/AuthProvider';
-import getIdCartActive from '../../services/cart/getIdActive';
 import getCartById from '../../services/cart/getCartById';
 import EmptyCart from '../../components/EmptyCart/EmptyCart';
+import getIdCartActive from '../../services/cart/getIdCartActive';
 
 const CustomerCart: React.FC = () => {
   const { isAuthenticated } = useAuth();
