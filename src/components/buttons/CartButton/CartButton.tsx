@@ -4,10 +4,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import styles from './CartButton.styles';
 
-const BasketButton: React.FC = () => (
+const CartButton: React.FC = () => (
   <Tooltip title="Cart">
     <Badge overlap="circular" badgeContent={3} color="error">
-      <Link to="/" style={{ textDecoration: 'none' }}>
+      <Link to="/cart" style={{ textDecoration: 'none' }}>
         <IconButton sx={styles.button}>
           <ShoppingCartIcon />
         </IconButton>
@@ -16,4 +16,4 @@ const BasketButton: React.FC = () => (
   </Tooltip>
 );
 
-export default BasketButton;
+export default CartButton;
