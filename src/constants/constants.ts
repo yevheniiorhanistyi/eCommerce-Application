@@ -1,3 +1,5 @@
+import { ISearchParams } from '../types/types';
+
 export const sortingOptions = [
   { label: 'Name: A - Z', value: 'name.en-us asc' },
   { label: 'Name: Z - A', value: 'name.en-us desc' },
@@ -35,3 +37,13 @@ export const colors = [
   { label: 'Orange', value: 'Orange' },
   { label: 'Gray', value: 'Gray' },
 ];
+
+export const initialSearchParams: ISearchParams = {
+  offset: 0,
+  term: '',
+  sortValue: 'price asc',
+  colors: [],
+  sizes: [],
+  brands: [],
+  prices: [10, 800],
+};
