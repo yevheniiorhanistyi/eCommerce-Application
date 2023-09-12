@@ -5,7 +5,7 @@ import { ProductListProps } from '../../types/productInterfaces';
 
 import styles from './ProductList.styles';
 
-const ProductList: React.FC<ProductListProps> = ({
+export const ProductList: React.FC<ProductListProps> = ({
   isLoading,
   products,
 }: ProductListProps) => (isLoading ? (
