@@ -17,7 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import StoreIcon from '@mui/icons-material/Store';
 
 import ProfilePopover from '../ProfilePopover/ProfilePopover';
-import BasketButton from '../buttons/BasketButton/BasketButton';
+import BasketButton from '../buttons/CartButton/CartButton';
 import NotificationsButton from '../buttons/NotificationsButton/NotificationsButton';
 
 import CategoryMenu from '../CategoryMenu/CategoryMenu';
