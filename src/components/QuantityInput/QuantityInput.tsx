@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ButtonGroup, IconButton, TextField } from '@mui/material';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { enqueueSnackbar } from 'notistack';
 import { useAuth } from '../AuthProvider/AuthProvider';
 import getIdCartActive from '../../services/cart/getIdCartActive';
@@ -112,26 +112,24 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
   return (
     <ButtonGroup sx={styles.wraper}>
       <IconButton
-        color="primary"
         onClick={handleDecrement}
         disabled={!validation(quantity - 1) || valueField < minQuantity}
       >
-        <IndeterminateCheckBoxIcon />
+        <RemoveIcon />
       </IconButton>
       <TextField
-        label="Quantity"
         value={valueField}
         onChange={(e) => setValueField(Number(e.target.value.replace(/\D/g, '')))}
         onBlur={handleBlur}
         error={error}
         sx={styles.textField}
+        variant="standard"
       />
       <IconButton
-        color="primary"
         onClick={handleIncrement}
         disabled={!validation(quantity + 1) || valueField > maxQuantity}
       >
-        <AddBoxIcon />
+        <AddIcon />
       </IconButton>
     </ButtonGroup>
   );
