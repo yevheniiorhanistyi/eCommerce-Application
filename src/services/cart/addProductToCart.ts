@@ -30,7 +30,6 @@ const addProductToCart = async ({
             action: 'addLineItem',
             productId,
             variantId,
-            // quantity,
           },
         ],
       }),

@@ -7,6 +7,7 @@ import { useAuth } from '../AuthProvider/AuthProvider';
 import getIdCartActive from '../../services/cart/getIdCartActive';
 import getQuantityProduct from '../../services/cart/getQuantityProduct';
 import styles from './QuantityInput.styles';
+import setQuantityProduct from '../../services/cart/setQuantityProduct';
 
 interface IQuantityInputProps {
   produstId: string;
@@ -21,6 +22,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
   const maxQuantity = Infinity;
   const [quantity, setQuantity] = useState(minQuantity);
   const [valueField, setValueField] = useState(minQuantity);
+  const [idCartActive, setIdCartActive] = useState('');
   const [error, setError] = useState(false);
   const { isAuthenticated } = useAuth();
 
@@ -30,9 +32,9 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
   }, []);
 
   const fetchCart = async () => {
-    const cartId = await getIdCartActive(isAuthenticated);
-    const QuantityProduct = await getQuantityProduct(cartId, produstId);
-    console.log('QuantityProduct', QuantityProduct);
+    const idCart = await getIdCartActive(isAuthenticated);
+    const QuantityProduct = await getQuantityProduct(idCart, produstId);
+    setIdCartActive(idCart);
     if (QuantityProduct) {
       setValueField(QuantityProduct);
       setQuantity(QuantityProduct);
@@ -53,29 +55,55 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     return true;
   };
 
-  const handleIncrement = () => {
+  const processQuantity = async (value: number): Promise<boolean> => {
+    const isSetQuantity = await setQuantityProduct({
+      cartId: idCartActive,
+      productId: produstId,
+      quantity: value - quantity,
+    });
+    if (isSetQuantity) {
+      setQuantity(value);
+      onChange();
+      enqueueSnackbar('Quantity set successfully!', {
+        variant: 'success',
+      });
+      return true;
+    }
+    enqueueSnackbar('Failed to set quantity!', {
+      variant: 'error',
+    });
+    return false;
+  };
+
+  const handleIncrement = async () => {
     const value = valueField + 1;
     if (validation(value + 1)) {
-      setQuantity(value);
-      setValueField(value);
-      setError(false);
+      const isSetQuantity = await processQuantity(value);
+      if (isSetQuantity) {
+        setValueField(value);
+        setError(false);
+      }
     }
   };
 
-  const handleDecrement = () => {
+  const handleDecrement = async () => {
     const value = valueField - 1;
     if (validation(value)) {
-      setQuantity(value);
-      setValueField(value);
-      setError(false);
+      const isSetQuantity = await processQuantity(value);
+      if (isSetQuantity) {
+        setValueField(value);
+        setError(false);
+      }
     }
   };
 
-  const handleBlur = () => {
+  const handleBlur = async () => {
     const value = valueField;
     if (validation(value)) {
-      setQuantity(value);
-      setError(false);
+      const isSetQuantity = await processQuantity(value);
+      if (isSetQuantity) {
+        setError(false);
+      }
     } else {
       setError(true);
     }
