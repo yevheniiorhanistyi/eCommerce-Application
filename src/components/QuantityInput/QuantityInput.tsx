@@ -1,13 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonGroup, IconButton, TextField } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import { enqueueSnackbar } from 'notistack';
+import { useAuth } from '../AuthProvider/AuthProvider';
+import getIdCartActive from '../../services/cart/getIdCartActive';
+import getQuantityProduct from '../../services/cart/getQuantityProduct';
 import styles from './QuantityInput.styles';
 
 interface IQuantityInputProps {
   produstId: string;
   onChange: () => void;
 }
+
 const QuantityInput: React.FC<IQuantityInputProps> = ({
   produstId,
   onChange,
@@ -17,6 +22,26 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
   const [quantity, setQuantity] = useState(minQuantity);
   const [valueField, setValueField] = useState(minQuantity);
   const [error, setError] = useState(false);
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    fetchCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchCart = async () => {
+    const cartId = await getIdCartActive(isAuthenticated);
+    const QuantityProduct = await getQuantityProduct(cartId, produstId);
+    console.log('QuantityProduct', QuantityProduct);
+    if (QuantityProduct) {
+      setValueField(QuantityProduct);
+      setQuantity(QuantityProduct);
+    } else {
+      enqueueSnackbar('Сould not find the quantity of the product!', {
+        variant: 'error',
+      });
+    }
+  };
 
   const validation = (value: number): boolean => {
     if (value < minQuantity) {
@@ -33,6 +58,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     if (validation(value + 1)) {
       setQuantity(value);
       setValueField(value);
+      setError(false);
     }
   };
 
@@ -41,6 +67,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     if (validation(value)) {
       setQuantity(value);
       setValueField(value);
+      setError(false);
     }
   };
 
@@ -59,7 +86,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
       <IconButton
         color="primary"
         onClick={handleDecrement}
-        disabled={!validation(quantity - 1)}
+        disabled={!validation(quantity - 1) || valueField < minQuantity}
       >
         <IndeterminateCheckBoxIcon />
       </IconButton>
@@ -74,7 +101,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
       <IconButton
         color="primary"
         onClick={handleIncrement}
-        disabled={!validation(quantity + 1)}
+        disabled={!validation(quantity + 1) || valueField > maxQuantity}
       >
         <AddBoxIcon />
       </IconButton>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Cart } from '@commercetools/platform-sdk';
+import { Cart, LineItem } from '@commercetools/platform-sdk';
 
 import getActiveToken from '../authenticate/getActiveToken';
 import getCartById from './getCartById';
@@ -13,12 +13,12 @@ export interface IRemoveProductFromCartProps {
   productId: string;
 }
 
-const getLineItemIdAroundProduct = async (
+export const getLineItemsAroundProduct = async (
   cartId: string,
   productId: string,
-): Promise<string | undefined> => {
+): Promise<LineItem[] | undefined> => {
   const cart = await getCartById(cartId);
-  return cart?.lineItems.filter((item) => item.productId === productId)[0].id;
+  return cart?.lineItems.filter((item) => item.productId === productId);
 };
 
 const removeProductFromCart = async ({
@@ -27,6 +27,8 @@ const removeProductFromCart = async ({
   productId,
 }: IRemoveProductFromCartProps): Promise<Cart | null> => {
   const { token } = await getActiveToken();
+  const lineItemResult = await getLineItemsAroundProduct(cartId, productId);
+  const lineItemId = lineItemResult ? lineItemResult[0].id : undefined;
   try {
     const response = await axios.post(
       `${baseUrl}/${projectKey}/carts/${cartId}`,
@@ -35,7 +37,7 @@ const removeProductFromCart = async ({
         actions: [
           {
             action: 'removeLineItem',
-            lineItemId: await getLineItemIdAroundProduct(cartId, productId),
+            lineItemId,
           },
         ],
       }),
