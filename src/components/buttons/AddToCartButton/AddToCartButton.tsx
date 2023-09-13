@@ -8,6 +8,7 @@ import getCartById from '../../../services/cart/getCartById';
 import { IProductDisplayData } from '../../../types/types';
 import getIdCartActive from '../../../services/cart/getIdCartActive';
 import removeProductFromCart from '../../../services/cart/removeProductFromCart';
+import checkProductToCart from '../../../services/cart/checkProductToCart';
 
 interface AddToCartButtonProps {
   product: IProductDisplayData;
@@ -29,6 +30,8 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
   const fetchCart = async () => {
     const idCart = await getIdCartActive(isAuthenticated);
     setIdCartActive(idCart);
+    const isProductToCart = await checkProductToCart(idCart, product.productId);
+    setIsAddProduct(isProductToCart);
   };
 
   const handleClick = async () => {
