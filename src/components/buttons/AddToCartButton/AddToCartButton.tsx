@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { enqueueSnackbar } from 'notistack';
 import { useAuth } from '../../AuthProvider/AuthProvider';
 import addProductToCart from '../../../services/cart/addProductToCart';
 import getCartById from '../../../services/cart/getCartById';
@@ -52,9 +53,24 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
         cartVersion: cart.version,
         productId: product.productId,
       };
-      await removeProductFromCart(removeProductFromCartData);
+      const isRemoveProduct = await removeProductFromCart(
+        removeProductFromCartData,
+      );
+      if (isRemoveProduct) {
+        enqueueSnackbar('Product removed from cart!', {
+          variant: 'success',
+        });
+        setIsAddProduct(false);
+      } else {
+        enqueueSnackbar('The product could not be removed from the cart!', {
+          variant: 'error',
+        });
+      }
+    } else {
+      enqueueSnackbar('The product could not be removed from the cart!', {
+        variant: 'error',
+      });
     }
-    setIsAddProduct(false);
   };
 
   const addToCard = async () => {
@@ -66,9 +82,22 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
         productId: product.productId,
         variantId: product.variantId,
       };
-      await addProductToCart(addProductToCartData);
+      const isAddeProduct = await addProductToCart(addProductToCartData);
+      if (isAddeProduct) {
+        enqueueSnackbar('Product added from cart!', {
+          variant: 'success',
+        });
+        setIsAddProduct(true);
+      } else {
+        enqueueSnackbar('The product could not be added from the cart!', {
+          variant: 'error',
+        });
+      }
+    } else {
+      enqueueSnackbar('The product could not be added from the cart!', {
+        variant: 'error',
+      });
     }
-    setIsAddProduct(true);
   };
 
   return (
@@ -81,7 +110,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
       onClick={handleClick}
       disabled={isDisabled}
     >
-      {isAddedProduct ? 'Remove from Сart' : 'Add to Cart'}
+      {isAddedProduct ? 'Remove from Cart' : 'Add to Cart'}
     </Button>
   );
 };
