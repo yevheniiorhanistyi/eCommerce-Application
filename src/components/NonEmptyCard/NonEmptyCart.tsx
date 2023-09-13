@@ -10,14 +10,16 @@ const NonEmptyCart: FC<INonEmptyCardAProps> = ({
 }: INonEmptyCardAProps) => {
   const fractionDigits = 2;
 
-  const convertToFractionalDigits = (value: number): number => {
-    return Number((value / 10 ** fractionDigits).toFixed(fractionDigits));
-  };
+  const convertToFractionalDigits = (value: number): number => Number(
+    ((value / 10 ** fractionDigits)).toFixed(
+      fractionDigits,
+    ),
+  );
 
   const summaryDiscount = cartData.lineItems.reduce((acc, lineItem) => {
     const price = lineItem.price.discounted?.value
-      ? Number(lineItem.price.value.centAmount) -
-        Number(lineItem.price.discounted.value.centAmount)
+      ? Number(lineItem.price.value.centAmount)
+        - Number(lineItem.price.discounted.value.centAmount)
       : 0;
 
     return acc + price;
@@ -25,8 +27,7 @@ const NonEmptyCart: FC<INonEmptyCardAProps> = ({
 
   const summaryPriceWithoutDiscount = Number(cartData.totalPrice.centAmount);
 
-  const summaryPriceWithDiscount =
-    summaryPriceWithoutDiscount - summaryDiscount;
+  const summaryPriceWithDiscount = summaryPriceWithoutDiscount - summaryDiscount;
 
   return !cartData ? null : (
     <Container sx={styles.wrapper} disableGutters>

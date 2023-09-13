@@ -14,7 +14,6 @@ const getCartById = async (id: string): Promise<Cart | null> => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);

@@ -46,7 +46,7 @@ const styles = {
   },
   originalPrice: {
     fontWeight: '700',
-  
+
   },
   cartItemDescription: {
     display: 'flex',
@@ -57,7 +57,7 @@ const styles = {
       flexDirection: 'column-reverse',
       alignItems: 'flex-start',
     },
-  }
+  },
 };
 
 export default styles;
