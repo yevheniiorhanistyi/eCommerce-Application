@@ -71,7 +71,6 @@ const CartItems: FC<INonEmptyCardAProps> = ({
                     gutterBottom
                     variant="h5"
                     component="div"
-                    align="center"
                     sx={styles.typographyTitle}
                   >
                     {Object.values(lineItem.name)}

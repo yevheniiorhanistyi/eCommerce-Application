@@ -46,10 +46,12 @@ const styles = {
   },
   originalPrice: {
     fontWeight: '700',
+  
   },
   cartItemDescription: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
 
     '@media (max-width: 870px)': {
       flexDirection: 'column-reverse',
