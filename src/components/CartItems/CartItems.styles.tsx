@@ -39,7 +39,23 @@ const styles = {
     margin: '0',
     minWidth: '100px',
     width: '90px',
+
+    '@media (max-width: 870px)': {
+      paddingLeft: '16px',
+    },
   },
+  originalPrice: {
+    fontWeight: '700',
+  },
+  cartItemDescription: {
+    display: 'flex',
+    alignItems: 'center',
+
+    '@media (max-width: 870px)': {
+      flexDirection: 'column-reverse',
+      alignItems: 'flex-start',
+    },
+  }
 };
 
 export default styles;

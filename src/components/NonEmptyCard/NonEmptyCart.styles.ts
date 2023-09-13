@@ -2,7 +2,7 @@ const styles = {
   wrapper: {
     display: 'flex',
 
-    '@media (max-width: 750px)': {
+    '@media (max-width: 870px)': {
       flexDirection: 'column',
     },
   },
@@ -69,6 +69,7 @@ const styles = {
   discounValue: {
     color: '#e52e6b',
     fontSize: '16px',
+    fontWeight: '700',
   },
 };
 
