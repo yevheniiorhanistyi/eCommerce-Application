@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import styles from './AddIconButton.styles';
 import { useModal } from '../../ModalProvider/ModalProvider';
 import { IAddIconButtonProps } from '../../../types/types';
+import { TReturnClose } from '../../ModalProvider/type';
 
 const AddIconButton: FC<IAddIconButtonProps> = ({
   userId,
@@ -15,16 +16,19 @@ const AddIconButton: FC<IAddIconButtonProps> = ({
 
   const handleClick = () => {
     modal.openModal('address', false);
-    modal.setContent('address', {
-      userId,
-      isBilling,
-      versionId,
-      onClose: (isSuccess: boolean) => {
+    modal.setContent(
+      'address',
+      {
+        userId,
+        isBilling,
+        versionId,
+      },
+      (isSuccess: TReturnClose) => {
         if (isSuccess) {
           addSuccess();
         }
       },
-    });
+    );
   };
 
   return (

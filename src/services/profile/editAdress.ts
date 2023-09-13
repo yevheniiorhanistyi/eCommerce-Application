@@ -9,9 +9,9 @@ interface IEditAddressProps {
   city: string;
   streetName: string;
   postalCode: string;
-  addressId: number | undefined;
-  userId: string | undefined;
-  versionId: number | undefined;
+  addressId: string;
+  userId: string;
+  versionId: number;
 }
 
 const editAddress = async ({
@@ -29,14 +29,18 @@ const editAddress = async ({
       `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({
         version: versionId,
-        action: 'changeAddress',
-        addressId,
-        address: {
-          streetName,
-          city,
-          postalCode,
-          country,
-        },
+        actions: [
+          {
+            action: 'changeAddress',
+            addressId,
+            address: {
+              streetName,
+              city,
+              postalCode,
+              country,
+            },
+          },
+        ],
       }),
       {
         headers: {

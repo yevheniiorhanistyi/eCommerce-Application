@@ -1,20 +1,15 @@
-import React from 'react';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { IProfileButtonProps } from '../../../types/types';
 
-import { Link } from 'react-router-dom';
 import styles from './ProfileButton.styles';
 
-const ProfileButton: React.FC = () => (
-  <Link to="/profile" style={{ textDecoration: 'none' }}>
-    <Button
-      startIcon={<AccountCircleIcon sx={styles.loginIcon} />}
-      variant="text"
-      sx={styles.button}
-    >
-      Profile
-    </Button>
-  </Link>
+const ProfileButton: React.FC<IProfileButtonProps> = ({
+  handleClick,
+}: IProfileButtonProps) => (
+  <IconButton onClick={handleClick}>
+    <AccountCircleIcon sx={styles.icon} />
+  </IconButton>
 );
 
 export default ProfileButton;

@@ -4,16 +4,17 @@ import {
   CustomerPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 import axios from 'axios';
-import { ModalContextType } from '../../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
+import getActiveToken from '../authenticate/getActiveToken';
 import constants from './constants';
+import { formatDateToYYYYMMDD } from '../../utils/formatDate';
+
+import { ModalContextType } from '../../components/ModalProvider/type';
 import {
   ICustomer,
   IGetCustomerData,
   ICustomerAddressBase,
 } from '../../types/types';
-import { formatDateToYYYYMMDD } from '../../utils/formatDate';
-import getActiveToken from '../authenticate/getActiveToken';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
