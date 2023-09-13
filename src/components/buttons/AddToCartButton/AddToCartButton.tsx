@@ -62,12 +62,12 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
         });
         setIsAddProduct(false);
       } else {
-        enqueueSnackbar('The product could not be removed from the cart!', {
+        enqueueSnackbar('Product can`t be removed from the cart!', {
           variant: 'error',
         });
       }
     } else {
-      enqueueSnackbar('The product could not be removed from the cart!', {
+      enqueueSnackbar('Product can`t be removed from the cart!', {
         variant: 'error',
       });
     }
@@ -84,17 +84,17 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
       };
       const isAddeProduct = await addProductToCart(addProductToCartData);
       if (isAddeProduct) {
-        enqueueSnackbar('Product added from cart!', {
+        enqueueSnackbar('Product added to cart!', {
           variant: 'success',
         });
         setIsAddProduct(true);
       } else {
-        enqueueSnackbar('The product could not be added from the cart!', {
+        enqueueSnackbar('Product can`t be added to the cart!', {
           variant: 'error',
         });
       }
     } else {
-      enqueueSnackbar('The product could not be added from the cart!', {
+      enqueueSnackbar('Product can`t be added to the cart!', {
         variant: 'error',
       });
     }
