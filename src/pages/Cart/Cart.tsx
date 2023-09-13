@@ -25,7 +25,7 @@ const CustomerCart: React.FC = () => {
 
   if (!cartData) {
     return null; // TODO Skeleton
-  } if (!cartData?.lineItems.length) {
+  } if (cartData && !cartData?.lineItems.length) {
     return (
       <Container maxWidth="lg" disableGutters>
         <Paper elevation={0} sx={{ p: 3, mt: 7, mb: 4 }}>

@@ -28,9 +28,16 @@ const styles = {
   typographyTitle: {
     fontSize: '1.2rem',
   },
-  typographyPrice: {
+  crossedPrice: {
+    color: '#a0a1a3',
+    fontSize: '12px',
+    textDecoration: 'line-through',
+  },
+  itemPricesWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
     margin: '0',
-    minWidth: '80px',
+    minWidth: '100px',
     width: '90px',
   },
 };
