@@ -56,7 +56,8 @@ const NonEmptyCart: FC<INonEmptyCardAProps> = ({
           <Container sx={styles.discountWrapper} disableGutters>
             <Typography sx={styles.discountTitle}>Discount</Typography>
             <Typography sx={styles.discounValue}>
-              {`- ${convertToFractionalDigits(summaryDiscount)}`}
+              {`- ${convertToFractionalDigits(summaryDiscount)} ${cartData.totalPrice.currencyCode}`}
+
             </Typography>
           </Container>
         </Container>
