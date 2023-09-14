@@ -3,10 +3,15 @@ const styles = {
     alignItems: 'center',
   },
   textField: {
-    width: 75,
+    width: 40,
     input: {
       textAlign: 'center',
       appearance: 'none',
+    },
+    '& .MuiInputBase-root': {
+      '&::before': {
+        borderBottomColor: 'transparent',
+      },
     },
   },
   helperText: {},
