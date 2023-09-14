@@ -31,7 +31,7 @@ const NonEmptyCart: FC<INonEmptyCardAProps> = ({
 
   return !cartData ? null : (
     <Container sx={styles.wrapper} disableGutters>
-      <Container sx={styles.leftSide} disableGutters>
+      <Container disableGutters>
         <CartItems cartData={cartData} deleteSuccess={deleteSuccess} />
       </Container>
       <Container sx={styles.rightSide}>

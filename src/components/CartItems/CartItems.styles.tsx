@@ -8,15 +8,19 @@ const styles = {
     justifyContent: 'space-between',
     maxWidth: '100%',
     width: '100%',
-    marginBottom: '15px',
-    padding: '7px',
+    padding: '7px 0 20px 0',
+    borderBottom: '1px solid #ebedf0',
+
+    '@media (max-width: 370px)': {
+      flexDirection: 'column',
+    },
   },
   innerBox: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '200px',
-    height: '180px',
+    width: '150px',
+    height: '150px',
     paddingTop: '10px',
   },
   cardMedia: {
@@ -33,20 +37,20 @@ const styles = {
     fontSize: '12px',
     textDecoration: 'line-through',
   },
+  descriptionPrices: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
   itemPricesWrapper: {
     display: 'flex',
     flexDirection: 'column',
     margin: '0',
     minWidth: '100px',
     width: '90px',
-
-    '@media (max-width: 870px)': {
-      paddingLeft: '16px',
-    },
   },
   originalPrice: {
     fontWeight: '700',
-
   },
   cartItemDescription: {
     display: 'flex',
@@ -54,13 +58,26 @@ const styles = {
     justifyContent: 'space-between',
 
     '@media (max-width: 870px)': {
-      flexDirection: 'column-reverse',
+      flexDirection: 'initial',
       alignItems: 'flex-start',
+    },
+
+    '@media (max-width: 500px)': {
+      flexDirection: 'column-reverse',
     },
   },
   cartItemActions: {
     display: 'flex',
     justifyContent: 'flex-end',
+  },
+  descriptionWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+
+    '@media (max-width: 325px)': {
+      gap: '5px',
+    },
   },
 };
 

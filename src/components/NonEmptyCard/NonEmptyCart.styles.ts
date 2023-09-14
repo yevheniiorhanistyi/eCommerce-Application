@@ -25,16 +25,23 @@ const styles = {
     paddingBottom: '10px',
   },
   summaryTitle: {
-    fontSize: '20px',
+    fontSize: '1.4rem',
     fontWeight: '700',
   },
   summaryValue: {
     fontSize: '20px',
     fontWeight: '700',
   },
-  leftSide: {},
   rightSide: {
-    width: '50%',
+    width: '55%',
+
+    '@media (max-width: 870px)': {
+      width: '80%',
+    },
+
+    '@media (max-width: 370px)': {
+      width: '100%',
+    },
   },
   promocode: {
     display: 'flex',

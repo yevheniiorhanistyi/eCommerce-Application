@@ -6,6 +6,7 @@ import { useAuth } from '../AuthProvider/AuthProvider';
 import getIdCartActive from '../../services/cart/getIdCartActive';
 import getCartById from '../../services/cart/getCartById';
 import removeProductFromCart from '../../services/cart/removeProductFromCart';
+import styles from './DeleteCartItemButton.styles';
 
 interface DeleteItemButtonProps {
   product: LineItem;
@@ -16,8 +17,9 @@ const DeleteCartItemButton: FC<DeleteItemButtonProps> = ({
   product,
   deleteSuccess,
 }: DeleteItemButtonProps) => {
-  const { isAuthenticated } = useAuth();
+  const [isDisabled, setIsDisabled] = useState(false);
   const [idCartActive, setIdCartActive] = useState('');
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     fetchCart();
@@ -30,6 +32,7 @@ const DeleteCartItemButton: FC<DeleteItemButtonProps> = ({
   };
 
   const handleClick = async () => {
+    setIsDisabled(true);
     await removeFromCart();
     deleteSuccess();
   };
@@ -52,6 +55,8 @@ const DeleteCartItemButton: FC<DeleteItemButtonProps> = ({
       color="primary"
       startIcon={<DeleteOutlineIcon />}
       onClick={handleClick}
+      sx={styles.button}
+      disabled={isDisabled}
     >
       Delete
     </Button>
