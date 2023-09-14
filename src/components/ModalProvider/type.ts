@@ -57,7 +57,7 @@ export type TModal = {
   [K in TModalName]: {
     isOpen: boolean;
     content: TContent;
-    onClose?: (value: TReturnClose) => void
+    onClose?: (value: TReturnClose) => void;
   };
 };
 
@@ -66,7 +66,7 @@ export type TModalFunction = (modalName: TModalName, isClose: boolean) => void;
 export type ModalFunctionWithContent = (
   modalName: TModalName,
   content: TContent,
-  onClose?: (value: TReturnClose) => void
+  onClose?: (value: TReturnClose) => void,
 ) => void;
 
 export type ModalContextType = {

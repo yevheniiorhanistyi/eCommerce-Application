@@ -25,7 +25,9 @@ const setDefaultAddress = async ({
         version: versionId,
         actions: [
           {
-            action: isBillingAddress ? 'setDefaultBillingAddress' : 'setDefaultShippingAddress',
+            action: isBillingAddress
+              ? 'setDefaultBillingAddress'
+              : 'setDefaultShippingAddress',
             addressId,
           },
         ],
