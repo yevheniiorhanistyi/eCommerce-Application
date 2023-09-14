@@ -12,6 +12,10 @@ const CustomerCart: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const [cartData, setCartData] = useState<Cart | null>();
 
+  const onDeleteSuccess = () => {
+    fetchCartData();
+  };
+
   useEffect(() => {
     fetchCartData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -24,7 +28,7 @@ const CustomerCart: React.FC = () => {
   };
 
   if (!cartData) {
-    return null; // TODO Skeleton
+    return null;
   } if (cartData && !cartData?.lineItems.length) {
     return (
       <Container maxWidth="lg" disableGutters>
@@ -42,7 +46,7 @@ const CustomerCart: React.FC = () => {
         <Typography variant="h3" align="left" sx={styles.title}>
           Cart
         </Typography>
-        <NonEmptyCart cartData={cartData as Cart} />
+        <NonEmptyCart cartData={cartData as Cart} deleteSuccess={onDeleteSuccess} />
       </Paper>
     </Container>
   );

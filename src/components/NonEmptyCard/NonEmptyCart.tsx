@@ -6,7 +6,7 @@ import { INonEmptyCardAProps } from '../../types/types';
 import SendIconButton from '../buttons/SendIconButton/SendIconButton';
 
 const NonEmptyCart: FC<INonEmptyCardAProps> = ({
-  cartData,
+  cartData, deleteSuccess,
 }: INonEmptyCardAProps) => {
   const fractionDigits = 2;
 
@@ -32,7 +32,7 @@ const NonEmptyCart: FC<INonEmptyCardAProps> = ({
   return !cartData ? null : (
     <Container sx={styles.wrapper} disableGutters>
       <Container sx={styles.leftSide} disableGutters>
-        <CartItems cartData={cartData} />
+        <CartItems cartData={cartData} deleteSuccess={deleteSuccess} />
       </Container>
       <Container sx={styles.rightSide}>
         <Container sx={styles.rightSideWrapper}>

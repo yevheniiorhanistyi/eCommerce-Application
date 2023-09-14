@@ -58,6 +58,10 @@ const styles = {
       alignItems: 'flex-start',
     },
   },
+  cartItemActions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 };
 
 export default styles;

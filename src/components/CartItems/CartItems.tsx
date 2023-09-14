@@ -16,9 +16,10 @@ import {
 
 import styles from './CartItems.styles';
 import { INonEmptyCardAProps } from '../../types/types';
+import DeleteCartItemButton from '../DeleteCartItemButton/DeleteCartItemButton';
 
 const CartItems: FC<INonEmptyCardAProps> = ({
-  cartData,
+  cartData, deleteSuccess,
 }: INonEmptyCardAProps) => (!cartData ? null : (
   <List>
     {cartData.lineItems.map((lineItem) => {
@@ -92,6 +93,9 @@ const CartItems: FC<INonEmptyCardAProps> = ({
                   )}
                 </Container>
               </Container>
+            </Container>
+            <Container sx={styles.cartItemActions} disableGutters>
+              <DeleteCartItemButton product={lineItem} deleteSuccess={deleteSuccess} />
             </Container>
           </Card>
         </ListItem>
