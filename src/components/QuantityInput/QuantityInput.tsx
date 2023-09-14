@@ -1,49 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ButtonGroup, IconButton, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { enqueueSnackbar } from 'notistack';
-import { useAuth } from '../AuthProvider/AuthProvider';
-import getIdCartActive from '../../services/cart/getIdCartActive';
-import getQuantityProduct from '../../services/cart/getQuantityProduct';
 import styles from './QuantityInput.styles';
-import setQuantityProduct from '../../services/cart/setQuantityProduct';
 
 interface IQuantityInputProps {
-  produstId: string;
-  onChange: () => void;
+  startQuantity: number;
+  onChange: (changeQuantity: number) => void;
 }
 
 const QuantityInput: React.FC<IQuantityInputProps> = ({
-  produstId,
+  startQuantity,
   onChange,
 }: IQuantityInputProps) => {
   const minQuantity = 1;
   const maxQuantity = Infinity;
-  const [quantity, setQuantity] = useState(minQuantity);
-  const [valueField, setValueField] = useState(minQuantity);
-  const [idCartActive, setIdCartActive] = useState('');
+  const [quantity, setQuantity] = useState(startQuantity);
+  const [valueField, setValueField] = useState(startQuantity);
   const [error, setError] = useState(false);
-  const { isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchCart = async () => {
-    const idCart = await getIdCartActive(isAuthenticated);
-    const QuantityProduct = await getQuantityProduct(idCart, produstId);
-    setIdCartActive(idCart);
-    if (QuantityProduct) {
-      setValueField(QuantityProduct);
-      setQuantity(QuantityProduct);
-    } else {
-      enqueueSnackbar('Сould not find the quantity of the product!', {
-        variant: 'error',
-      });
-    }
-  };
 
   const validation = (value: number): boolean => {
     if (value < minQuantity) {
@@ -55,55 +29,34 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     return true;
   };
 
-  const processQuantity = async (value: number): Promise<boolean> => {
-    const isSetQuantity = await setQuantityProduct({
-      cartId: idCartActive,
-      productId: produstId,
-      quantity: value - quantity,
-    });
-    if (isSetQuantity) {
-      setQuantity(value);
-      onChange();
-      enqueueSnackbar('Quantity set successfully!', {
-        variant: 'success',
-      });
-      return true;
-    }
-    enqueueSnackbar('Failed to set quantity!', {
-      variant: 'error',
-    });
-    return false;
+  const processQuantity = (value: number) => {
+    setQuantity(value);
+    onChange(value);
   };
 
-  const handleIncrement = async () => {
+  const handleIncrement = () => {
     const value = valueField + 1;
     if (validation(value + 1)) {
-      const isSetQuantity = await processQuantity(value);
-      if (isSetQuantity) {
-        setValueField(value);
-        setError(false);
-      }
+      processQuantity(value);
+      setValueField(value);
+      setError(false);
     }
   };
 
-  const handleDecrement = async () => {
+  const handleDecrement = () => {
     const value = valueField - 1;
     if (validation(value)) {
-      const isSetQuantity = await processQuantity(value);
-      if (isSetQuantity) {
-        setValueField(value);
-        setError(false);
-      }
+      processQuantity(value);
+      setValueField(value);
+      setError(false);
     }
   };
 
   const handleBlur = async () => {
     const value = valueField;
     if (validation(value)) {
-      const isSetQuantity = await processQuantity(value);
-      if (isSetQuantity) {
-        setError(false);
-      }
+      processQuantity(value);
+      setError(false);
     } else {
       setError(true);
     }
