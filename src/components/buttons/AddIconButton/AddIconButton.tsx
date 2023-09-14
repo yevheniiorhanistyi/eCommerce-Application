@@ -16,15 +16,19 @@ const AddIconButton: FC<IAddIconButtonProps> = ({
 
   const handleClick = () => {
     modal.openModal('address', false);
-    modal.setContent('address', {
-      userId,
-      isBilling,
-      versionId,
-    }, (isSuccess: TReturnClose) => {
-      if (isSuccess) {
-        addSuccess();
-      }
-    });
+    modal.setContent(
+      'address',
+      {
+        userId,
+        isBilling,
+        versionId,
+      },
+      (isSuccess: TReturnClose) => {
+        if (isSuccess) {
+          addSuccess();
+        }
+      },
+    );
   };
 
   return (

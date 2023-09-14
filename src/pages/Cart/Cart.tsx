@@ -1,6 +1,4 @@
-import {
-  Container, Paper, Typography,
-} from '@mui/material';
+import { Container, Paper, Typography } from '@mui/material';
 import EmptyCart from '../../components/EmptyCart/EmptyCart';
 import styles from './Cart.styles';
 

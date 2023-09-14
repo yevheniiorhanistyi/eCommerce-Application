@@ -17,9 +17,7 @@ const EditDataModal = ({ isOpen, content, onClose }: IEditDataModalProps) => {
       <Modal open={isOpen} onClose={onClose}>
         <Container maxWidth="sm" sx={styles.outerBox}>
           <Paper sx={styles.paper}>
-            <EditDataForm
-              customer={content.customer}
-            />
+            <EditDataForm customer={content.customer} />
           </Paper>
         </Container>
       </Modal>

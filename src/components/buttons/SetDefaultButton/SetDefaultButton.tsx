@@ -11,11 +11,7 @@ const SetDefaultButton: FC<IEditIconButtonProps> = ({
   };
 
   return (
-    <Button
-      onClick={handleClick}
-      variant="text"
-      sx={styles.setDefaultButton}
-    >
+    <Button onClick={handleClick} variant="text" sx={styles.setDefaultButton}>
       Set as default
     </Button>
   );
