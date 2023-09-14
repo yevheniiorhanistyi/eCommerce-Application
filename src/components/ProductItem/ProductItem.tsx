@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -11,26 +12,53 @@ import {
   Link,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-// import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { Link as RouterLink } from 'react-router-dom';
-import calculatePrices from '../../utils/calculatePrices';
 import { ProductItemProps } from '../../types/productInterfaces';
+import calculatePrices from '../../utils/calculatePrices';
 
 import styles from './ProductItem.styles';
 
 export const ProductItem: React.FC<ProductItemProps> = ({
-  keyProduct,
-  title,
-  description,
-  url,
-  prices,
+  product,
+  itemsInCart,
+  addToCard,
+  removeFromCart,
 }: ProductItemProps) => {
-  const { originalPrice, hasDiscount, discountedPrice } = calculatePrices(prices);
+  const [hasMatch, setHasMatch] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const { id, key, name, description, masterVariant } = product;
+  const imageUrl = masterVariant.images[0].url;
+  const price = masterVariant.prices[0];
+  const { originalPrice, hasDiscount, discountedPrice } = calculatePrices(price);
+
+  useEffect(() => {
+    const matchExists = itemsInCart.some((item) => item.productId === id);
+    setHasMatch(matchExists);
+  }, [itemsInCart, id]);
+
+  const handleClick = async (productId: string, variantId: number) => {
+    setIsDisabled(true);
+
+    try {
+      if (hasMatch) {
+        await removeFromCart(productId);
+      } else {
+        await addToCard(productId, variantId);
+      }
+
+      setHasMatch(!hasMatch);
+    } catch (error) {
+      setHasMatch(!hasMatch);
+    } finally {
+      setIsDisabled(false);
+    }
+  };
 
   return (
     <Card sx={styles.card}>
       <Link
-        to={`/product/${keyProduct}`}
+        to={`/product/${key}`}
         component={RouterLink}
         underline="none"
         color="inherit"
@@ -39,8 +67,8 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           <Box sx={styles.innerBox}>
             <CardMedia
               component="img"
-              image={url}
-              alt={title}
+              image={imageUrl}
+              alt={name['en-US']}
               sx={styles.cardMedia}
             />
           </Box>
@@ -52,10 +80,10 @@ export const ProductItem: React.FC<ProductItemProps> = ({
               align="center"
               sx={styles.typograohyTitle}
             >
-              {title}
+              {name['en-US']}
             </Typography>
             <Typography variant="body2" color="text.secondary" align="center">
-              {description}
+              {description?.['en-US']}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -69,43 +97,35 @@ export const ProductItem: React.FC<ProductItemProps> = ({
         >
           {hasDiscount ? (
             <>
-              {`${discountedPrice} ${prices.value.currencyCode}`}
+              {`${discountedPrice} ${price.value.currencyCode}`}
               <Typography
                 component="span"
                 variant="body2"
                 color="error"
                 sx={styles.typographyDiscount}
               >
-                {`${originalPrice} ${prices.value.currencyCode}`}
+                {`${originalPrice} ${price.value.currencyCode}`}
               </Typography>
             </>
           ) : (
-            `${originalPrice} ${prices.value.currencyCode}`
+            `${originalPrice} ${price.value.currencyCode}`
           )}
         </Typography>
-        <Rating name={`rating-${keyProduct}`} size="small" />
+        <Rating name={`rating-${key}`} size="small" />
         <Button
-          aria-label="Button add to cart"
-          startIcon={<AddShoppingCartIcon />}
-          sx={{
-            fontSize: '0.8rem',
-            padding: '8px 20px',
-          }}
+          aria-label="Cart button"
+          startIcon={
+            hasMatch ? <ShoppingCartCheckoutIcon /> : <AddShoppingCartIcon />
+          }
+          sx={styles.buttonCartControl}
           variant="contained"
+          onClick={() => {
+            handleClick(id, masterVariant.id);
+          }}
+          disabled={isDisabled}
         >
-          Add to Cart
+          {hasMatch ? 'Remove from Cart' : 'Add to Cart'}
         </Button>
-        {/* <Button
-          aria-label="Button remove from cart"
-          startIcon={<ShoppingCartCheckoutIcon />}
-          sx={{
-            fontSize: '0.8rem',
-            padding: '8px 20px',
-          }}
-          variant="contained"
-        >
-          Remove from Cart
-        </Button> */}
       </CardActions>
     </Card>
   );
