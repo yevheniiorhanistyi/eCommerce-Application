@@ -20,9 +20,9 @@ import { authenticateClient } from '../../services/authenticate/authenticateClie
 import { getCustomerData } from '../../services/apiIntegration/customers';
 import { setUserData } from '../../utils/userDataUtils';
 import { useModal } from '../ModalProvider/ModalProvider';
+import { ISignInFormProps } from '../../types/types';
 
 import styles from './SignInForm.styles';
-import { ISignInFormProps } from '../../types/types';
 
 const SignInForm: React.FC<ISignInFormProps> = ({
   onSignInSuccess,
@@ -33,7 +33,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const showErrorModal = (error: Error) => {
-    setContent('error', { title: 'Oops 😕', text: error.message }, () => {});
+    setContent('error', { title: 'Oops 😕', text: error.message });
     openModal('error', false);
   };
 
