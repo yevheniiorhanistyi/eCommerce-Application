@@ -5,13 +5,9 @@ import React, {
   useMemo,
   ReactNode,
 } from 'react';
+import { ICartContextType } from '../../types/types';
 
-interface CartContextType {
-  badgeContent: number;
-  updateBadgeContent: (value: number) => void;
-}
-
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CartContext = createContext<ICartContextType | undefined>(undefined);
 
 interface CartProviderProps {
   children: ReactNode;
@@ -34,7 +30,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   );
 };
 
-export const useCart = (): CartContextType => {
+export const useCart = (): ICartContextType => {
   const context = useContext(CartContext);
   if (!context) {
     throw new Error('useCart must be used within a CartProvider');

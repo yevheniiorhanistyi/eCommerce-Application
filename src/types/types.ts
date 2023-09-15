@@ -256,6 +256,11 @@ export interface IDeleteIconButtonProps {
   deleteSuccess: () => void;
 }
 
+export interface ICartContextType {
+  badgeContent: number;
+  updateBadgeContent: (value: number) => void;
+}
+
 export interface IProtectedComponentProps {
   isLoggedIn: boolean;
   children: React.ReactNode;
