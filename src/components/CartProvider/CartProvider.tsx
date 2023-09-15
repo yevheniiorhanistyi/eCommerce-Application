@@ -1,19 +1,9 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useMemo,
-  ReactNode,
-} from 'react';
-import { ICartContextType } from '../../types/types';
+import React, { createContext, useContext, useState, useMemo } from 'react';
+import { ICartContextType, ICartProviderProps } from '../../types/types';
 
 const CartContext = createContext<ICartContextType | undefined>(undefined);
 
-interface CartProviderProps {
-  children: ReactNode;
-}
-
-export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
+export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
   const [badgeContent, setBadgeContent] = useState<number>(0);
 
   const updateBadgeContent = (value: number) => {

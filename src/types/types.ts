@@ -261,6 +261,10 @@ export interface ICartContextType {
   updateBadgeContent: (value: number) => void;
 }
 
+export interface ICartProviderProps {
+  children: ReactNode;
+}
+
 export interface IProtectedComponentProps {
   isLoggedIn: boolean;
   children: React.ReactNode;
