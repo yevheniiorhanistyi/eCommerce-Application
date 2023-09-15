@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -13,9 +14,9 @@ import {
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { Link as RouterLink } from 'react-router-dom';
-import { ProductItemProps } from '../../types/productInterfaces';
+
 import calculatePrices from '../../utils/calculatePrices';
+import { ProductItemProps } from '../../types/productInterfaces';
 
 import styles from './ProductItem.styles';
 
@@ -35,6 +36,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
   useEffect(() => {
     const matchExists = itemsInCart.some((item) => item.productId === id);
     setHasMatch(matchExists);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsInCart, id]);
 
   const handleClick = async (productId: string, variantId: number) => {

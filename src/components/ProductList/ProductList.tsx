@@ -5,6 +5,7 @@ import { enqueueSnackbar } from 'notistack';
 import CircularIndeterminate from '../CircularInterminate/CircularInterminate';
 
 import { useAuth } from '../AuthProvider/AuthProvider';
+import { useCart } from '../CartProvider/CartProvider';
 import { ProductItem } from '../ProductItem/ProductItem';
 import { ProductListProps } from '../../types/productInterfaces';
 
@@ -19,10 +20,11 @@ export const ProductList: React.FC<ProductListProps> = ({
   isLoading,
   products,
 }: ProductListProps) => {
-  const { isAuthenticated } = useAuth();
   const [isAddedProduct, setIsAddProduct] = useState(false);
   const [idCartActive, setIdCartActive] = useState('');
   const [itemsInCart, setItemsInCart] = useState<LineItem[]>([]);
+  const { isAuthenticated } = useAuth();
+  const { badgeContent, updateBadgeContent } = useCart();
 
   useEffect(() => {
     fetchCart();
@@ -31,7 +33,10 @@ export const ProductList: React.FC<ProductListProps> = ({
 
   const getItemsFromCart = async (id: string) => {
     const cart = await getCartById(id);
-    if (cart) setItemsInCart(cart.lineItems);
+    if (cart) {
+      setItemsInCart(cart.lineItems);
+      updateBadgeContent(cart.lineItems.length);
+    }
   };
 
   const fetchCart = async () => {
@@ -55,6 +60,7 @@ export const ProductList: React.FC<ProductListProps> = ({
           variant: 'success',
         });
         setIsAddProduct(true);
+        updateBadgeContent(badgeContent + 1);
       } else {
         enqueueSnackbar('Product can`t be added to the cart!', {
           variant: 'error',
@@ -83,6 +89,7 @@ export const ProductList: React.FC<ProductListProps> = ({
           variant: 'success',
         });
         setIsAddProduct(false);
+        updateBadgeContent(badgeContent - 1);
       } else {
         enqueueSnackbar('Product can`t be removed from the cart!', {
           variant: 'error',
