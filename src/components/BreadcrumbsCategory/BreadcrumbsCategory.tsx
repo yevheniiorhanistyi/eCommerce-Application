@@ -8,7 +8,7 @@ type BreadcrumbsCategoryProps = {
   paramLink: string | undefined;
 };
 
-const BreadcrumbsCategory: React.FC<BreadcrumbsCategoryProps> = ({
+export const BreadcrumbsCategory: React.FC<BreadcrumbsCategoryProps> = ({
   paramLink,
 }: BreadcrumbsCategoryProps) => {
   const { categoryData } = useCategoryData();
