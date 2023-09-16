@@ -281,3 +281,12 @@ export interface INonEmptyCardAProps {
   cartData: Cart;
   deleteSuccess: () => void;
 }
+
+export interface ITeamMember {
+  name: string;
+  role: string;
+  bio: string[];
+  github: string;
+  photo: string;
+  linkedin?: string;
+}
