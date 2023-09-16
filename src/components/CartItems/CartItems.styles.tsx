@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   listItem: {
     width: '100%',
@@ -6,13 +8,13 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    maxWidth: '100%',
     width: '100%',
     padding: '7px 0 20px 0',
     borderBottom: '1px solid #ebedf0',
 
     '@media (max-width: 370px)': {
       flexDirection: 'column',
+      justifyContent: 'flex-start',
     },
   },
   innerBox: {
@@ -33,7 +35,7 @@ const styles = {
     fontSize: '1.2rem',
   },
   crossedPrice: {
-    color: '#a0a1a3',
+    color: theme.palette.grey[500],
     fontSize: '12px',
     textDecoration: 'line-through',
   },

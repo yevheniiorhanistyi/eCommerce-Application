@@ -1,5 +1,4 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material';
-import { FC } from 'react';
 
 import styles from './CustomerAddress.styles';
 import { ICustomerAddressProps } from '../../types/types';
@@ -9,7 +8,7 @@ import { useModal } from '../ModalProvider/ModalProvider';
 import { TReturnClose } from '../ModalProvider/type';
 import SetDefaultButton from '../buttons/SetDefaultButton/SetDefaultButton';
 
-const CustomerAddress: FC<ICustomerAddressProps> = ({
+const CustomerAddress: React.FC<ICustomerAddressProps> = ({
   addresses,
   defaultAddressId,
   userId,

@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   wrapper: {
     display: 'flex',
@@ -70,11 +72,11 @@ const styles = {
     margin: '3px 0',
   },
   discountTitle: {
-    color: '#e52e6b',
+    color: theme.palette.error.light,
     fontSize: '14px',
   },
   discounValue: {
-    color: '#e52e6b',
+    color: theme.palette.error.light,
     fontSize: '16px',
     fontWeight: '700',
   },

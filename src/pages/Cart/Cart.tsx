@@ -1,4 +1,5 @@
 import { Container, Paper, Typography } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Cart } from '@commercetools/platform-sdk';
 import NonEmptyCart from '../../components/NonEmptyCard/NonEmptyCart';
@@ -14,6 +15,10 @@ const CustomerCart: React.FC = () => {
 
   const onDeleteSuccess = () => {
     fetchCartData();
+    enqueueSnackbar('Item succesfully deleted', {
+      variant: 'success',
+      autoHideDuration: 1000,
+    });
   };
 
   useEffect(() => {
@@ -29,7 +34,8 @@ const CustomerCart: React.FC = () => {
 
   if (!cartData) {
     return null;
-  } if (cartData && !cartData?.lineItems.length) {
+  }
+  if (cartData && !cartData?.lineItems.length) {
     return (
       <Container maxWidth="lg" disableGutters>
         <Paper elevation={0} sx={{ p: 3, mt: 7, mb: 4 }}>
@@ -40,13 +46,17 @@ const CustomerCart: React.FC = () => {
         </Paper>
       </Container>
     );
-  } return (
+  }
+  return (
     <Container maxWidth="lg" disableGutters>
       <Paper elevation={0} sx={{ p: 3, mt: 7, mb: 4 }}>
         <Typography variant="h3" align="left" sx={styles.title}>
           Cart
         </Typography>
-        <NonEmptyCart cartData={cartData as Cart} deleteSuccess={onDeleteSuccess} />
+        <NonEmptyCart
+          cartData={cartData as Cart}
+          deleteSuccess={onDeleteSuccess}
+        />
       </Paper>
     </Container>
   );

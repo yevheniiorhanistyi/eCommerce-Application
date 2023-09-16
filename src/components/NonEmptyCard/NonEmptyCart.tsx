@@ -1,33 +1,25 @@
-import { FC } from 'react';
 import { Container, TextField, Typography } from '@mui/material';
 import CartItems from '../CartItems/CartItems';
 import styles from './NonEmptyCart.styles';
 import { INonEmptyCardAProps } from '../../types/types';
 import SendIconButton from '../buttons/SendIconButton/SendIconButton';
+import formatPrice from '../../utils/formatPrice';
 
-const NonEmptyCart: FC<INonEmptyCardAProps> = ({
-  cartData, deleteSuccess,
+const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
+  cartData,
+  deleteSuccess,
 }: INonEmptyCardAProps) => {
-  const fractionDigits = 2;
-
-  const convertToFractionalDigits = (value: number): number => Number(
-    ((value / 10 ** fractionDigits)).toFixed(
-      fractionDigits,
-    ),
-  );
-
   const summaryDiscount = cartData.lineItems.reduce((acc, lineItem) => {
-    const price = lineItem.price.discounted?.value
-      ? Number(lineItem.price.value.centAmount)
-        - Number(lineItem.price.discounted.value.centAmount)
-      : 0;
+    const discounted = lineItem.price.discounted?.value.centAmount;
+    const original = lineItem.price.value.centAmount;
+    const price = discounted ? discounted - original : 0;
 
     return acc + price;
   }, 0);
 
-  const summaryPriceWithoutDiscount = Number(cartData.totalPrice.centAmount);
+  const summaryPriceWithDiscount = cartData.totalPrice.centAmount;
 
-  const summaryPriceWithDiscount = summaryPriceWithoutDiscount - summaryDiscount;
+  const summaryPriceWithoutDiscount = summaryPriceWithDiscount - summaryDiscount;
 
   return !cartData ? null : (
     <Container sx={styles.wrapper} disableGutters>
@@ -39,9 +31,7 @@ const NonEmptyCart: FC<INonEmptyCardAProps> = ({
           <Container sx={styles.summaryWrapper} disableGutters>
             <Typography sx={styles.summaryTitle}>Summary:</Typography>
             <Typography sx={styles.summaryValue}>
-              {`${convertToFractionalDigits(summaryPriceWithDiscount)} ${
-                cartData.totalPrice.currencyCode
-              }`}
+              {formatPrice(summaryPriceWithDiscount)}
             </Typography>
           </Container>
           <Container sx={styles.itemsCountWrapper} disableGutters>
@@ -49,15 +39,13 @@ const NonEmptyCart: FC<INonEmptyCardAProps> = ({
               {`${cartData.lineItems.length} items`}
             </Typography>
             <Typography sx={styles.itemsCountValue}>
-              {`${convertToFractionalDigits(summaryPriceWithoutDiscount)}
-              ${cartData.totalPrice.currencyCode}`}
+              {formatPrice(summaryPriceWithoutDiscount)}
             </Typography>
           </Container>
           <Container sx={styles.discountWrapper} disableGutters>
             <Typography sx={styles.discountTitle}>Discount</Typography>
             <Typography sx={styles.discounValue}>
-              {`- ${convertToFractionalDigits(summaryDiscount)} ${cartData.totalPrice.currencyCode}`}
-
+              {formatPrice(summaryDiscount)}
             </Typography>
           </Container>
         </Container>

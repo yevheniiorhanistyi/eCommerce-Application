@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import { Button } from '@mui/material';
 import styles from './SetDefaultButton.styles';
 import { IEditIconButtonProps } from '../../../types/types';
 
-const SetDefaultButton: FC<IEditIconButtonProps> = ({
+const SetDefaultButton: React.FC<IEditIconButtonProps> = ({
   callback,
 }: IEditIconButtonProps) => {
   const handleClick = () => {

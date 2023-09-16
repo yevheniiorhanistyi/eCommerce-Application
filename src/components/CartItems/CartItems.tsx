@@ -1,5 +1,4 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { FC } from 'react';
 
 import {
   CardContent,
@@ -16,27 +15,20 @@ import {
 import styles from './CartItems.styles';
 import { INonEmptyCardAProps } from '../../types/types';
 import DeleteCartItemButton from '../DeleteCartItemButton/DeleteCartItemButton';
+import parsingPrice from '../../utils/parsingPrice';
+import languageCode from '../../utils/languageCode';
 
-const CartItems: FC<INonEmptyCardAProps> = ({
+const CartItems: React.FC<INonEmptyCardAProps> = ({
   cartData,
   deleteSuccess,
 }: INonEmptyCardAProps) => (!cartData ? null : (
   <List>
     {cartData.lineItems.map((lineItem) => {
-      const fractionDigits = 2;
-      const discountedPrice: string = lineItem.price.discounted?.value
-        ? (
-          lineItem.price.discounted.value.centAmount
-              / 10 ** fractionDigits
-        ).toFixed(fractionDigits)
-        : '';
+      const discounted = lineItem.price.discounted?.value;
+      const original = lineItem.price.value;
 
-      const originalPrice: string = lineItem.price.value
-        ? (
-          lineItem.price.value.centAmount
-              / 10 ** lineItem.price.value.fractionDigits
-        ).toFixed(lineItem.price.value.fractionDigits)
-        : '';
+      const discountedPrice = discounted ? parsingPrice(discounted) : '';
+      const originalPrice = parsingPrice(original);
 
       const hasDiscount: string | boolean = discountedPrice && discountedPrice !== originalPrice;
 
@@ -73,7 +65,7 @@ const CartItems: FC<INonEmptyCardAProps> = ({
                     component="div"
                     sx={styles.typographyTitle}
                   >
-                    {Object.values(lineItem.name)}
+                    {lineItem.name[languageCode]}
                   </Typography>
                 </CardContent>
                 <Container sx={styles.itemPricesWrapper} disableGutters>
@@ -81,15 +73,15 @@ const CartItems: FC<INonEmptyCardAProps> = ({
                     {hasDiscount ? (
                       <>
                         <Typography sx={styles.crossedPrice}>
-                          {`${originalPrice} ${lineItem.totalPrice.currencyCode}`}
+                          {originalPrice}
                         </Typography>
                         <Typography sx={styles.originalPrice}>
-                          {`${discountedPrice} ${lineItem.totalPrice.currencyCode}`}
+                          {discountedPrice}
                         </Typography>
                       </>
                     ) : (
                       <Typography sx={styles.originalPrice}>
-                        {`${originalPrice} ${lineItem.totalPrice.currencyCode}`}
+                        {originalPrice}
                       </Typography>
                     )}
                   </Container>

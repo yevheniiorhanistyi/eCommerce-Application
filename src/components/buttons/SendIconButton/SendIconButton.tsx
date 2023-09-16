@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { IEditIconButtonProps } from '../../../types/types';
@@ -8,7 +7,7 @@ interface ISendIconButtonProps {
   callback: () => void;
 }
 
-const SendIconButton: FC<ISendIconButtonProps> = ({
+const SendIconButton: React.FC<ISendIconButtonProps> = ({
   callback,
 }: IEditIconButtonProps) => {
   const handleClick = () => {
