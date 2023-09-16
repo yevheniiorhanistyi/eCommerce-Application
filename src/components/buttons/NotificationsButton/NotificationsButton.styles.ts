@@ -1,7 +1,6 @@
 const styles = {
-  label: {
-    width: '33%',
-    flexShrink: 0,
+  icon: {
+    color: '#fff',
   },
 };
 

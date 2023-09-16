@@ -45,6 +45,7 @@ module.exports = {
       },
     ],
     'react/react-in-jsx-scope': 'off',
+    'react/require-default-props': 'off',
     'linebreak-style': 2,
     'object-curly-newline': 'off',
     'no-console': ['warn', { allow: ['error'] }],

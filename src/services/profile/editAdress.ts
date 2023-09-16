@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getTokenFromLocalStorage } from '../../utils/authUtils';
+import getActiveToken from '../authenticate/getActiveToken';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
@@ -9,9 +9,9 @@ interface IEditAddressProps {
   city: string;
   streetName: string;
   postalCode: string;
-  addressId: number | undefined;
-  userId: string | undefined;
-  versionId: number | undefined;
+  addressId: string;
+  userId: string;
+  versionId: number;
 }
 
 const editAddress = async ({
@@ -24,19 +24,23 @@ const editAddress = async ({
   addressId,
 }: IEditAddressProps) => {
   try {
-    const { token } = getTokenFromLocalStorage();
+    const { token } = await getActiveToken();
     const response = await axios.post(
       `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({
         version: versionId,
-        action: 'changeAddress',
-        addressId,
-        address: {
-          streetName,
-          city,
-          postalCode,
-          country,
-        },
+        actions: [
+          {
+            action: 'changeAddress',
+            addressId,
+            address: {
+              streetName,
+              city,
+              postalCode,
+              country,
+            },
+          },
+        ],
       }),
       {
         headers: {

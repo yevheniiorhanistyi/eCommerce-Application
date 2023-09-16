@@ -4,7 +4,7 @@ import styles from './AddAddressModal.styles';
 import AddAddressForm from '../AddAddressForm/AddAddressForm';
 import { TAddressContent } from '../ModalProvider/type';
 
-interface AddAddressModalProps {
+interface IAddAddressModalProps {
   isOpen: boolean;
   content: TAddressContent;
   onClose: () => void;
@@ -14,7 +14,7 @@ const AddAddressModal = ({
   isOpen,
   content,
   onClose,
-}: AddAddressModalProps) => (
+}: IAddAddressModalProps) => (
   <Modal
     open={isOpen}
     onClose={onClose}

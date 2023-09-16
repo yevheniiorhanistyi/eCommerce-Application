@@ -15,11 +15,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import nameValidation from '../../validation/name.validation';
-import {
-  ICountry,
-  ICustomerAddressBase,
-  IGetCustomerData,
-} from '../../types/types';
+import { ICountry, ICustomerAddressBase } from '../../types/types';
 
 import { useModal } from '../ModalProvider/ModalProvider';
 import notEmtyValidation from '../../validation/notEmty.validation';
@@ -29,17 +25,21 @@ import editAddress from '../../services/profile/editAdress';
 import styles from './EditAddressForm.styles';
 
 interface EditAddressFormProps {
-  customer: IGetCustomerData;
+  address: ICustomerAddressBase;
+  userId: string;
+  versionId: number;
   onEditDataSuccess: () => void;
 }
 
 const EditAddressForm: FC<EditAddressFormProps> = ({
-  customer,
+  address,
+  userId,
+  versionId,
   onEditDataSuccess,
 }: EditAddressFormProps) => {
   const modal = useModal();
-  const [isContrySelected, setIsContrySelected] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [isContrySelected, setIsContrySelected] = useState(true);
+  const [selectedCountry, setSelectedCountry] = useState(address.country);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -71,10 +71,10 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
   });
 
   const formData: ICustomerAddressBase = {
-    streetName: '',
-    city: '',
-    postalCode: '',
-    country: '',
+    streetName: address.streetName,
+    city: address.city,
+    postalCode: address.postalCode,
+    country: address.country,
   };
 
   const formik = useFormik({
@@ -83,23 +83,23 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
     validateOnChange: true,
     onSubmit: async (values) => {
       setSubmitting(true);
-      const addressId = 0; // TODO
       const editAddressData = {
         ...values,
-        addressId,
-        versionId: customer.version,
-        userId: customer.id,
+        userId,
+        versionId,
+        addressId: address.id as string,
       };
+
       try {
         const isEdited = await editAddress(editAddressData);
         if (isEdited) {
-          enqueueSnackbar('You have successfully add new address!', {
+          enqueueSnackbar('You have successfully edit address!', {
             variant: 'success',
           });
-          modal.closeModal('address', true);
+          modal.closeModal('editAddress', true);
         }
       } catch (error) {
-        enqueueSnackbar('Adding address failed, please try again later', {
+        enqueueSnackbar('Editing address failed, please try again later', {
           variant: 'error',
         });
       } finally {

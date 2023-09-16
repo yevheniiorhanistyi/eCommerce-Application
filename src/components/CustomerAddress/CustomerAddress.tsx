@@ -1,20 +1,22 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material';
-import { FC } from 'react';
 
 import styles from './CustomerAddress.styles';
 import { ICustomerAddressProps } from '../../types/types';
 import DeleteIconButton from '../buttons/DeleteIconButton/DeleteIconButton';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import { useModal } from '../ModalProvider/ModalProvider';
+import { TReturnClose } from '../ModalProvider/type';
+import SetDefaultButton from '../buttons/SetDefaultButton/SetDefaultButton';
 
-const CustomerAddress: FC<ICustomerAddressProps> = ({
+const CustomerAddress: React.FC<ICustomerAddressProps> = ({
   addresses,
   defaultAddressId,
   userId,
   versionId,
   editSuccess,
   deleteSuccess,
-  customer,
+  setAsDefault,
+  isBillingAddress,
 }: ICustomerAddressProps) => {
   const modal = useModal();
 
@@ -55,23 +57,34 @@ const CustomerAddress: FC<ICustomerAddressProps> = ({
           <EditIconButton
             callback={() => {
               modal.openModal('editAddress', false);
-              modal.setContent('editAddress', {
-                customer,
-                onClose: (isSuccess: boolean) => {
+              modal.setContent(
+                'editAddress',
+                {
+                  address,
+                  userId,
+                  versionId,
+                },
+                (isSuccess: TReturnClose): void => {
                   if (isSuccess) {
                     editSuccess();
                   }
                 },
-              });
+              );
             }}
-            index={index}
           />
           <Box sx={styles.separator} />
           <DeleteIconButton
             userId={userId}
             versionId={versionId}
-            addressId={address.id}
+            addressId={address.id as string}
             deleteSuccess={deleteSuccess}
+          />
+          <Box sx={styles.separator} />
+
+          <SetDefaultButton
+            callback={() => {
+              setAsDefault(address.id as string, isBillingAddress);
+            }}
           />
         </ListItem>
       ))}

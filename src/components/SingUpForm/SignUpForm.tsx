@@ -45,6 +45,7 @@ import {
 import { createCustomer } from '../../services/apiIntegration/customers';
 import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
 import { authenticateClient } from '../../services/authenticate/authenticateClient';
+import { setUserData } from '../../utils/userDataUtils';
 
 const SignUpForm: React.FC<ISignUpFormProps> = ({
   onSignInSuccess,
@@ -160,6 +161,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
             password: customerData.password,
           });
           onSignInSuccess();
+          const { firstName, lastName, email } = customerData;
+          setUserData({ firstName, lastName, email });
         } catch (error) {
           modal.openModal('error', false);
           modal.setContent('error', {

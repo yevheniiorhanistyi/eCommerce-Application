@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Box, Grid, Typography } from '@mui/material';
 import { useModal } from '../ModalProvider/ModalProvider';
 import DetailedProductNotFound from './DetailedProductNotFound';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
@@ -11,6 +10,7 @@ import PriceProduct from '../PriceProduct/PriceProduct';
 import getProduct from '../../services/apiIntegration/product';
 import { IDetailedProductProps, IProductDisplayData } from '../../types/types';
 import parsingData from './services/parsingData';
+import AddToCartButton from '../buttons/AddToCartButton/AddToCartButton';
 
 const DetailedProduct: React.FC<IDetailedProductProps> = ({
   keyProduct,
@@ -91,13 +91,7 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
         <Box sx={styles.tittleBlock}>
           <Typography variant="h2">{productData.title}</Typography>
           <PriceProduct productData={productData} />
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddShoppingCartIcon />}
-          >
-            Buy
-          </Button>
+          <AddToCartButton product={productData} />
         </Box>
       </Grid>
       <Grid item sm={12} xs={12}>

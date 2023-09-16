@@ -10,29 +10,39 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { CategoryAccordionProps } from '../../types/types';
+import { ICategoryAccordionProps } from '../../types/types';
 
 import styles from './CategoryAccordion.styles';
 
-const CategoryAccordion: React.FC<CategoryAccordionProps> = ({
+export const CategoryAccordion: React.FC<ICategoryAccordionProps> = ({
   isOpen,
   label,
   labelList,
-  selectedValues,
-  setSelectedValues,
-}: CategoryAccordionProps) => {
+  searchParams,
+  propertyToChange,
+  setSearchParams,
+}: ICategoryAccordionProps) => {
   const [expanded, setExpanded] = useState<boolean>(isOpen);
+  const property = propertyToChange;
   const handleChange = () => {
     setExpanded(!expanded);
   };
 
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
-    const updatedSelectedValues = selectedValues.includes(id)
-      ? selectedValues.filter((val) => val !== id)
-      : [...selectedValues, id];
 
-    setSelectedValues(updatedSelectedValues);
+    if (Array.isArray(searchParams[property])) {
+      const updatedValues = searchParams[property].includes(id)
+        ? searchParams[property].filter((val) => val !== id)
+        : [...searchParams[property], id];
+
+      const updatedSearchParams = {
+        ...searchParams,
+        [property]: updatedValues,
+      };
+
+      setSearchParams(updatedSearchParams);
+    }
   };
 
   return (
@@ -48,7 +58,7 @@ const CategoryAccordion: React.FC<CategoryAccordionProps> = ({
               control={(
                 <Checkbox
                   id={item.label}
-                  checked={selectedValues.includes(item.label)}
+                  checked={searchParams[property].includes(item.label)}
                   onChange={handleChangeValue}
                 />
               )}

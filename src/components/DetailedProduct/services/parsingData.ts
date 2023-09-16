@@ -1,15 +1,13 @@
 import { Product } from '@commercetools/platform-sdk';
 import { IProductDisplayData } from '../../../types/types';
 import languageCode from '../../../utils/languageCode';
-import { IPriceValue } from '../../../types/productInterfaces';
-
-const parsingPrice = (price: IPriceValue): string => `${(price.centAmount / 10 ** price.fractionDigits).toFixed(
-  price.fractionDigits,
-)} ${price.currencyCode}`;
+import parsingPrice from '../../../utils/parsingPrice';
 
 const parsingData = (data: Product | null): IProductDisplayData | null => {
   if (data) {
     let result = {
+      productId: data.id,
+      variantId: data.masterData.current.masterVariant.id,
       title: data.masterData.current.name[languageCode],
       description: data.masterData.current.description
         ? data.masterData.current.description[languageCode]

@@ -19,12 +19,10 @@ import { IGetCustomerData } from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';
 
 type EditDataFormProps = {
-  onEditDataSuccess: () => void;
   customer: IGetCustomerData;
 };
 
 const EditDataForm: FC<EditDataFormProps> = ({
-  onEditDataSuccess,
   customer,
 }: EditDataFormProps) => {
   const modal = useModal();
