@@ -1,12 +1,11 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material';
-import { FC } from 'react';
 import { ICustomerDataField, ICustomerDataProps } from '../../types/types';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import styles from './CustomerData.styles';
 import { useModal } from '../ModalProvider/ModalProvider';
 import { TReturnClose } from '../ModalProvider/type';
 
-const CustomerData: FC<ICustomerDataProps> = ({
+const CustomerData: React.FC<ICustomerDataProps> = ({
   fields,
   customer,
   addSuccess,

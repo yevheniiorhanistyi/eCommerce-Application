@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 
 import { useModal } from '../ModalProvider/ModalProvider';
@@ -12,7 +11,7 @@ interface IPassworDataProps {
   addSuccess: () => void;
 }
 
-const PassworData: FC<IPassworDataProps> = ({
+const PassworData: React.FC<IPassworDataProps> = ({
   customer,
   addSuccess,
 }: IPassworDataProps) => {

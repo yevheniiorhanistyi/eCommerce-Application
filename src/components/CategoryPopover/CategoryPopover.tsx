@@ -1,20 +1,15 @@
-import { ReactNode, MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import { Popover, Button, Box } from '@mui/material';
 import TuneIcon from '@mui/icons-material/Tune';
+import { ICategoryPopoverProps } from '../../types/types';
 
 import styles from './CategoryPopover.styles';
 
-interface CategoryPopoverProps {
-  anchorEl: HTMLElement | null;
-  setAnchorElem: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
-  children: ReactNode;
-}
-
-const CategoryPopover: React.FC<CategoryPopoverProps> = ({
+export const CategoryPopover: React.FC<ICategoryPopoverProps> = ({
   anchorEl,
   setAnchorElem,
   children,
-}: CategoryPopoverProps) => {
+}: ICategoryPopoverProps) => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 

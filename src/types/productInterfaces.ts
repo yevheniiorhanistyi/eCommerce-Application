@@ -1,3 +1,5 @@
+import { LineItem } from '@commercetools/platform-sdk';
+
 interface ICategory {
   id: string;
   typeId: string;
@@ -42,6 +44,7 @@ export interface IProduct {
   name: { 'en-US': string };
   categories: ICategory[];
   masterVariant: {
+    id: number;
     attributes: IAttribute[];
     images: IImage[];
     prices: IPrice[];
@@ -57,11 +60,10 @@ export interface IProductResponse {
 }
 
 export type ProductItemProps = {
-  keyProduct: string;
-  title: string;
-  description: string;
-  url: string;
-  prices: IPrice;
+  product: IProduct;
+  itemsInCart: LineItem[];
+  addToCard: (productId: string, variantId: number) => Promise<void>;
+  removeFromCart: (productId: string) => Promise<void>;
 };
 
 export type ProductListProps = {

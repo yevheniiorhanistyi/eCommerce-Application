@@ -2,19 +2,14 @@ import axios from 'axios';
 import getActiveToken from '../authenticate/getActiveToken';
 import combineStringAndValues from '../../utils/combineStringAndValues';
 import { IProductResponse } from '../../types/productInterfaces';
+import { ISearchParams } from '../../types/types';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const getProductByParams = async (
-  sortValue: string,
-  colors: string[],
-  sizes: string[],
-  brands: string[],
-  searchValue: string,
-  categoryId: string | null = null,
-  minPrice = 10,
-  maxPrice = 120,
+  categoryId: string | undefined,
+  { offset, term, sortValue, colors, sizes, brands, prices }: ISearchParams,
 ) => {
   try {
     const { token } = await getActiveToken();
@@ -28,14 +23,18 @@ export const getProductByParams = async (
       filter: string[];
       sort: string[];
       'text.en-US': string;
+      limit: number;
+      offset: number;
     } = {
       filter: [
-        `variants.price.centAmount:range("${minPrice * 100}" to "${
-          maxPrice * 100
+        `variants.price.centAmount:range("${prices[0] * 100}" to "${
+          prices[1] * 100
         }")`,
       ],
       sort: [sortValue],
-      'text.en-US': `${searchValue}`,
+      'text.en-US': `${term}`,
+      limit: 6,
+      offset,
     };
     if (categoryId) queryParams.filter.push(`categories.id:"${categoryId}"`);
     filters.forEach((filter) => {
@@ -55,7 +54,7 @@ export const getProductByParams = async (
         params: queryParams,
       },
     );
-    return response.data.results;
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;

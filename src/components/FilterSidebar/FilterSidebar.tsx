@@ -1,51 +1,53 @@
 import { Button } from '@mui/material';
-import { clothingSizes, brands, colors } from '../../constants/constants';
-import { FilterSidebarProps } from '../../types/types';
-import CategoryAccordion from '../CategoryAccordion/CategoryAccordion';
-import PriceRange from '../PriceRange/PriceRange';
+import {
+  initialSearchParams,
+  clothingSizes,
+  brands,
+  colors,
+} from '../../constants/constants';
+import { ICommonProps } from '../../types/types';
+import { CategoryAccordion } from '../CategoryAccordion/CategoryAccordion';
+import { PriceRange } from '../PriceRange/PriceRange';
 
 import styles from './FilterSidebar.styles';
 
-const FilterSidebar: React.FC<FilterSidebarProps> = ({
-  prices,
-  selectedColors,
-  selectedSizes,
-  selectedBrands,
-  setPrices,
-  setSelectedBrands,
-  setSelectedSizes,
-  setSelectedColors,
-}: FilterSidebarProps) => {
+export const FilterSidebar: React.FC<ICommonProps> = ({
+  searchParams,
+  setSearchParams,
+}: ICommonProps) => {
   const resetFilters = () => {
-    setPrices([10, 800]);
-    setSelectedBrands([]);
-    setSelectedSizes([]);
-    setSelectedColors([]);
+    setSearchParams({ ...initialSearchParams });
   };
 
   return (
     <>
-      <PriceRange prices={prices} setPrices={setPrices} />
+      <PriceRange
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+      />
       <CategoryAccordion
         isOpen={false}
         label="Brand"
         labelList={brands}
-        selectedValues={selectedBrands}
-        setSelectedValues={setSelectedBrands}
+        propertyToChange="brands"
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       />
       <CategoryAccordion
         isOpen={false}
         label="Size"
         labelList={clothingSizes}
-        selectedValues={selectedSizes}
-        setSelectedValues={setSelectedSizes}
+        propertyToChange="sizes"
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       />
       <CategoryAccordion
         label="Color"
         labelList={colors}
         isOpen={false}
-        selectedValues={selectedColors}
-        setSelectedValues={setSelectedColors}
+        propertyToChange="colors"
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
       />
       <Button
         onClick={resetFilters}
