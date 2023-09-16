@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Typography, Container, Box } from '@mui/material';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
@@ -45,15 +45,7 @@ const CustomerInfo: React.FC = () => {
     setIsLoading(false);
   };
 
-  const onDeleteSuccess = () => {
-    fetchCustomerData();
-  };
-
-  const onAddSuccess = () => {
-    fetchCustomerData();
-  };
-
-  const onEditSuccess = () => {
+  const onActionSuccess = () => {
     fetchCustomerData();
   };
 
@@ -99,14 +91,14 @@ const CustomerInfo: React.FC = () => {
         customer={customerData as IGetCustomerData}
         logoIcon={<PermIdentityIcon />}
         fields={primaryCustomerFields}
-        addSuccess={onEditSuccess}
+        addSuccess={onActionSuccess}
       />
       <Typography sx={styles.addressesTitle} variant="h5">
         Password
       </Typography>
       <PassworData
         customer={customerData as IGetCustomerData}
-        addSuccess={onEditSuccess}
+        addSuccess={onActionSuccess}
       />
       <Box sx={styles.flexBox}>
         <Typography sx={styles.addressesTitle} variant="h5">
@@ -116,7 +108,7 @@ const CustomerInfo: React.FC = () => {
           userId={customerData?.id as string}
           isBilling={false}
           versionId={customerData?.version as number}
-          addSuccess={onAddSuccess}
+          addSuccess={onActionSuccess}
         />
       </Box>
       <CustomerAddress
@@ -124,8 +116,8 @@ const CustomerInfo: React.FC = () => {
         defaultAddressId={customerData?.defaultShippingAddressId}
         versionId={customerData?.version as number}
         userId={customerData?.id as string}
-        deleteSuccess={onDeleteSuccess}
-        editSuccess={onEditSuccess}
+        deleteSuccess={onActionSuccess}
+        editSuccess={onActionSuccess}
         customer={customerData as IGetCustomerData}
         setAsDefault={setAsDefault}
         isBillingAddress={false}
@@ -138,7 +130,7 @@ const CustomerInfo: React.FC = () => {
           userId={customerData?.id as string}
           isBilling
           versionId={customerData?.version as number}
-          addSuccess={onAddSuccess}
+          addSuccess={onActionSuccess}
         />
       </Box>
       <CustomerAddress
@@ -146,8 +138,8 @@ const CustomerInfo: React.FC = () => {
         defaultAddressId={customerData?.defaultBillingAddressId}
         versionId={customerData?.version as number}
         userId={customerData?.id as string}
-        deleteSuccess={onDeleteSuccess}
-        editSuccess={onEditSuccess}
+        deleteSuccess={onActionSuccess}
+        editSuccess={onActionSuccess}
         customer={customerData as IGetCustomerData}
         setAsDefault={setAsDefault}
         isBillingAddress
