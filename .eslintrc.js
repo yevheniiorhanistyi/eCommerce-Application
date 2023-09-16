@@ -49,5 +49,6 @@ module.exports = {
     'linebreak-style': 2,
     'object-curly-newline': 'off',
     'no-console': ['warn', { allow: ['error'] }],
+    'import/no-cycle': ['error', { maxDepth: 1 }],
   },
 };

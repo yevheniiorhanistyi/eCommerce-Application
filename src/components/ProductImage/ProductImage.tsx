@@ -3,7 +3,6 @@ import { Card, CardActionArea, CardMedia } from '@mui/material';
 import { ZoomOutMap } from '@mui/icons-material';
 import { IProductImageProps } from '../../types/types';
 import styles from './ProductImage.styles';
-// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
 
 const ProductImage: React.FC<IProductImageProps> = ({

@@ -1,9 +1,7 @@
 import { Container, Modal, Paper } from '@mui/material';
 
 import styles from './EditPasswordModal.styles';
-// eslint-disable-next-line import/no-cycle
 import { TPasswordContent } from '../ModalProvider/type';
-// eslint-disable-next-line import/no-cycle
 import EditPasswordForm from '../EditPasswordForm/EditPasswordForm';
 
 type EditPasswordModalProps = {
