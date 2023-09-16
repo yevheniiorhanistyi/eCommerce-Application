@@ -10,15 +10,10 @@ import {
 
 import { IModalProviderProps } from '../../types/types';
 import ErrorModal from '../ErrorModal/ErrorModal';
-// eslint-disable-next-line import/no-cycle
 import EditDataModal from '../EditDataModal/EditDataModal';
-// eslint-disable-next-line import/no-cycle
 import AddAddressModal from '../AddAddressModal/AddAddressModal';
-// eslint-disable-next-line import/no-cycle
 import ProductModal from '../ProductModal/ProductModal';
-// eslint-disable-next-line import/no-cycle
 import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
-// eslint-disable-next-line import/no-cycle
 import EditAddressModal from '../EditAddressModal/EditAddressModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);

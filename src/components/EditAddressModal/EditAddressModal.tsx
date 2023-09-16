@@ -1,9 +1,7 @@
 import { Container, Modal, Paper } from '@mui/material';
 
 import styles from './EditAddressModal.styles';
-// eslint-disable-next-line import/no-cycle
 import { TCustomerContent } from '../ModalProvider/type';
-// eslint-disable-next-line import/no-cycle
 import EditAddressForm from '../EditAddressForm/EditAddressForm';
 
 type EditDataModalProps = {

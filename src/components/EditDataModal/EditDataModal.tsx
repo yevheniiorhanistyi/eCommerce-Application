@@ -1,7 +1,6 @@
 import { Container, Modal, Paper } from '@mui/material';
 
 import styles from './EditDataModal.styles';
-// eslint-disable-next-line import/no-cycle
 import EditDataForm from '../EditDataForm/EditDataForm';
 import { TCustomerContent } from '../ModalProvider/type';
 

@@ -1,5 +1,4 @@
 import Carousel from 'react-material-ui-carousel';
-// eslint-disable-next-line import/no-cycle
 import ProductImage from '../ProductImage/ProductImage';
 import { IProductSliderProps } from '../../types/types';
 
