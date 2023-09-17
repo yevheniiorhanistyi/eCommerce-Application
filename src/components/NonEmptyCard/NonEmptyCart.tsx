@@ -1,30 +1,51 @@
+import { useState } from 'react';
 import { Container, TextField, Typography } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
 import CartItems from '../CartItems/CartItems';
-import styles from './NonEmptyCart.styles';
 import { INonEmptyCardAProps } from '../../types/types';
 import SendIconButton from '../buttons/SendIconButton/SendIconButton';
 import formatPrice from '../../utils/formatPrice';
+import addPromoCode from '../../services/cart/cartPromoCode/addPromoCode';
+import getCartActive from '../../services/cart/getCartActive';
+
+import styles from './NonEmptyCart.styles';
 
 const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   cartData,
   deleteSuccess,
+  addPromoCodeSuccess,
 }: INonEmptyCardAProps) => {
-  const summaryDiscount = cartData.lineItems.reduce((acc, lineItem) => {
-    const discounted = lineItem.price.discounted?.value.centAmount;
-    const original = lineItem.price.value.centAmount;
-    const price = discounted ? discounted - original : 0;
-
-    return acc + price;
+  const [promoCode, setPromoCode] = useState('');
+  const summaryPriceWithoutDiscount = cartData.lineItems.reduce((acc, item) => {
+    const original = item.price.value.centAmount;
+    return acc + original;
   }, 0);
 
   const summaryPriceWithDiscount = cartData.totalPrice.centAmount;
-
-  const summaryPriceWithoutDiscount = summaryPriceWithDiscount - summaryDiscount;
+  const discount = summaryPriceWithDiscount - summaryPriceWithoutDiscount;
+  const addActivePromoCode = async () => {
+    const activeCart = await getCartActive();
+    if (activeCart) {
+      try {
+        const { id, version } = activeCart;
+        await addPromoCode(id, version, promoCode);
+        addPromoCodeSuccess();
+      } catch (error) {
+        if (error instanceof Error) enqueueSnackbar(error.message, { variant: 'error' });
+      } finally {
+        setPromoCode('');
+      }
+    }
+  };
 
   return !cartData ? null : (
     <Container sx={styles.wrapper} disableGutters>
       <Container disableGutters>
-        <CartItems cartData={cartData} deleteSuccess={deleteSuccess} />
+        <CartItems
+          cartData={cartData}
+          deleteSuccess={deleteSuccess}
+          addPromoCodeSuccess={addActivePromoCode}
+        />
       </Container>
       <Container sx={styles.rightSide}>
         <Container sx={styles.rightSideWrapper}>
@@ -45,7 +66,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
           <Container sx={styles.discountWrapper} disableGutters>
             <Typography sx={styles.discountTitle}>Discount</Typography>
             <Typography sx={styles.discounValue}>
-              {formatPrice(summaryDiscount)}
+              {formatPrice(discount)}
             </Typography>
           </Container>
         </Container>
@@ -55,12 +76,10 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
             id="outlined-basic"
             label="Enter promocode"
             variant="outlined"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value.toLocaleUpperCase())}
           />
-          <SendIconButton
-            callback={() => ({
-              message: 'This is a message',
-            })}
-          />
+          <SendIconButton callback={addActivePromoCode} />
         </Container>
       </Container>
     </Container>
