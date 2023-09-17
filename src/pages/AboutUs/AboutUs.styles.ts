@@ -28,6 +28,14 @@ const styles = {
       margin: '0 5px',
     },
   },
+  rsschoolLogo: {
+    transition: '.3s ease',
+
+    '&:hover': {
+      filter: 'invert(.2)',
+      transform: 'scale(110%)',
+    },
+  },
 };
 
 export default styles;

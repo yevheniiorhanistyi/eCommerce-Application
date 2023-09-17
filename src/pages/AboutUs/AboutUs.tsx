@@ -49,7 +49,7 @@ const AboutUs: React.FC = () => {
           <Typography variant="h3" align="center" sx={styles.titleText}>
             Meet our
           </Typography>
-          <Link href="https://rs.school/index.html" target="_blank">
+          <Link sx={styles.rsschoolLogo} href="https://rs.school/index.html" target="_blank">
             <img
               alt="RSSchool"
               width="80"
