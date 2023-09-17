@@ -9,21 +9,21 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { PriceRangeProps } from '../../types/types';
+import { ICommonProps } from '../../types/types';
 
 import styles from './PriceRange.styles';
 
-const PriceRange: React.FC<PriceRangeProps> = ({
-  prices,
-  setPrices,
-}: PriceRangeProps) => {
-  const minPrice = prices[0];
-  const maxPrice = prices[1];
+export const PriceRange: React.FC<ICommonProps> = ({
+  searchParams,
+  setSearchParams,
+}: ICommonProps) => {
+  const minPrice = searchParams.prices[0];
+  const maxPrice = searchParams.prices[1];
 
   const onChangeInputsPrice = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(event.target.value);
     if (!isNaN(newValue)) {
-      let [min, max] = [...prices];
+      let [min, max] = [...searchParams.prices];
 
       if (index === 0) {
         min = newValue;
@@ -33,7 +33,7 @@ const PriceRange: React.FC<PriceRangeProps> = ({
       if (min > max) {
         [min, max] = [max, min];
       }
-      setPrices([min, max]);
+      setSearchParams({ ...searchParams, prices: [min, max] });
     }
   };
 

@@ -1,10 +1,9 @@
-import { FC } from 'react';
 import { Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import styles from './EditiconButton.styles';
 import { IEditIconButtonProps } from '../../../types/types';
 
-const EditIconButton: FC<IEditIconButtonProps> = ({
+const EditIconButton: React.FC<IEditIconButtonProps> = ({
   callback,
 }: IEditIconButtonProps) => {
   const handleClick = () => {

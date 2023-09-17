@@ -1,4 +1,3 @@
-// import fetch from 'node-fetch'
 import {
   ClientBuilder,
   Client,
@@ -33,7 +32,6 @@ const client: Client = new ClientBuilder()
   .withProjectKey(projectKey)
   .withClientCredentialsFlow(authMiddlewareOptions)
   .withHttpMiddleware(httpMiddlewareOptions)
-  // .withLoggerMiddleware()
   .build();
 
 export const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({

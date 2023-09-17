@@ -18,7 +18,6 @@ import styles from './AddAddressForm.styles';
 import nameValidation from '../../validation/name.validation';
 import { ICountry, ICustomerAddressBase } from '../../types/types';
 
-// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import getCountries from '../../services/apiIntegration/getCountries';

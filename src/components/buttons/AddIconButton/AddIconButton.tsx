@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import styles from './AddIconButton.styles';
@@ -6,7 +5,7 @@ import { useModal } from '../../ModalProvider/ModalProvider';
 import { IAddIconButtonProps } from '../../../types/types';
 import { TReturnClose } from '../../ModalProvider/type';
 
-const AddIconButton: FC<IAddIconButtonProps> = ({
+const AddIconButton: React.FC<IAddIconButtonProps> = ({
   userId,
   isBilling = false,
   versionId,
@@ -16,15 +15,19 @@ const AddIconButton: FC<IAddIconButtonProps> = ({
 
   const handleClick = () => {
     modal.openModal('address', false);
-    modal.setContent('address', {
-      userId,
-      isBilling,
-      versionId,
-    }, (isSuccess: TReturnClose) => {
-      if (isSuccess) {
-        addSuccess();
-      }
-    });
+    modal.setContent(
+      'address',
+      {
+        userId,
+        isBilling,
+        versionId,
+      },
+      (isSuccess: TReturnClose) => {
+        if (isSuccess) {
+          addSuccess();
+        }
+      },
+    );
   };
 
   return (

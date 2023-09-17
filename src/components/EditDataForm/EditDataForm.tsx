@@ -14,7 +14,6 @@ import nameValidation from '../../validation/name.validation';
 import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
 import editCustomerData from '../../services/profile/editCustomerData';
 import emailValidation from '../../validation/email.validation';
-// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
 import { IGetCustomerData } from '../../types/types';
 import { formatDateToYYYYMMDD } from '../../utils/formatDate';

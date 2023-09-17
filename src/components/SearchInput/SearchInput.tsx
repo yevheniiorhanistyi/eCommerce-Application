@@ -1,19 +1,15 @@
 import { Paper, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { ICommonProps } from '../../types/types';
 
 import styles from './SearchInput.styles';
 
-type SearchInputProps = {
-  value: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-};
-
-const SearchInput: React.FC<SearchInputProps> = ({
-  value,
-  setSearchValue,
-}: SearchInputProps) => {
+export const SearchInput: React.FC<ICommonProps> = ({
+  searchParams,
+  setSearchParams,
+}: ICommonProps) => {
   const handleSearchChange = (newValue: string) => {
-    setSearchValue(newValue);
+    setSearchParams({ ...searchParams, term: newValue });
   };
 
   return (
@@ -22,7 +18,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         sx={styles.inputBase}
         placeholder="Search"
         inputProps={{ 'aria-label': 'search' }}
-        value={value}
+        value={searchParams.term}
         onChange={(e) => handleSearchChange(e.target.value)}
       />
       <IconButton type="button" sx={styles.iconButton} aria-label="search">

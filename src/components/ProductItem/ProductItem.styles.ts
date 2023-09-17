@@ -34,6 +34,10 @@ const styles = {
     textDecoration: 'line-through',
     marginLeft: '10px',
   },
+  buttonCartControl: {
+    fontSize: '0.8rem',
+    padding: '8px 20px',
+  },
 };
 
 export default styles;

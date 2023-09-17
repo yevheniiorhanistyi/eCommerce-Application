@@ -12,7 +12,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
 import passwordValidation from '../../validation/password.validation';
 import confirmFiled from '../../validation/confirmFiled';
