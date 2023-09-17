@@ -4,6 +4,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 import { ITeamMember } from '../../types/types';
 import styles from './TeamMember.styles';
+import ContributionButton from '../buttons/ContributionButton/ContributionButton';
 
 const TeamMember: React.FC<ITeamMember> = ({
   name,
@@ -37,6 +38,9 @@ const TeamMember: React.FC<ITeamMember> = ({
       {bio.map((paragraph) => (
         <Typography sx={styles.bio} key={paragraph}>{paragraph}</Typography>
       ))}
+      <Container sx={styles.button} disableGutters>
+        <ContributionButton name={name} />
+      </Container>
     </Container>
   </Container>
 );

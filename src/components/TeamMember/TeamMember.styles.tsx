@@ -58,6 +58,14 @@ const styles = {
     color: theme.palette.grey[800],
     textAlign: 'justify',
   },
+  button: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+
+    '@media (max-width: 800px)': {
+      justifyContent: 'center',
+    },
+  },
 };
 
 export default styles;
