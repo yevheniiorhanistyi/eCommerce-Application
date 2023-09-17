@@ -280,4 +280,5 @@ export type LocalizedObject<T> = {
 export interface INonEmptyCardAProps {
   cartData: Cart;
   deleteSuccess: () => void;
+  quantityChangeSucces: () => void;
 }

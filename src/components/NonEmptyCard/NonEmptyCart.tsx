@@ -8,6 +8,7 @@ import formatPrice from '../../utils/formatPrice';
 const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   cartData,
   deleteSuccess,
+  quantityChangeSucces,
 }: INonEmptyCardAProps) => {
   const summaryDiscount = cartData.lineItems.reduce((acc, lineItem) => {
     const discounted = lineItem.price.discounted?.value.centAmount;
@@ -24,7 +25,11 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   return !cartData ? null : (
     <Container sx={styles.wrapper} disableGutters>
       <Container disableGutters>
-        <CartItems cartData={cartData} deleteSuccess={deleteSuccess} />
+        <CartItems
+          cartData={cartData}
+          deleteSuccess={deleteSuccess}
+          quantityChangeSucces={quantityChangeSucces}
+        />
       </Container>
       <Container sx={styles.rightSide}>
         <Container sx={styles.rightSideWrapper}>

@@ -17,11 +17,13 @@ import { INonEmptyCardAProps } from '../../types/types';
 import DeleteCartItemButton from '../DeleteCartItemButton/DeleteCartItemButton';
 import parsingPrice from '../../utils/parsingPrice';
 import languageCode from '../../utils/languageCode';
+import QuantityInput from '../QuantityInput/QuantityInput';
 
 const CartItems: React.FC<INonEmptyCardAProps> = ({
   cartData,
   deleteSuccess,
-}: INonEmptyCardAProps) => (!cartData ? null : (
+  quantityChangeSucces,
+}: INonEmptyCardAProps) => (
   <List>
     {cartData.lineItems.map((lineItem) => {
       const discounted = lineItem.price.discounted?.value;
@@ -46,10 +48,10 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
                   <CardMedia
                     component="img"
                     image={
-                        lineItem.variant.images
-                          ? lineItem.variant.images[0].url
-                          : 'No image available'
-                      }
+                      lineItem.variant.images
+                        ? lineItem.variant.images[0].url
+                        : 'No image available'
+                    }
                     alt={lineItem.productKey}
                     sx={styles.cardMedia}
                   />
@@ -68,6 +70,11 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
                     {lineItem.name[languageCode]}
                   </Typography>
                 </CardContent>
+                <QuantityInput
+                  startQuantity={lineItem.quantity}
+                  produstId={lineItem.productId}
+                  onChange={quantityChangeSucces}
+                />
                 <Container sx={styles.itemPricesWrapper} disableGutters>
                   <Container sx={styles.descriptionPrices} disableGutters>
                     {hasDiscount ? (
@@ -99,6 +106,6 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
       );
     })}
   </List>
-));
+);
 
 export default CartItems;

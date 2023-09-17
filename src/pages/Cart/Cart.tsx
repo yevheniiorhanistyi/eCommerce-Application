@@ -32,6 +32,10 @@ const CustomerCart: React.FC = () => {
     setCartData(data);
   };
 
+  const onQuantityChangeSucces = () => {
+    fetchCartData();
+  };
+
   if (!cartData) {
     return null;
   }
@@ -56,6 +60,7 @@ const CustomerCart: React.FC = () => {
         <NonEmptyCart
           cartData={cartData as Cart}
           deleteSuccess={onDeleteSuccess}
+          quantityChangeSucces={onQuantityChangeSucces}
         />
       </Paper>
     </Container>
