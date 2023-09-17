@@ -26,7 +26,7 @@ const ContributionSlider: React.FC<IContributionSliderProps> = ({
           navButtonsAlwaysVisible
           indicators={false}
           cycleNavigation={false}
-          navButtonsWrapperProps={{ className: 'nav__wrap' }}
+          navButtonsWrapperProps={{ className: 'contribution' }}
           navButtonsProps={{ className: 'nav__button' }}
           index={startIndex}
         >

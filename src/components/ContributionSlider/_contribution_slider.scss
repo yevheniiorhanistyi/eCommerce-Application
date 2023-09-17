@@ -1,4 +1,4 @@
-.nav__wrap:not(foo) .nav__button:not(foo) {
+.contribution:not(foo) .nav__button:not(foo) {
   border-radius: 8px;
   background-color: #1976d2;
   box-shadow:
@@ -25,8 +25,8 @@
   }
 }
 
-.nav__wrap {
-    bottom: 0 !important;
-    height: auto !important;
-    top: calc(100% - 40px) !important;
+.contribution {
+  bottom: 0 !important;
+  height: auto !important;
+  top: calc(100% - 40px) !important;
 }
