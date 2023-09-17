@@ -280,4 +280,7 @@ export type LocalizedObject<T> = {
 export interface INonEmptyCardAProps {
   cartData: Cart;
   deleteSuccess: () => void;
+  addPromoCodeSuccess: () => void;
 }
+
+export type MessageType = 'success' | 'error' | 'info' | 'warning';
