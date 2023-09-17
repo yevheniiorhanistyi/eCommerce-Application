@@ -16,6 +16,10 @@ const AboutUs: React.FC = () => {
       github: 'https://github.com/yevheniiorhanistyi',
       linkedin: 'https://www.linkedin.com/in/yevhenii-orhanistyi-819094224',
       photo: 'https://avatars.githubusercontent.com/u/88982441?v=4',
+      sliderData: [
+        { image: '/src/assets/1.png', description: 'He cares about the experience, architecture and code quality of the things he builds. Creating applications is his greatest passion, which inspires him to constantly improve his skills' },
+        { image: '/src/assets/2.png', description: 'He cares about the experience, architecture and code quality of the things he builds. Creating applications is his greatest passion, which inspires him to constantly improve his skills' },
+      ],
     },
     {
       name: 'Alexander Samak',
@@ -27,6 +31,10 @@ const AboutUs: React.FC = () => {
       github: 'https://github.com/AlxndrSmk',
       linkedin: 'https://www.linkedin.com/in/alexander-samak-0141a6235',
       photo: 'https://avatars.githubusercontent.com/u/106277870?v=4',
+      sliderData: [
+        { image: '/src/assets/1.png', description: 'Alexander 11111' },
+        { image: '/src/assets/2.png', description: 'Alexander 22222' },
+      ],
     },
     {
       name: 'Konstantin Kikinov',
@@ -39,6 +47,10 @@ const AboutUs: React.FC = () => {
       linkedin: 'https://www.linkedin.com/in/kostiantyn-kikinov-505387b3',
       photo:
         'https://raw.githubusercontent.com/KikinovK/rsschool-cv/gh-pages/img/avatar_800.jpg',
+      sliderData: [
+        { image: '/src/assets/1.png', description: 'Konstantin 11111' },
+        { image: '/src/assets/2.png', description: 'Konstantin 22222' },
+      ],
     },
   ];
 
@@ -49,7 +61,11 @@ const AboutUs: React.FC = () => {
           <Typography variant="h3" align="center" sx={styles.titleText}>
             Meet our
           </Typography>
-          <Link sx={styles.rsschoolLogo} href="https://rs.school/index.html" target="_blank">
+          <Link
+            sx={styles.rsschoolLogo}
+            href="https://rs.school/index.html"
+            target="_blank"
+          >
             <img
               alt="RSSchool"
               width="80"
@@ -70,6 +86,7 @@ const AboutUs: React.FC = () => {
             linkedin={member.linkedin}
             photo={member.photo}
             key={member.name}
+            sliderData={member.sliderData}
           />
         ))}
       </Box>

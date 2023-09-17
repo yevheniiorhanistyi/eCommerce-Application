@@ -17,11 +17,13 @@ const styles = {
     },
   },
   image: {
-    borderRadius: '50%',
-
     '@media (max-width: 800px)': {
       display: 'flex',
       justifyContent: 'center',
+    },
+
+    img: {
+      borderRadius: '50%',
     },
   },
   icon: {

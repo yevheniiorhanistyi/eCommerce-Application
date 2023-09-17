@@ -21,6 +21,7 @@ import AddAddressModal from '../AddAddressModal/AddAddressModal';
 import ProductModal from '../ProductModal/ProductModal';
 import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
 import EditAddressModal from '../EditAddressModal/EditAddressModal';
+import ContributionModal from '../ContributionModal/ContributionModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -73,6 +74,13 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         userId: null,
         versionId: null,
       } as TEditAddressContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    contribution: {
+      isOpen: false,
+      content: {
+        sliderData: [],
+      },
       onClose: (value: TReturnClose) => {},
     },
   });
@@ -148,6 +156,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         open={modals.imageView.isOpen}
         content={modals.imageView.content}
         onClose={() => closeModal('imageView', true)}
+      />
+      <ContributionModal
+        open={modals.contribution.isOpen}
+        content={modals.contribution.content}
+        onClose={() => closeModal('contribution', true)}
       />
       {children}
     </ModalContext.Provider>

@@ -200,9 +200,23 @@ export interface IProductImageProps {
   images?: IImage[];
 }
 
+export interface IContributionImageProps {
+  url: string;
+  alt: string;
+  isButtondDisabled?: boolean;
+  index?: number;
+  images?: IImage[];
+}
+
 export interface IProductSliderProps {
   images: IImage[];
   title: string;
+  isButtondDisabled?: boolean;
+  startIndex?: number;
+}
+
+export interface IContributionSliderProps {
+  sliderData: ISliderData[];
   isButtondDisabled?: boolean;
   startIndex?: number;
 }
@@ -289,4 +303,10 @@ export interface ITeamMember {
   github: string;
   photo: string;
   linkedin?: string;
+  sliderData: ISliderData[];
+}
+
+export interface ISliderData {
+  image: string;
+  description: string;
 }
