@@ -3,10 +3,12 @@ import { Container, TextField, Typography } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
 import CartItems from '../CartItems/CartItems';
 import { INonEmptyCardAProps } from '../../types/types';
+import { useAuth } from '../AuthProvider/AuthProvider';
 import SendIconButton from '../buttons/SendIconButton/SendIconButton';
 import formatPrice from '../../utils/formatPrice';
 import addPromoCode from '../../services/cart/cartPromoCode/addPromoCode';
-import getCartActive from '../../services/cart/getCartActive';
+import getIdCartActive from '../../services/cart/getIdCartActive';
+import getCartById from '../../services/cart/getCartById';
 
 import styles from './NonEmptyCart.styles';
 
@@ -16,6 +18,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   addPromoCodeSuccess,
 }: INonEmptyCardAProps) => {
   const [promoCode, setPromoCode] = useState('');
+  const { isAuthenticated } = useAuth();
   const summaryPriceWithoutDiscount = cartData.lineItems.reduce((acc, item) => {
     const original = item.price.value.centAmount;
     return acc + original;
@@ -24,11 +27,12 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   const summaryPriceWithDiscount = cartData.totalPrice.centAmount;
   const discount = summaryPriceWithDiscount - summaryPriceWithoutDiscount;
   const addActivePromoCode = async () => {
-    const activeCart = await getCartActive();
+    const activeCartId = await getIdCartActive(isAuthenticated);
+    const activeCart = await getCartById(activeCartId);
     if (activeCart) {
       try {
         const { id, version } = activeCart;
-        await addPromoCode(id, version, promoCode);
+        await addPromoCode(id, version, promoCode.toUpperCase());
         addPromoCodeSuccess();
       } catch (error) {
         if (error instanceof Error) enqueueSnackbar(error.message, { variant: 'error' });
@@ -77,7 +81,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
             label="Enter promocode"
             variant="outlined"
             value={promoCode}
-            onChange={(e) => setPromoCode(e.target.value.toLocaleUpperCase())}
+            onChange={(e) => setPromoCode(e.target.value)}
           />
           <SendIconButton callback={addActivePromoCode} />
         </Container>
