@@ -24,7 +24,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   const [promoCode, setPromoCode] = useState('');
   const { isAuthenticated } = useAuth();
   const summaryPriceWithoutDiscount = cartData.lineItems.reduce((acc, item) => {
-    const original = item.price.value.centAmount;
+    const original = item.price.value.centAmount * item.quantity;
     return acc + original;
   }, 0);
 
