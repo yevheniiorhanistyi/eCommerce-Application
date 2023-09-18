@@ -33,6 +33,9 @@ const CustomerCart: React.FC = () => {
   const onAddPromoCodeSuccess = () => {
     showSnackbarMessage('Promo code applied successfully', 'success', 1000);
   };
+  const onClearSucces = () => {
+    showSnackbarMessage('Cart cleared', 'success', 1000);
+  };
 
   useEffect(() => {
     fetchCartData();
@@ -78,6 +81,7 @@ const CustomerCart: React.FC = () => {
           deleteSuccess={onDeleteSuccess}
           quantityChangeSucces={onQuantityChangeSucces}
           addPromoCodeSuccess={onAddPromoCodeSuccess}
+          clearSucces={onClearSucces}
         />
       </Paper>
     </Container>

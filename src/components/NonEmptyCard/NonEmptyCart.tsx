@@ -19,6 +19,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   deleteSuccess,
   quantityChangeSucces,
   addPromoCodeSuccess,
+  clearSucces,
 }: INonEmptyCardAProps) => {
   const [promoCode, setPromoCode] = useState('');
   const { isAuthenticated } = useAuth();
@@ -93,7 +94,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
         </Container>
       </Container>
       <Box sx={styles.clearWrap}>
-        <ClearCart clearSuccess={() => {}} />
+        <ClearCart cartData={cartData} clearSuccess={clearSucces} />
       </Box>
     </Container>
   );

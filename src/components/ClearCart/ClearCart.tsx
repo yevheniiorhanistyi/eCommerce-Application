@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
-import styles from './ClearCart.styles';
+import { Cart } from '@commercetools/platform-sdk';
+import { enqueueSnackbar } from 'notistack';
 import { useModal } from '../ModalProvider/ModalProvider';
 import { TReturnClose } from '../ModalProvider/type';
+import styles from './ClearCart.styles';
+import updateCart from '../../services/cart/updateCart';
 
 interface IClearCartProps {
+  cartData: Cart;
   clearSuccess: () => void;
 }
 
 const ClearCart: React.FC<IClearCartProps> = ({
+  cartData,
   clearSuccess,
 }: IClearCartProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -34,7 +39,24 @@ const ClearCart: React.FC<IClearCartProps> = ({
   };
 
   const clearCart = async () => {
-    console.log('clearCart');
+    const actions = cartData.lineItems.map((item) => ({
+      action: 'removeLineItem',
+      lineItemId: item.id,
+    }));
+
+    const result = await updateCart({
+      cartId: cartData.id,
+      cartVersion: cartData.version,
+      actions,
+    });
+
+    if (result && result?.lineItems.length === 0) {
+      clearSuccess();
+    } else {
+      enqueueSnackbar('Failed to empty cart', {
+        variant: 'error',
+      });
+    }
   };
 
   return (
