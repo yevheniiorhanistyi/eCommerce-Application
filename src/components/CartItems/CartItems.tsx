@@ -60,7 +60,7 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
             </Link>
             <Container sx={styles.descriptionWrapper} disableGutters>
               <Container sx={styles.cartItemDescription}>
-                <CardContent>
+                <CardContent sx={styles.captionDescription}>
                   <Typography
                     gutterBottom
                     variant="h5"
@@ -70,11 +70,13 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
                     {lineItem.name[languageCode]}
                   </Typography>
                 </CardContent>
-                <QuantityInput
-                  startQuantity={lineItem.quantity}
-                  produstId={lineItem.productId}
-                  onChange={quantityChangeSucces}
-                />
+                <Box sx={styles.quantityWrap}>
+                  <QuantityInput
+                    startQuantity={lineItem.quantity}
+                    produstId={lineItem.productId}
+                    onChange={quantityChangeSucces}
+                  />
+                </Box>
                 <Container sx={styles.itemPricesWrapper} disableGutters>
                   <Container sx={styles.descriptionPrices} disableGutters>
                     {hasDiscount ? (
@@ -93,12 +95,12 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
                     )}
                   </Container>
                 </Container>
-              </Container>
-              <Container sx={styles.cartItemActions}>
-                <DeleteCartItemButton
-                  product={lineItem}
-                  deleteSuccess={deleteSuccess}
-                />
+                <Box sx={styles.deleteWrap}>
+                  <DeleteCartItemButton
+                    product={lineItem}
+                    deleteSuccess={deleteSuccess}
+                  />
+                </Box>
               </Container>
             </Container>
           </Container>

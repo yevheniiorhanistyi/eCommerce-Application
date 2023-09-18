@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   wraper: {
     alignItems: 'center',
@@ -15,6 +17,10 @@ const styles = {
     },
   },
   helperText: {},
+  button: {
+    borderRadius: '50%',
+    border: `1px solid ${theme.palette.grey[200]}`,
+  },
 };
 
 export default styles;

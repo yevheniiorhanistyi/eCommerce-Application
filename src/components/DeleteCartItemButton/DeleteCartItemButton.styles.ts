@@ -22,6 +22,13 @@ const styles = {
       color: theme.palette.grey[500],
     },
   },
+  buttonText: {
+    fontWeight: 'inherit',
+
+    '@media (max-width: 370px)': {
+      display: 'none',
+    },
+  },
 };
 
 export default styles;

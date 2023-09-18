@@ -106,6 +106,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
       <IconButton
         onClick={handleDecrement}
         disabled={!validation(quantity - 1) || valueField < minQuantity}
+        sx={styles.button}
       >
         <RemoveIcon />
       </IconButton>
@@ -120,6 +121,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
       <IconButton
         onClick={handleIncrement}
         disabled={!validation(quantity + 1) || valueField > maxQuantity}
+        sx={styles.button}
       >
         <AddIcon />
       </IconButton>
