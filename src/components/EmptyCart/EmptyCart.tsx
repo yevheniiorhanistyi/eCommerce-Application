@@ -1,5 +1,6 @@
 import { Container, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import emptyCartImg from '../../assets/emptyCart.png';
 
 import styles from './EmptyCart.styles';
 
@@ -7,7 +8,7 @@ const EmptyCart: React.FC = () => (
   <Container>
     <Container sx={styles.imageWrapper}>
       <img
-        src="/src/assets/emptyCart.png"
+        src={emptyCartImg}
         alt="Empty cart"
         style={styles.emptyCartImage}
       />
