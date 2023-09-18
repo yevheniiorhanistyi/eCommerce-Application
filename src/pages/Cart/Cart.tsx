@@ -8,13 +8,15 @@ import { useAuth } from '../../components/AuthProvider/AuthProvider';
 import getCartById from '../../services/cart/getCartById';
 import EmptyCart from '../../components/EmptyCart/EmptyCart';
 import getIdCartActive from '../../services/cart/getIdCartActive';
+import { useCart } from '../../components/CartProvider/CartProvider';
 
 const CustomerCart: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const [cartData, setCartData] = useState<Cart | null>();
+  const { updateBadgeContent } = useCart();
 
-  const onDeleteSuccess = () => {
-    fetchCartData();
+  const onDeleteSuccess = async () => {
+    await fetchCartData();
     enqueueSnackbar('Item succesfully deleted', {
       variant: 'success',
       autoHideDuration: 1000,
@@ -30,6 +32,9 @@ const CustomerCart: React.FC = () => {
     const id = await getIdCartActive(isAuthenticated);
     const data = await getCartById(id);
     setCartData(data);
+    if (data?.lineItems) {
+      updateBadgeContent(data.lineItems.length);
+    }
   };
 
   const onQuantityChangeSucces = () => {
