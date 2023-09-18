@@ -13,17 +13,17 @@ import {
 } from '@mui/material';
 
 import styles from './CartItems.styles';
-import { INonEmptyCardAProps } from '../../types/types';
+import { ICartItemsProps } from '../../types/types';
 import DeleteCartItemButton from '../DeleteCartItemButton/DeleteCartItemButton';
 import parsingPrice from '../../utils/parsingPrice';
 import languageCode from '../../utils/languageCode';
 import QuantityInput from '../QuantityInput/QuantityInput';
 
-const CartItems: React.FC<INonEmptyCardAProps> = ({
+const CartItems: React.FC<ICartItemsProps> = ({
   cartData,
   deleteSuccess,
   quantityChangeSucces,
-}: INonEmptyCardAProps) => (
+}: ICartItemsProps) => (
   <List>
     {cartData.lineItems.map((lineItem) => {
       const original = lineItem.price.value;
