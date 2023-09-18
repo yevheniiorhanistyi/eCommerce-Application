@@ -30,9 +30,7 @@ const ClearCart: React.FC<IClearCartProps> = ({
         text: 'Are you sure you want to clear your cart?',
       },
       (isSuccess: TReturnClose) => {
-        if (isSuccess) {
-          clearCart();
-        }
+        isSuccess && clearCart();
       },
     );
     setIsDisabled(false);
