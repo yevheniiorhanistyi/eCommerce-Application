@@ -17,8 +17,16 @@ _The eCommerce Application is an online store built using modern web development
 ## Technology Stack
 
 - React.js
+- React Router
 - TypeScript
 - Jest (testing)
+- Material-UI
+- Axios
+- Formik
+- Yup
+- Notistack
+- Dayjs
+- Slick Carousel
 
 <!-- GETTING STARTED -->
 ## Getting Started

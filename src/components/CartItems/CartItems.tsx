@@ -26,14 +26,18 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
 }: INonEmptyCardAProps) => (
   <List>
     {cartData.lineItems.map((lineItem) => {
-      const discounted = lineItem.price.discounted?.value;
       const original = lineItem.price.value;
+      const discounted = lineItem.price.discounted?.value;
+      const discPerQty = lineItem.discountedPricePerQuantity.length > 0
+        ? lineItem.discountedPricePerQuantity[0].discountedPrice.value
+        : undefined;
 
       const discountedPrice = discounted ? parsingPrice(discounted) : '';
+      const discPriceByPromo = discPerQty ? parsingPrice(discPerQty) : '';
       const originalPrice = parsingPrice(original);
 
-      const hasDiscount: string | boolean = discountedPrice && discountedPrice !== originalPrice;
-
+      const hasDiscount: string | boolean = (discPriceByPromo && discPriceByPromo !== originalPrice)
+        || (discountedPrice && discountedPrice !== originalPrice);
       return (
         <ListItem key={lineItem.id} sx={styles.listItem}>
           <Container sx={styles.card} disableGutters>
@@ -85,7 +89,7 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
                           {originalPrice}
                         </Typography>
                         <Typography sx={styles.originalPrice}>
-                          {discountedPrice}
+                          {discPriceByPromo || discountedPrice}
                         </Typography>
                       </>
                     ) : (
