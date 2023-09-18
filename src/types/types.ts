@@ -281,4 +281,7 @@ export interface INonEmptyCardAProps {
   cartData: Cart;
   deleteSuccess: () => void;
   quantityChangeSucces: () => void;
+  addPromoCodeSuccess: () => void;
 }
+
+export type MessageType = 'success' | 'error' | 'info' | 'warning';
