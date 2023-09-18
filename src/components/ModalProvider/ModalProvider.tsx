@@ -3,6 +3,7 @@ import {
   ModalContextType,
   ModalFunctionWithContent,
   TAddressContent,
+  TConfirmContent,
   TContent,
   TCustomerContent,
   TEditAddressContent,
@@ -21,6 +22,7 @@ import AddAddressModal from '../AddAddressModal/AddAddressModal';
 import ProductModal from '../ProductModal/ProductModal';
 import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
 import EditAddressModal from '../EditAddressModal/EditAddressModal';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
@@ -73,6 +75,14 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         userId: null,
         versionId: null,
       } as TEditAddressContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    confirm: {
+      isOpen: false,
+      content: {
+        title: '',
+        text: '',
+      } as TConfirmContent,
       onClose: (value: TReturnClose) => {},
     },
   });
@@ -148,6 +158,12 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         open={modals.imageView.isOpen}
         content={modals.imageView.content}
         onClose={() => closeModal('imageView', true)}
+      />
+      <ConfirmModal
+        open={modals.confirm.isOpen}
+        content={modals.confirm.content}
+        onClose={() => closeModal('confirm', false)}
+        onConfirm={() => closeModal('confirm', true)}
       />
       {children}
     </ModalContext.Provider>
