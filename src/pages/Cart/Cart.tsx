@@ -2,23 +2,35 @@ import { Container, Paper, Typography } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { Cart } from '@commercetools/platform-sdk';
-import NonEmptyCart from '../../components/NonEmptyCard/NonEmptyCart';
-import styles from './Cart.styles';
 import { useAuth } from '../../components/AuthProvider/AuthProvider';
+import { MessageType } from '../../types/types';
+import NonEmptyCart from '../../components/NonEmptyCard/NonEmptyCart';
 import getCartById from '../../services/cart/getCartById';
 import EmptyCart from '../../components/EmptyCart/EmptyCart';
 import getIdCartActive from '../../services/cart/getIdCartActive';
 
-const CustomerCart: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-  const [cartData, setCartData] = useState<Cart | null>();
+import styles from './Cart.styles';
 
-  const onDeleteSuccess = () => {
+const CustomerCart: React.FC = () => {
+  const [cartData, setCartData] = useState<Cart | null>();
+  const { isAuthenticated } = useAuth();
+
+  const showSnackbarMessage = (
+    messageText: string,
+    messageType: MessageType,
+    autoHideDuration?: number,
+  ) => {
     fetchCartData();
-    enqueueSnackbar('Item succesfully deleted', {
-      variant: 'success',
-      autoHideDuration: 1000,
+    enqueueSnackbar(messageText, {
+      variant: messageType,
+      autoHideDuration,
     });
+  };
+  const onDeleteSuccess = () => {
+    showSnackbarMessage('Item succesfully deleted', 'success', 1000);
+  };
+  const onAddPromoCodeSuccess = () => {
+    showSnackbarMessage('Promo code applied successfully', 'success', 1000);
   };
 
   useEffect(() => {
@@ -56,6 +68,7 @@ const CustomerCart: React.FC = () => {
         <NonEmptyCart
           cartData={cartData as Cart}
           deleteSuccess={onDeleteSuccess}
+          addPromoCodeSuccess={onAddPromoCodeSuccess}
         />
       </Paper>
     </Container>
