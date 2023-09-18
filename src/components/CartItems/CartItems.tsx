@@ -17,11 +17,13 @@ import { INonEmptyCardAProps } from '../../types/types';
 import DeleteCartItemButton from '../DeleteCartItemButton/DeleteCartItemButton';
 import parsingPrice from '../../utils/parsingPrice';
 import languageCode from '../../utils/languageCode';
+import QuantityInput from '../QuantityInput/QuantityInput';
 
 const CartItems: React.FC<INonEmptyCardAProps> = ({
   cartData,
   deleteSuccess,
-}: INonEmptyCardAProps) => (!cartData ? null : (
+  quantityChangeSucces,
+}: INonEmptyCardAProps) => (
   <List>
     {cartData.lineItems.map((lineItem) => {
       const original = lineItem.price.value;
@@ -62,7 +64,7 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
             </Link>
             <Container sx={styles.descriptionWrapper} disableGutters>
               <Container sx={styles.cartItemDescription}>
-                <CardContent>
+                <CardContent sx={styles.captionDescription}>
                   <Typography
                     gutterBottom
                     variant="h5"
@@ -72,6 +74,13 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
                     {lineItem.name[languageCode]}
                   </Typography>
                 </CardContent>
+                <Box sx={styles.quantityWrap}>
+                  <QuantityInput
+                    startQuantity={lineItem.quantity}
+                    produstId={lineItem.productId}
+                    onChange={quantityChangeSucces}
+                  />
+                </Box>
                 <Container sx={styles.itemPricesWrapper} disableGutters>
                   <Container sx={styles.descriptionPrices} disableGutters>
                     {hasDiscount ? (
@@ -90,12 +99,12 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
                     )}
                   </Container>
                 </Container>
-              </Container>
-              <Container sx={styles.cartItemActions}>
-                <DeleteCartItemButton
-                  product={lineItem}
-                  deleteSuccess={deleteSuccess}
-                />
+                <Box sx={styles.deleteWrap}>
+                  <DeleteCartItemButton
+                    product={lineItem}
+                    deleteSuccess={deleteSuccess}
+                  />
+                </Box>
               </Container>
             </Container>
           </Container>
@@ -103,6 +112,6 @@ const CartItems: React.FC<INonEmptyCardAProps> = ({
       );
     })}
   </List>
-));
+);
 
 export default CartItems;

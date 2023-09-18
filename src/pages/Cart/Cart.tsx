@@ -8,12 +8,13 @@ import NonEmptyCart from '../../components/NonEmptyCard/NonEmptyCart';
 import getCartById from '../../services/cart/getCartById';
 import EmptyCart from '../../components/EmptyCart/EmptyCart';
 import getIdCartActive from '../../services/cart/getIdCartActive';
-
+import { useCart } from '../../components/CartProvider/CartProvider';
 import styles from './Cart.styles';
 
 const CustomerCart: React.FC = () => {
-  const [cartData, setCartData] = useState<Cart | null>();
   const { isAuthenticated } = useAuth();
+  const [cartData, setCartData] = useState<Cart | null>();
+  const { updateBadgeContent } = useCart();
 
   const showSnackbarMessage = (
     messageText: string,
@@ -42,12 +43,19 @@ const CustomerCart: React.FC = () => {
     const id = await getIdCartActive(isAuthenticated);
     const data = await getCartById(id);
     setCartData(data);
+    if (data?.lineItems) {
+      updateBadgeContent(data.lineItems.length);
+    }
+  };
+
+  const onQuantityChangeSucces = () => {
+    fetchCartData();
   };
 
   if (!cartData) {
     return null;
   }
-  if (cartData && !cartData?.lineItems.length) {
+  if (cartData && !cartData?.lineItems?.length) {
     return (
       <Container maxWidth="lg" disableGutters>
         <Paper elevation={0} sx={{ p: 3, mt: 7, mb: 4 }}>
@@ -68,6 +76,7 @@ const CustomerCart: React.FC = () => {
         <NonEmptyCart
           cartData={cartData as Cart}
           deleteSuccess={onDeleteSuccess}
+          quantityChangeSucces={onQuantityChangeSucces}
           addPromoCodeSuccess={onAddPromoCodeSuccess}
         />
       </Paper>

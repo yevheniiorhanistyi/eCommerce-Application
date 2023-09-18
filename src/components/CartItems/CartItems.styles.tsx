@@ -42,6 +42,7 @@ const styles = {
   descriptionPrices: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'flex-end',
   },
   itemPricesWrapper: {
@@ -50,6 +51,18 @@ const styles = {
     margin: '0',
     minWidth: '100px',
     width: '90px',
+
+    '@media (min-width: 870px) and (max-width: 1000px)': {
+      width: '100%',
+    },
+
+    '@media (max-width: 650px)': {
+      width: '100%',
+    },
+
+    '@media (max-width: 500px)': {
+      order: 1,
+    },
   },
   originalPrice: {
     fontWeight: '700',
@@ -58,14 +71,11 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
 
     '@media (max-width: 870px)': {
       flexDirection: 'initial',
       alignItems: 'flex-start',
-    },
-
-    '@media (max-width: 500px)': {
-      flexDirection: 'column-reverse',
     },
   },
   cartItemActions: {
@@ -79,6 +89,65 @@ const styles = {
 
     '@media (max-width: 325px)': {
       gap: '5px',
+    },
+  },
+  captionDescription: {
+    width: '250px',
+    '@media (min-width: 870px) and (max-width: 1000px)': {
+      width: '100%',
+    },
+
+    '@media (max-width: 650px)': {
+      width: '100%',
+    },
+
+    '@media (max-width: 500px)': {
+      order: 2,
+    },
+  },
+  quantityWrap: {
+    display: 'flex',
+
+    '@media (min-width: 500px) and (max-width: 1200px)': {
+      width: '50%',
+      order: 2,
+      justifyContent: 'flex-end',
+    },
+
+    '@media (min-width: 371px) and (max-width: 500px)': {
+      width: '100%',
+      order: 3,
+      justifyContent: 'flex-end',
+    },
+
+    '@media (max-width: 370px)': {
+      width: 'auto',
+      alignSelf: 'center',
+      justifyContent: 'flex-end',
+      order: 4,
+    },
+  },
+  deleteWrap: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+
+    '@media (min-width: 500px) and (max-width: 1200px)': {
+      width: '50%',
+      order: 1,
+      justifyContent: 'flex-start',
+    },
+
+    '@media (max-width: 500px)': {
+      justifyContent: 'flex-start',
+      order: 4,
+    },
+
+    '@media (max-width: 370px)': {
+      width: 'auto',
+      alignSelf: 'center',
+      justifyContent: 'flex-start',
+      order: 3,
     },
   },
 };

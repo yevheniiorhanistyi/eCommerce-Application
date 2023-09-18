@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { LineItem } from '@commercetools/platform-sdk';
 import { useAuth } from '../AuthProvider/AuthProvider';
@@ -58,7 +58,9 @@ const DeleteCartItemButton: FC<DeleteItemButtonProps> = ({
       sx={styles.button}
       disabled={isDisabled}
     >
-      Delete
+      <Typography component="span" sx={styles.buttonText}>
+        Delete
+      </Typography>
     </Button>
   );
 };

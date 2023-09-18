@@ -10,7 +10,7 @@ const createCart = async (): Promise<Cart | null> => {
   const { token } = await getActiveToken();
   try {
     const response = await axios.post(
-      `${baseUrl}/${projectKey}/me/carts`,
+      `${baseUrl}/${projectKey}/carts`,
       JSON.stringify({
         currency: 'EUR',
       }),

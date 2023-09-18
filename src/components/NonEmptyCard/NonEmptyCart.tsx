@@ -15,6 +15,7 @@ import styles from './NonEmptyCart.styles';
 const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
   cartData,
   deleteSuccess,
+  quantityChangeSucces,
   addPromoCodeSuccess,
 }: INonEmptyCardAProps) => {
   const [promoCode, setPromoCode] = useState('');
@@ -48,6 +49,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
         <CartItems
           cartData={cartData}
           deleteSuccess={deleteSuccess}
+          quantityChangeSucces={quantityChangeSucces}
           addPromoCodeSuccess={addActivePromoCode}
         />
       </Container>

@@ -10,6 +10,7 @@ import { IProductDisplayData } from '../../../types/types';
 import getIdCartActive from '../../../services/cart/getIdCartActive';
 import removeProductFromCart from '../../../services/cart/removeProductFromCart';
 import checkProductToCart from '../../../services/cart/checkProductToCart';
+import { useCart } from '../../CartProvider/CartProvider';
 
 interface AddToCartButtonProps {
   product: IProductDisplayData;
@@ -22,6 +23,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
   const [isDisabled, setIsDisabled] = useState(false);
   const { isAuthenticated } = useAuth();
   const [idCartActive, setIdCartActive] = useState('');
+  const { badgeContent, updateBadgeContent } = useCart();
 
   useEffect(() => {
     fetchCart();
@@ -33,6 +35,10 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
     setIdCartActive(idCart);
     const isProductToCart = await checkProductToCart(idCart, product.productId);
     setIsAddProduct(isProductToCart);
+    const cart = await getCartById(idCart);
+    if (cart?.lineItems) {
+      updateBadgeContent(cart.lineItems.length);
+    }
   };
 
   const handleClick = async () => {
@@ -61,6 +67,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
           variant: 'success',
         });
         setIsAddProduct(false);
+        updateBadgeContent(badgeContent - 1);
       } else {
         enqueueSnackbar('Product can`t be removed from the cart!', {
           variant: 'error',
@@ -88,6 +95,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
           variant: 'success',
         });
         setIsAddProduct(true);
+        updateBadgeContent(badgeContent + 1);
       } else {
         enqueueSnackbar('Product can`t be added to the cart!', {
           variant: 'error',
