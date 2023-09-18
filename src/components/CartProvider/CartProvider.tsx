@@ -28,7 +28,7 @@ export const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
   const fetchCart = async () => {
     const idCart = await getIdCartActive(isAuthenticated);
     const cart = await getCartById(idCart);
-    if (cart) {
+    if (cart?.lineItems) {
       updateBadgeContent(cart.lineItems.length);
     }
   };

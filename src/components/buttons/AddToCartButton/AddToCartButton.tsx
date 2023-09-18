@@ -36,7 +36,7 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
     const isProductToCart = await checkProductToCart(idCart, product.productId);
     setIsAddProduct(isProductToCart);
     const cart = await getCartById(idCart);
-    if (cart) {
+    if (cart?.lineItems) {
       updateBadgeContent(cart.lineItems.length);
     }
   };

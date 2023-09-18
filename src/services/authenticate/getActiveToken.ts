@@ -11,7 +11,7 @@ const getActiveToken = async () => {
   if (!token || !(await validateTokenStatus(token)).active) {
     const anonymousToken = await getAnonymousToken();
     setTokenToLocalStorage(anonymousToken.token, false);
-    return { token, isAuthenticated: false };
+    return { token: anonymousToken.token, isAuthenticated: false };
   }
 
   return { token, isAuthenticated };
