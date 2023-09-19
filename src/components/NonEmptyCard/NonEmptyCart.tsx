@@ -67,7 +67,7 @@ const NonEmptyCart: React.FC<INonEmptyCardAProps> = ({
             </Container>
             <Container sx={styles.itemsCountWrapper} disableGutters>
               <Typography sx={styles.itemsCountTitle}>
-                {`${cartData.lineItems.length} items`}
+                {`${cartData.totalLineItemQuantity} items`}
               </Typography>
               <Typography sx={styles.itemsCountValue}>
                 {formatPrice(summaryPriceWithoutDiscount)}
