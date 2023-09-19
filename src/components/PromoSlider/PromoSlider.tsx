@@ -35,7 +35,7 @@ const PromoSlider = () => {
               alt={item.alt}
               height={360}
               src={item.imgSrc}
-              width={1090}
+              width="auto"
               effect="opacity"
               style={styles.img}
             />
