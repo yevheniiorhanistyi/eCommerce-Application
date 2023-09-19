@@ -6,7 +6,9 @@ const styles = {
     margin: '5vh 0',
   },
   emptyCartImage: {
-    height: '240px',
+    width: '100%',
+    maxWidth: '278px',
+    height: 'auto',
   },
 };
 

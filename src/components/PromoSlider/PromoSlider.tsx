@@ -1,11 +1,14 @@
 import Slider from 'react-slick';
 import { Container, Box } from '@mui/material';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import promoImg1 from '../../assets/promo_1.png';
 import promoImg2 from '../../assets/promo_2.png';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
+
 import styles from './PromoSlider.styles';
 
 const PromoSlider = () => {
@@ -28,7 +31,14 @@ const PromoSlider = () => {
       >
         {images.map((item) => (
           <Box sx={styles.imgWrapper} key={item.alt}>
-            <img style={styles.img} src={item.imgSrc} alt={item.alt} />
+            <LazyLoadImage
+              alt={item.alt}
+              height={360}
+              src={item.imgSrc}
+              width={1090}
+              effect="opacity"
+              style={styles.img}
+            />
           </Box>
         ))}
       </Slider>

@@ -1,8 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import {
   CardContent,
-  CardMedia,
   Typography,
   CardActionArea,
   Box,
@@ -12,12 +11,15 @@ import {
   Container,
 } from '@mui/material';
 
-import styles from './CartItems.styles';
 import { ICartItemsProps } from '../../types/types';
 import DeleteCartItemButton from '../DeleteCartItemButton/DeleteCartItemButton';
 import parsingPrice from '../../utils/parsingPrice';
 import languageCode from '../../utils/languageCode';
 import QuantityInput from '../QuantityInput/QuantityInput';
+
+import 'react-lazy-load-image-component/src/effects/opacity.css';
+
+import styles from './CartItems.styles';
 
 const CartItems: React.FC<ICartItemsProps> = ({
   cartData,
@@ -49,15 +51,15 @@ const CartItems: React.FC<ICartItemsProps> = ({
             >
               <CardActionArea>
                 <Box sx={styles.innerBox}>
-                  <CardMedia
-                    component="img"
-                    image={
+                  <LazyLoadImage
+                    src={
                       lineItem.variant.images
                         ? lineItem.variant.images[0].url
                         : 'No image available'
                     }
                     alt={lineItem.productKey}
-                    sx={styles.cardMedia}
+                    effect="opacity"
+                    style={styles.cardMedia}
                   />
                 </Box>
               </CardActionArea>

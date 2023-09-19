@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { LineItem } from '@commercetools/platform-sdk';
-import { Box } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
 import { enqueueSnackbar } from 'notistack';
-import CircularIndeterminate from '../CircularInterminate/CircularInterminate';
 
 import { useAuth } from '../AuthProvider/AuthProvider';
 import { useCart } from '../CartProvider/CartProvider';
@@ -103,8 +102,10 @@ export const ProductList: React.FC<ProductListProps> = ({
   };
 
   return isLoading ? (
-    <Box sx={styles.circularIndeterminateBox}>
-      <CircularIndeterminate />
+    <Box sx={styles.spinnerOuterBox}>
+      <Box sx={styles.spinnerInnerBox}>
+        <CircularProgress />
+      </Box>
     </Box>
   ) : (
     <Box sx={styles.productListBox}>

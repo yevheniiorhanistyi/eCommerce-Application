@@ -27,7 +27,7 @@ const styles = {
   },
   cardMedia: {
     maxWidth: '100%',
-    maxHeight: '100%',
+    maxHeight: '145px',
     width: 'auto',
     height: 'auto',
   },
