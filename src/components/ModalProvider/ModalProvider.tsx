@@ -22,6 +22,7 @@ import AddAddressModal from '../AddAddressModal/AddAddressModal';
 import ProductModal from '../ProductModal/ProductModal';
 import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
 import EditAddressModal from '../EditAddressModal/EditAddressModal';
+import ContributionModal from '../ContributionModal/ContributionModal';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -75,6 +76,13 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         userId: null,
         versionId: null,
       } as TEditAddressContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    contribution: {
+      isOpen: false,
+      content: {
+        sliderData: [],
+      },
       onClose: (value: TReturnClose) => {},
     },
     confirm: {
@@ -164,6 +172,11 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         content={modals.confirm.content}
         onClose={() => closeModal('confirm', false)}
         onConfirm={() => closeModal('confirm', true)}
+      />
+      <ContributionModal
+        open={modals.contribution.isOpen}
+        content={modals.contribution.content}
+        onClose={() => closeModal('contribution', true)}
       />
       {children}
     </ModalContext.Provider>
