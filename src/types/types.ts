@@ -277,11 +277,14 @@ export type LocalizedObject<T> = {
   [key in TLanguage]: T;
 };
 
-export interface INonEmptyCardAProps {
+export interface ICartItemsProps {
   cartData: Cart;
   deleteSuccess: () => void;
   quantityChangeSucces: () => void;
   addPromoCodeSuccess: () => void;
+}
+export interface INonEmptyCardAProps extends ICartItemsProps {
+  clearSucces: () => void;
 }
 
 export type MessageType = 'success' | 'error' | 'info' | 'warning';

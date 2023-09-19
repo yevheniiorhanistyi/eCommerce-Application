@@ -80,6 +80,12 @@ const styles = {
     fontSize: '16px',
     fontWeight: '700',
   },
+  clearWrap: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    paddingTop: '30px',
+  },
 };
 
 export default styles;
