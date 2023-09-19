@@ -2,6 +2,7 @@ import {
   ICustomerAddressBase,
   IGetCustomerData,
   IImage,
+  ISliderData,
 } from '../../types/types';
 
 export type TModalName =
@@ -11,8 +12,8 @@ export type TModalName =
   | 'address'
   | 'password'
   | 'editAddress'
-  | 'confirm';
-
+  | 'confirm'
+  | 'contribution';
 export interface TErrorContent {
   title: string;
   text: string;
@@ -49,6 +50,15 @@ export interface TConfirmContent {
   title: string;
   text: string;
 }
+export interface IContributionContent {
+  name?: string | null;
+  role?: string | null;
+  bio?: string | null;
+  github?: string | null;
+  linkedin?: string | null;
+  photo?: string | null;
+  sliderData: ISliderData[];
+}
 
 export type TContent = {
   error?: TErrorContent;
@@ -58,6 +68,7 @@ export type TContent = {
   password?: TPasswordContent;
   editAddress?: TEditAddressContent;
   confirm?: TConfirmContent;
+  contribution?: IContributionContent;
 }[TModalName];
 
 export type TModal = {
