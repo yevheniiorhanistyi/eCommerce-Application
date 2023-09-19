@@ -66,7 +66,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
         component={RouterLink}
         underline="none"
         color="inherit"
-        style={{ flex: '1 0 auto' }}
+        style={styles.link}
       >
         <CardActionArea>
           <Box sx={styles.innerBox}>

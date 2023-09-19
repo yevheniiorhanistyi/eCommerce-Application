@@ -6,6 +6,9 @@ const styles = {
     maxWidth: 280,
     marginBottom: '15px',
   },
+  link: {
+    flex: '1 0 auto',
+  },
   cardActions: {
     display: 'flex',
     flexDirection: 'column',
