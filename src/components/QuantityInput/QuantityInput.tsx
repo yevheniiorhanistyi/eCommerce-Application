@@ -98,6 +98,8 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
       }
     } else {
       setError(true);
+      setValueField(quantity);
+      setError(false);
     }
   };
 

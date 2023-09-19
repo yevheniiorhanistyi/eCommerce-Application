@@ -10,7 +10,8 @@ export type TModalName =
   | 'customer'
   | 'address'
   | 'password'
-  | 'editAddress';
+  | 'editAddress'
+  | 'confirm';
 
 export interface TErrorContent {
   title: string;
@@ -44,6 +45,11 @@ export interface TEditAddressContent {
   versionId: number | null;
 }
 
+export interface TConfirmContent {
+  title: string;
+  text: string;
+}
+
 export type TContent = {
   error?: TErrorContent;
   imageView?: TImageViewContent;
@@ -51,6 +57,7 @@ export type TContent = {
   address?: TAddressContent;
   password?: TPasswordContent;
   editAddress?: TEditAddressContent;
+  confirm?: TConfirmContent;
 }[TModalName];
 
 export type TModal = {
