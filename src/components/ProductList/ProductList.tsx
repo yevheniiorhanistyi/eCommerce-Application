@@ -34,7 +34,7 @@ export const ProductList: React.FC<ProductListProps> = ({
     const cart = await getCartById(id);
     if (cart) {
       setItemsInCart(cart.lineItems);
-      updateBadgeContent(cart.lineItems.length);
+      updateBadgeContent(cart.totalLineItemQuantity || 0);
     }
   };
 

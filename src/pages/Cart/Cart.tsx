@@ -46,8 +46,8 @@ const CustomerCart: React.FC = () => {
     const id = await getIdCartActive(isAuthenticated);
     const data = await getCartById(id);
     setCartData(data);
-    if (data?.lineItems) {
-      updateBadgeContent(data.lineItems.length);
+    if (data) {
+      updateBadgeContent(data.totalLineItemQuantity || 0);
     }
   };
 
