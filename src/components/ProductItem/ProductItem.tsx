@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import {
   Card,
   CardContent,
-  CardMedia,
   Typography,
   CardActions,
   CardActionArea,
@@ -17,6 +17,8 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 
 import calculatePrices from '../../utils/calculatePrices';
 import { ProductItemProps } from '../../types/productInterfaces';
+
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 import styles from './ProductItem.styles';
 
@@ -64,14 +66,15 @@ export const ProductItem: React.FC<ProductItemProps> = ({
         component={RouterLink}
         underline="none"
         color="inherit"
+        style={{ flex: '1 0 auto' }}
       >
-        <CardActionArea sx={styles.cardActionArea}>
+        <CardActionArea>
           <Box sx={styles.innerBox}>
-            <CardMedia
-              component="img"
-              image={imageUrl}
+            <LazyLoadImage
+              src={imageUrl}
               alt={name['en-US']}
-              sx={styles.cardMedia}
+              effect="opacity"
+              style={styles.cardMedia}
             />
           </Box>
           <CardContent>
