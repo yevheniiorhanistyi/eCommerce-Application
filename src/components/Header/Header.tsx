@@ -27,10 +27,10 @@ import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
 import styles from './Header.styles';
 
 const Header: React.FC = () => {
-  const pages = [{ title: 'About Us', route: '/about' }];
-
-  const { categoryData } = useCategoryData();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const { categoryData } = useCategoryData();
+  const pages = [{ title: 'About Us', route: '/about' }];
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -38,8 +38,6 @@ const Header: React.FC = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popper' : undefined;
-
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

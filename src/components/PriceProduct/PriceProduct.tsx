@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
-import styles from './PriceProduct.styles';
 import { IProductDisplayData } from '../../types/types';
+
+import styles from './PriceProduct.styles';
 
 interface PriceProductProps {
   productData: IProductDisplayData;

@@ -3,10 +3,12 @@ import { ButtonGroup, IconButton, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { enqueueSnackbar } from 'notistack';
-import styles from './QuantityInput.styles';
+
+import { useAuth } from '../AuthProvider/AuthProvider';
 import setQuantityProduct from '../../services/cart/setQuantityProduct';
 import getIdCartActive from '../../services/cart/getIdCartActive';
-import { useAuth } from '../AuthProvider/AuthProvider';
+
+import styles from './QuantityInput.styles';
 
 interface IQuantityInputProps {
   startQuantity: number;
@@ -19,13 +21,13 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
   produstId,
   onChange,
 }: IQuantityInputProps) => {
-  const minQuantity = 1;
-  const maxQuantity = Infinity;
   const [quantity, setQuantity] = useState(startQuantity);
   const [valueField, setValueField] = useState(startQuantity);
   const [error, setError] = useState(false);
   const [idCartActive, setIdCartActive] = useState('');
   const { isAuthenticated } = useAuth();
+  const minQuantity = 1;
+  const maxQuantity = Infinity;
 
   useEffect(() => {
     fetchCart();

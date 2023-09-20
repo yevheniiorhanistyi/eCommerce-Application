@@ -7,6 +7,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import RecursiveMenu from './RecursiveMenu';
 import { categoryHasChildren, getChildren } from './utils/dataProcessing';
 import languageCode from '../../utils/languageCode';
+
 import styles from './CategoryMenu.styles';
 
 type CategoryMenuProps = {

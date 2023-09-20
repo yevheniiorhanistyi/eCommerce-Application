@@ -4,13 +4,14 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
 import { ICustomerAddressBase, IGetCustomerData } from '../../types/types';
 
-import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
 import CustomerData from '../CustomerData/CustomerData';
 import AddIconButton from '../buttons/AddIconButton/AddIconButton';
 import PassworData from '../PasswordData/PasswordData';
 import setDefaultAddress from '../../services/profile/setDefaultAddress';
 import CustomerDataLoader from '../CustomerDataLoader/CustomerDataLoader';
+
+import styles from './CustomerInfo.styles';
 
 const CustomerInfo: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);

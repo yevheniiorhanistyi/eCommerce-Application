@@ -26,7 +26,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
-import styles from './SignUpForm.styles';
 import passwordValidation from '../../validation/password.validation';
 import emailValidation from '../../validation/email.validation';
 import nameValidation from '../../validation/name.validation';
@@ -46,6 +45,8 @@ import { createCustomer } from '../../services/apiIntegration/customers';
 import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
 import { authenticateClient } from '../../services/authenticate/authenticateClient';
 import { setUserData } from '../../utils/userDataUtils';
+
+import styles from './SignUpForm.styles';
 
 const SignUpForm: React.FC<ISignUpFormProps> = ({
   onSignInSuccess,

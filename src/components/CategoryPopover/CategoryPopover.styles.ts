@@ -5,7 +5,7 @@ const styles = {
     minWidth: '40px',
   },
   buttonIcon: {
-    fontSize: 40,
+    fontSize: '2.5rem',
   },
   popover: {
     maxWidth: 'calc(100% - 100px)',

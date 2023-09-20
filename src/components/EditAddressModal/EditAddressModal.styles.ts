@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   outerBox: {
     display: 'flex',
@@ -6,11 +8,11 @@ const styles = {
     mb: 12,
   },
   title: {
-    fontSize: 32,
+    fontSize: '2rem',
     fontWeight: 700,
     display: 'block',
     margin: '0 auto',
-    color: '#242424',
+    color: theme.palette.grey[900],
     lineHeight: 1.167,
     textTransform: 'uppercase',
     textAlign: 'center',

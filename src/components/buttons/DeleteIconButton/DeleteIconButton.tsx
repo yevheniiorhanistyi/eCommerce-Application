@@ -1,8 +1,9 @@
 import { Button } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import styles from './DeleteIconButton.styles';
 import { IDeleteIconButtonProps } from '../../../types/types';
 import deleteAddress from '../../../services/profile/deleteAddress';
+
+import styles from './DeleteIconButton.styles';
 
 const DeleteIconButton: React.FC<IDeleteIconButtonProps> = ({
   userId,

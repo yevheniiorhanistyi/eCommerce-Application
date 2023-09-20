@@ -1,9 +1,10 @@
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import styles from './AddIconButton.styles';
 import { useModal } from '../../ModalProvider/ModalProvider';
 import { IAddIconButtonProps } from '../../../types/types';
 import { TReturnClose } from '../../ModalProvider/type';
+
+import styles from './AddIconButton.styles';
 
 const AddIconButton: React.FC<IAddIconButtonProps> = ({
   userId,

@@ -17,7 +17,7 @@ const styles = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     fill: theme.palette.primary.main,
-    fontSize: 148,
+    fontSize: '9.25rem',
     pointerEvents: 'none',
     opacity: 0,
     transition: `opacity ${theme.transitions.duration.standard}ms`,

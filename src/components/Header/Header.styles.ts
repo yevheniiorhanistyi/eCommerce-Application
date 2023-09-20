@@ -1,9 +1,11 @@
+import theme from '../../theme';
+
 const styles = {
   typo: {
     mr: 2,
     fontWeight: 700,
     letterSpacing: '.3rem',
-    color: '#fff',
+    color: theme.palette.common.white,
     textDecoration: 'none',
   },
   typoH6: {
