@@ -23,10 +23,10 @@ const setQuantityProduct = async ({
   let actionItem = {};
   const { token } = await getActiveToken();
   const cartResult = await getCartById(cartId);
-  const cartVersion = cartResult ? cartResult.version : undefined;
+  const cartVersion = cartResult && cartResult.version;
   const lineItemResult = await getLineItemsAroundProduct(cartId, productId);
-  const lineItem = lineItemResult ? lineItemResult[0] : undefined;
-  const lineItemId = lineItemResult ? lineItemResult[0].id : undefined;
+  const lineItem = lineItemResult && lineItemResult[0];
+  const lineItemId = lineItemResult && lineItemResult[0].id;
   if (lineItem) {
     variantId = lineItem.variant.id;
   }

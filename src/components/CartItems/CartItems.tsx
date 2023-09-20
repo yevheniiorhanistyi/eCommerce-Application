@@ -31,8 +31,7 @@ const CartItems: React.FC<ICartItemsProps> = ({
       const original = lineItem.price.value;
       const discounted = lineItem.price.discounted?.value;
       const discPerQty = lineItem.discountedPricePerQuantity.length > 0
-        ? lineItem.discountedPricePerQuantity[0].discountedPrice.value
-        : undefined;
+        && lineItem.discountedPricePerQuantity[0].discountedPrice.value;
 
       const discountedPrice = discounted ? parsingPrice(discounted) : '';
       const discPriceByPromo = discPerQty ? parsingPrice(discPerQty) : '';
