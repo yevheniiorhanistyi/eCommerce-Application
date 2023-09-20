@@ -2,6 +2,7 @@ import { Breadcrumbs, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import languageCode from '../../utils/languageCode';
 import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
+
 import styles from './BreadcrumbsCategory.styles';
 
 type BreadcrumbsCategoryProps = {

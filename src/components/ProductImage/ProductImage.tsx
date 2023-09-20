@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Card, CardActionArea, CardMedia } from '@mui/material';
 import { ZoomOutMap } from '@mui/icons-material';
 import { IProductImageProps } from '../../types/types';
-import styles from './ProductImage.styles';
 import { useModal } from '../ModalProvider/ModalProvider';
+
+import styles from './ProductImage.styles';
 
 const ProductImage: React.FC<IProductImageProps> = ({
   url,

@@ -5,8 +5,9 @@ import { Cart } from '@commercetools/platform-sdk';
 import { enqueueSnackbar } from 'notistack';
 import { useModal } from '../ModalProvider/ModalProvider';
 import { TReturnClose } from '../ModalProvider/type';
-import styles from './ClearCart.styles';
 import updateCart from '../../services/cart/updateCart';
+
+import styles from './ClearCart.styles';
 
 interface IClearCartProps {
   cartData: Cart;

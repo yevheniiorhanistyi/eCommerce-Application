@@ -22,6 +22,7 @@ import notEmtyValidation from '../../validation/notEmty.validation';
 import getCountries from '../../services/apiIntegration/getCountries';
 import createPostalCodeValidationSingle from '../../validation/postalCodeSingle.validation';
 import editAddress from '../../services/profile/editAdress';
+
 import styles from './EditAddressForm.styles';
 
 interface EditAddressFormProps {
@@ -37,11 +38,11 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
   versionId,
   onEditDataSuccess,
 }: EditAddressFormProps) => {
-  const modal = useModal();
   const [isContrySelected, setIsContrySelected] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState(address.country);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
+  const modal = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
 

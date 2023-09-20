@@ -1,10 +1,11 @@
 import { Box, IconButton, Modal } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
-import styles from './ProductModal.styles';
 import { TImageViewContent } from '../ModalProvider/type';
 import ProductSlider from '../ProductSlider/ProductSlider';
 import ProductImage from '../ProductImage/ProductImage';
+
+import styles from './ProductModal.styles';
 
 type ProductModalProps = {
   open: boolean;

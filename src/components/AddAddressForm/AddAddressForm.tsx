@@ -14,7 +14,6 @@ import {
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import styles from './AddAddressForm.styles';
 import nameValidation from '../../validation/name.validation';
 import { ICountry, ICustomerAddressBase } from '../../types/types';
 
@@ -23,6 +22,8 @@ import notEmtyValidation from '../../validation/notEmty.validation';
 import getCountries from '../../services/apiIntegration/getCountries';
 import { addAddress } from '../../services/profile/addAddress';
 import createPostalCodeValidationSingle from '../../validation/postalCodeSingle.validation';
+
+import styles from './AddAddressForm.styles';
 
 interface AddAddressModalFormProps {
   userId: string;
@@ -35,11 +36,11 @@ const AddAddressForm: FC<AddAddressModalFormProps> = ({
   isBilling,
   versionId,
 }: AddAddressModalFormProps) => {
-  const modal = useModal();
   const [isContrySelected, setIsContrySelected] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('');
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
+  const modal = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
 

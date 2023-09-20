@@ -1,4 +1,3 @@
-import React from 'react';
 import { Skeleton } from '@mui/material';
 
 const CustomerDataLoader: React.FC = () => {
@@ -11,7 +10,7 @@ const CustomerDataLoader: React.FC = () => {
 
   return (
     <>
-      {customerDataFields.map((field) => (
+      {customerDataFields.map(() => (
         <>
           <Skeleton width="40%" height={40} />
           <Skeleton width="100%" height={100} />

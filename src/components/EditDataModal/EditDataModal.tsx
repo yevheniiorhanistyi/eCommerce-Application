@@ -1,8 +1,9 @@
 import { Container, Modal, Paper } from '@mui/material';
 
-import styles from './EditDataModal.styles';
 import EditDataForm from '../EditDataForm/EditDataForm';
 import { TCustomerContent } from '../ModalProvider/type';
+
+import styles from './EditDataModal.styles';
 
 interface IEditDataModalProps {
   isOpen: boolean;

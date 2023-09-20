@@ -6,9 +6,9 @@ import React, {
   useEffect,
 } from 'react';
 import { ICartContextType, ICartProviderProps } from '../../types/types';
+import { useAuth } from '../AuthProvider/AuthProvider';
 import getIdCartActive from '../../services/cart/getIdCartActive';
 import getCartById from '../../services/cart/getCartById';
-import { useAuth } from '../AuthProvider/AuthProvider';
 
 const CartContext = createContext<ICartContextType | undefined>(undefined);
 
