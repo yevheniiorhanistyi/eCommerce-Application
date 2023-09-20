@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   outerBox: {
     display: 'flex',
@@ -5,13 +7,13 @@ const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     flexGrow: 1,
-    backgroundColor: '#808080',
+    backgroundColor: theme.palette.grey[600],
   },
   title: {
-    color: '#fff',
+    color: theme.palette.common.white,
   },
   subtitle: {
-    color: '#fff',
+    color: theme.palette.common.white,
   },
   button: {
     marginTop: '15px',

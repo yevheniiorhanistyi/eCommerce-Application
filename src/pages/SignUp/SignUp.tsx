@@ -5,8 +5,6 @@ import { enqueueSnackbar } from 'notistack';
 import SignUpForm from '../../components/SingUpForm/SignUpForm';
 import { useAuth } from '../../components/AuthProvider/AuthProvider';
 
-import styles from './SignUp.style';
-
 const SignUp: React.FC = () => {
   const { isAuthenticated, setAuthentication } = useAuth();
 
@@ -25,7 +23,7 @@ const SignUp: React.FC = () => {
         <Typography variant="h3" align="center" gutterBottom>
           Create your account
         </Typography>
-        <Typography variant="body2" align="center" sx={styles.subtitle}>
+        <Typography variant="body2" align="center" sx={{ mb: '1em' }}>
           {'Already registered? '}
           <Link
             align="center"
