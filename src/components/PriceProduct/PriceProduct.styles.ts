@@ -17,12 +17,11 @@ const styles = {
   },
   priceWrap: {
     alignSelf: 'center',
-    fontSize: 28,
+    fontSize: '1.75rem',
   },
   discountPriceWrap: {
     display: 'flex',
     flexDirection: 'column',
-    // columnGap: '0.6em',
     alignItems: 'center',
     justifyContent: 'center',
   },

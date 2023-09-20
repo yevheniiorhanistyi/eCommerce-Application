@@ -7,7 +7,7 @@ const styles = {
     a: {
       color: theme.palette.primary.main,
       textDecoration: 'none',
-      fontWeight: 'bold',
+      fontWeight: 700,
     },
   },
 };

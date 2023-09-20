@@ -17,19 +17,13 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
   keyProduct,
 }: IDetailedProductProps) => {
   const [productData, setProductData] = useState<
-  IProductDisplayData | null | ''
-  >('');
+  IProductDisplayData | null | undefined
+  >();
   const [imageViewWidth, setImageViewWidth] = useState(544);
   const imageViewRef = useRef<HTMLDivElement>(null);
   const modal = useModal();
 
   useEffect(() => {
-    const handleResize = () => {
-      if (imageViewRef.current) {
-        setImageViewWidth(imageViewRef.current.offsetWidth);
-      }
-    };
-
     handleResize();
 
     window.addEventListener('resize', handleResize);
@@ -39,17 +33,23 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
   }, [productData]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (keyProduct !== undefined) {
-        const data = await getProduct(keyProduct, modal);
-        const dataDisplay = parsingData(data);
-        setProductData(dataDisplay);
-      }
-    };
-
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleResize = () => {
+    if (imageViewRef.current) {
+      setImageViewWidth(imageViewRef.current.offsetWidth);
+    }
+  };
+
+  const fetchData = async () => {
+    if (keyProduct !== undefined) {
+      const data = await getProduct(keyProduct, modal);
+      const dataDisplay = parsingData(data);
+      setProductData(dataDisplay);
+    }
+  };
 
   const renderImageView = (data: IProductDisplayData) => {
     if (data.images.length === 1) {
@@ -64,13 +64,10 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
     return <ProductSlider images={data.images} title={data.title} />;
   };
 
-  if (productData === null) {
+  if (productData === null || keyProduct === undefined) {
     return <DetailedProductNotFound />;
   }
-  if (keyProduct === undefined) {
-    return <DetailedProductNotFound />;
-  }
-  if (productData === '') {
+  if (productData === undefined) {
     return null;
   }
   return (
