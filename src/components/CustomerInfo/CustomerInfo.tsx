@@ -78,11 +78,14 @@ const CustomerInfo: React.FC = () => {
     },
   ];
 
-  return isLoading ? (
-    <Container sx={styles.innerContainer}>
-      <CustomerDataLoader />
-    </Container>
-  ) : (
+  if (isLoading) {
+    return (
+      <Container sx={styles.innerContainer}>
+        <CustomerDataLoader />
+      </Container>
+    );
+  }
+  return (
     <Container sx={styles.innerContainer}>
       <Typography sx={styles.addressesTitle} variant="h5">
         Personal data

@@ -9,12 +9,11 @@ import { useAuth } from '../../components/AuthProvider/AuthProvider';
 const Profile: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
-  return isAuthenticated ? (
+  if (!isAuthenticated) return <Navigate to="/" />;
+  return (
     <Container fixed maxWidth="md" sx={styles.innerBox}>
       <CustomerInfo />
     </Container>
-  ) : (
-    <Navigate to="/" />
   );
 };
 
