@@ -33,9 +33,7 @@ const PromoSlider = () => {
           <Box sx={styles.imgWrapper} key={item.alt}>
             <LazyLoadImage
               alt={item.alt}
-              height={360}
               src={item.imgSrc}
-              width={1090}
               effect="opacity"
               style={styles.img}
             />

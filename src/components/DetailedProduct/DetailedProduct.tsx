@@ -3,7 +3,6 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useModal } from '../ModalProvider/ModalProvider';
 import DetailedProductNotFound from './DetailedProductNotFound';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
-import styles from './DetailedProduct.styles';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductSlider from '../ProductSlider/ProductSlider';
 import PriceProduct from '../PriceProduct/PriceProduct';
@@ -11,6 +10,8 @@ import getProduct from '../../services/apiIntegration/product';
 import { IDetailedProductProps, IProductDisplayData } from '../../types/types';
 import parsingData from './services/parsingData';
 import AddToCartButton from '../buttons/AddToCartButton/AddToCartButton';
+
+import styles from './DetailedProduct.styles';
 
 const DetailedProduct: React.FC<IDetailedProductProps> = ({
   keyProduct,

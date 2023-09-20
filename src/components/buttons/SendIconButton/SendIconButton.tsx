@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { IEditIconButtonProps } from '../../../types/types';
+
 import styles from './SendIconButton.styles';
 
 interface ISendIconButtonProps {

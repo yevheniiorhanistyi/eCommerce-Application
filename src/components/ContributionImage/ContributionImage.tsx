@@ -1,5 +1,6 @@
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { IContributionImageProps } from '../../types/types';
+
 import styles from './ContributionImage.styles';
 
 const ContributionImage: React.FC<IContributionImageProps> = ({

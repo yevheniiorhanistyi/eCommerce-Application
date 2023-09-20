@@ -36,11 +36,11 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
   versionId,
   onEditDataSuccess,
 }: EditAddressFormProps) => {
-  const modal = useModal();
   const [isContrySelected, setIsContrySelected] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState(address.country);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
+  const modal = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
 

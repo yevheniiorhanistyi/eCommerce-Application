@@ -1,6 +1,5 @@
 import { Box, Link, Typography } from '@mui/material';
 
-import styles from './AboutUs.styles';
 import TeamMember from '../../components/TeamMember/TeamMember';
 import { ITeamMember } from '../../types/types';
 
@@ -10,6 +9,8 @@ import styleAlexander from '../../assets/styleAlexander.png';
 import grammarAlexander from '../../assets/grammarAlexander.png';
 import clearCodeKonstantin from '../../assets/clearCodeKonstantin.png';
 import themeKonstantin from '../../assets/themeKonstantin.png';
+
+import styles from './AboutUs.styles';
 
 const AboutUs: React.FC = () => {
   const teamMembers: ITeamMember[] = [
