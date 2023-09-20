@@ -23,16 +23,16 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottom: '1px solid #ebedf0',
+    borderBottom: `1px solid ${theme.palette.grey[200]}`,
     paddingBottom: '10px',
   },
   summaryTitle: {
     fontSize: '1.4rem',
-    fontWeight: '700',
+    fontWeight: 700,
   },
   summaryValue: {
     fontSize: '20px',
-    fontWeight: '700',
+    fontWeight: 700,
   },
   rightSide: {
     width: '55%',
@@ -63,7 +63,7 @@ const styles = {
   },
   itemsCountValue: {
     fontSize: '16px',
-    fontWeight: '700',
+    fontWeight: 700,
   },
   discountWrapper: {
     display: 'flex',
@@ -78,7 +78,7 @@ const styles = {
   discounValue: {
     color: theme.palette.error.light,
     fontSize: '16px',
-    fontWeight: '700',
+    fontWeight: 700,
   },
   clearWrap: {
     display: 'flex',

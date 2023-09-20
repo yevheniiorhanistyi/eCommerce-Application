@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   outerBox: {
     display: 'flex',
@@ -29,7 +31,7 @@ const styles = {
     },
   },
   rsschoolLogo: {
-    transition: '.3s ease',
+    transition: `${theme.transitions.duration.standard}ms ease`,
 
     '&:hover': {
       filter: 'invert(.2)',

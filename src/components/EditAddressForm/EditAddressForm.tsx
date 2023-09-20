@@ -22,7 +22,6 @@ import notEmtyValidation from '../../validation/notEmty.validation';
 import getCountries from '../../services/apiIntegration/getCountries';
 import createPostalCodeValidationSingle from '../../validation/postalCodeSingle.validation';
 import editAddress from '../../services/profile/editAdress';
-import styles from './EditAddressForm.styles';
 
 interface EditAddressFormProps {
   address: ICustomerAddressBase;
@@ -130,7 +129,7 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
 
   return (
     <form onSubmit={formik.handleSubmit} noValidate>
-      <Grid container spacing={2} sx={styles.contanierGrid}>
+      <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth

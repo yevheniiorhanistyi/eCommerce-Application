@@ -8,7 +8,7 @@ const styles = {
   },
   list: {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: '360px',
     bgcolor: 'background.paper',
   },
   icon: {
@@ -17,13 +17,13 @@ const styles = {
   },
   typographyUserData: {
     fontSize: '0.875rem',
-    fontWeight: '600',
+    fontWeight: 600,
   },
   typographyUserMail: {
     fontSize: '0.875rem',
-    fontWeight: '400',
-    lineHeight: '1',
-    color: '#637381',
+    fontWeight: 400,
+    lineHeight: 1,
+    color: theme.palette.info.dark,
     mb: '10px',
   },
   button: {
