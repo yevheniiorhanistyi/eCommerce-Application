@@ -1,18 +1,18 @@
-import { FC } from 'react';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 
 import { useModal } from '../ModalProvider/ModalProvider';
 import { IGetCustomerData } from '../../types/types';
-import styles from './PasswordData.styles';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
 import { TReturnClose } from '../ModalProvider/type';
+
+import styles from './PasswordData.styles';
 
 interface IPassworDataProps {
   customer: IGetCustomerData;
   addSuccess: () => void;
 }
 
-const PassworData: FC<IPassworDataProps> = ({
+const PassworData: React.FC<IPassworDataProps> = ({
   customer,
   addSuccess,
 }: IPassworDataProps) => {

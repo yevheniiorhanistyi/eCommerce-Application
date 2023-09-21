@@ -26,7 +26,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
-import styles from './SignUpForm.styles';
 import passwordValidation from '../../validation/password.validation';
 import emailValidation from '../../validation/email.validation';
 import nameValidation from '../../validation/name.validation';
@@ -45,11 +44,13 @@ import {
 import { createCustomer } from '../../services/apiIntegration/customers';
 import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
 import { authenticateClient } from '../../services/authenticate/authenticateClient';
+import { setUserData } from '../../utils/userDataUtils';
+
+import styles from './SignUpForm.styles';
 
 const SignUpForm: React.FC<ISignUpFormProps> = ({
   onSignInSuccess,
 }: ISignUpFormProps) => {
-  const modal = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isContrySelected, setIsContrySelected] = useState({
@@ -65,6 +66,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
   const [isVisibleAddressBilling, setIsVisibleAddressBilling] = useState(false);
 
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
+  const modal = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -83,7 +85,6 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addressValidation = (
@@ -160,6 +161,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
             password: customerData.password,
           });
           onSignInSuccess();
+          const { firstName, lastName, email } = customerData;
+          setUserData({ firstName, lastName, email });
         } catch (error) {
           modal.openModal('error', false);
           modal.setContent('error', {

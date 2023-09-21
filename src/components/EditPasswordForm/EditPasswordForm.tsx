@@ -12,14 +12,14 @@ import Visibility from '@mui/icons-material/Visibility';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
 import passwordValidation from '../../validation/password.validation';
 import confirmFiled from '../../validation/confirmFiled';
-import styles from './EditPasswordForm.styles';
 import { IGetCustomerData } from '../../types/types';
 import changePassword from '../../services/profile/changePassword';
 import { authenticateClient } from '../../services/authenticate/authenticateClient';
+
+import styles from './EditPasswordForm.styles';
 
 type EditPasswordFormProps = {
   onEditDataSuccess: () => void;
@@ -35,10 +35,10 @@ const EditPasswordForm: FC<EditPasswordFormProps> = ({
   const [isCurrentPasswordValid, setIsCurrentPasswordValid] = useState(false);
   const [isNewPasswordValid, setIsNewPasswordValid] = useState(false);
 
-  const modal = useModal();
-
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
   const newPasswordRef = useRef<HTMLInputElement | null>(null);
+
+  const modal = useModal();
 
   useEffect(() => {
     if (isNewPasswordValid && confirmPasswordRef.current) {

@@ -5,7 +5,7 @@ const styles = {
   },
   contentBox: {
     m: 1,
-    minWidth: 120,
+    minWidth: '120px',
     padding: '10px 5px 0',
     textAlign: 'center',
   },

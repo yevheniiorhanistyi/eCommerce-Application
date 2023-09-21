@@ -17,13 +17,11 @@ import { useSnackbar } from 'notistack';
 import nameValidation from '../../validation/name.validation';
 import { ICountry, ICustomerAddressBase } from '../../types/types';
 
-// eslint-disable-next-line import/no-cycle
 import { useModal } from '../ModalProvider/ModalProvider';
 import notEmtyValidation from '../../validation/notEmty.validation';
 import getCountries from '../../services/apiIntegration/getCountries';
 import createPostalCodeValidationSingle from '../../validation/postalCodeSingle.validation';
 import editAddress from '../../services/profile/editAdress';
-import styles from './EditAddressForm.styles';
 
 interface EditAddressFormProps {
   address: ICustomerAddressBase;
@@ -38,11 +36,11 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
   versionId,
   onEditDataSuccess,
 }: EditAddressFormProps) => {
-  const modal = useModal();
   const [isContrySelected, setIsContrySelected] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState(address.country);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [isSubmitting, setSubmitting] = useState(false);
+  const modal = useModal();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -55,7 +53,6 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addressValidation = (countryField: string, validateFields = true) => Yup.object().shape({
@@ -131,7 +128,7 @@ const EditAddressForm: FC<EditAddressFormProps> = ({
 
   return (
     <form onSubmit={formik.handleSubmit} noValidate>
-      <Grid container spacing={2} sx={styles.contanierGrid}>
+      <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid item sm={12} xs={12}>
           <TextField
             fullWidth

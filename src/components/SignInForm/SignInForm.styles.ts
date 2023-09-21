@@ -7,8 +7,8 @@ const styles = {
     mb: '20px',
   },
   helperText: {
-    fontSize: '14px',
-    fontWeight: '400',
+    fontSize: '0.875rem',
+    fontWeight: 400,
     textTransform: 'initial',
   },
 };

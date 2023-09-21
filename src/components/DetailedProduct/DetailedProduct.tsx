@@ -1,34 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Box, Grid, Typography } from '@mui/material';
 import { useModal } from '../ModalProvider/ModalProvider';
 import DetailedProductNotFound from './DetailedProductNotFound';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
-import styles from './DetailedProduct.styles';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductSlider from '../ProductSlider/ProductSlider';
 import PriceProduct from '../PriceProduct/PriceProduct';
 import getProduct from '../../services/apiIntegration/product';
 import { IDetailedProductProps, IProductDisplayData } from '../../types/types';
 import parsingData from './services/parsingData';
+import AddToCartButton from '../buttons/AddToCartButton/AddToCartButton';
+
+import styles from './DetailedProduct.styles';
 
 const DetailedProduct: React.FC<IDetailedProductProps> = ({
   keyProduct,
 }: IDetailedProductProps) => {
-  const modal = useModal();
   const [productData, setProductData] = useState<
-  IProductDisplayData | null | ''
-  >('');
-  const imageViewRef = useRef<HTMLDivElement>(null);
+  IProductDisplayData | null | undefined
+  >();
   const [imageViewWidth, setImageViewWidth] = useState(544);
+  const imageViewRef = useRef<HTMLDivElement>(null);
+  const modal = useModal();
 
   useEffect(() => {
-    const handleResize = () => {
-      if (imageViewRef.current) {
-        setImageViewWidth(imageViewRef.current.offsetWidth);
-      }
-    };
-
     handleResize();
 
     window.addEventListener('resize', handleResize);
@@ -38,17 +33,22 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
   }, [productData]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (keyProduct !== undefined) {
-        const data = await getProduct(keyProduct, modal);
-        const dataDisplay = parsingData(data);
-        setProductData(dataDisplay);
-      }
-    };
-
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleResize = () => {
+    if (imageViewRef.current) {
+      setImageViewWidth(imageViewRef.current.offsetWidth);
+    }
+  };
+
+  const fetchData = async () => {
+    if (keyProduct !== undefined) {
+      const data = await getProduct(keyProduct, modal);
+      const dataDisplay = parsingData(data);
+      setProductData(dataDisplay);
+    }
+  };
 
   const renderImageView = (data: IProductDisplayData) => {
     if (data.images.length === 1) {
@@ -63,13 +63,10 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
     return <ProductSlider images={data.images} title={data.title} />;
   };
 
-  if (productData === null) {
+  if (productData === null || keyProduct === undefined) {
     return <DetailedProductNotFound />;
   }
-  if (keyProduct === undefined) {
-    return <DetailedProductNotFound />;
-  }
-  if (productData === '') {
+  if (productData === undefined) {
     return null;
   }
   return (
@@ -91,13 +88,7 @@ const DetailedProduct: React.FC<IDetailedProductProps> = ({
         <Box sx={styles.tittleBlock}>
           <Typography variant="h2">{productData.title}</Typography>
           <PriceProduct productData={productData} />
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddShoppingCartIcon />}
-          >
-            Buy
-          </Button>
+          <AddToCartButton product={productData} />
         </Box>
       </Grid>
       <Grid item sm={12} xs={12}>

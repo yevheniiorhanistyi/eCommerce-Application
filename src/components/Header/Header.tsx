@@ -16,25 +16,21 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import StoreIcon from '@mui/icons-material/Store';
 
-import SignInButton from '../buttons/SignInButton/SignInButton';
-import SignUpButton from '../buttons/SignUpButton/SignUpButton';
-import SignOutButton from '../buttons/SignOutButton/SignOutButton';
-import ProfileButton from '../buttons/ProfileButton/ProfileButton';
+import ProfilePopover from '../ProfilePopover/ProfilePopover';
+import CartButton from '../buttons/CartButton/CartButton';
+import NotificationsButton from '../buttons/NotificationsButton/NotificationsButton';
 
 import CategoryMenu from '../CategoryMenu/CategoryMenu';
-import { useAuth } from '../AuthProvider/AuthProvider';
 
-import { removeTokenFromLocalStorage } from '../../utils/authUtils';
-
-import styles from './Header.styles';
 import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
 
-const Header: React.FC = () => {
-  const { isAuthenticated, setAuthentication } = useAuth();
-  const pages = [{ title: 'About Us', route: '/' }];
+import styles from './Header.styles';
 
-  const { categoryData } = useCategoryData();
+const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const { categoryData } = useCategoryData();
+  const pages = [{ title: 'About Us', route: '/about' }];
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -42,13 +38,6 @@ const Header: React.FC = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popper' : undefined;
-
-  const handleSignOut = () => {
-    setAuthentication(false);
-    removeTokenFromLocalStorage();
-  };
-
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -136,18 +125,10 @@ const Header: React.FC = () => {
             ))}
           </Box>
 
-          <Box sx={styles.menuBox}>
-            {isAuthenticated ? (
-              <>
-                <ProfileButton />
-                <SignOutButton onSignOutSuccess={handleSignOut} />
-              </>
-            ) : (
-              <>
-                <SignInButton />
-                <SignUpButton />
-              </>
-            )}
+          <Box display="flex" alignItems="center">
+            <NotificationsButton />
+            <CartButton />
+            <ProfilePopover />
           </Box>
         </Toolbar>
       </Container>

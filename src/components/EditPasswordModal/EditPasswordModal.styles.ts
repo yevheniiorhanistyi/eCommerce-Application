@@ -1,15 +1,6 @@
+import theme from '../../theme';
+
 const styles = {
-  // modal: {
-  //   position: 'absolute',
-  //   top: '50%',
-  //   left: '50%',
-  //   transform: 'translate(-50%, -50%)',
-  //   width: 400,
-  //   bgcolor: 'background.paper',
-  //   border: '2px solid #000',
-  //   boxShadow: 24,
-  //   p: 4,
-  // },
   outerBox: {
     display: 'flex',
     flexDirection: 'column',
@@ -17,11 +8,11 @@ const styles = {
     mb: 12,
   },
   title: {
-    fontSize: 32,
+    fontSize: '2rem',
     fontWeight: 700,
     display: 'block',
     margin: '0 auto',
-    color: '#242424',
+    color: theme.palette.grey[900],
     lineHeight: 1.167,
     textTransform: 'uppercase',
     textAlign: 'center',

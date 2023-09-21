@@ -4,23 +4,24 @@ import {
   CustomerPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 import axios from 'axios';
-import { ModalContextType } from '../../components/ModalProvider/type';
 import { apiRoot } from './ClientBuilder';
+import getActiveToken from '../authenticate/getActiveToken';
 import constants from './constants';
+import formatDateToYYYYMMDD from '../../utils/formatDate';
+
+import { ModalContextType } from '../../components/ModalProvider/type';
 import {
   ICustomer,
   IGetCustomerData,
   ICustomerAddressBase,
 } from '../../types/types';
-import { formatDateToYYYYMMDD } from '../../utils/formatDate';
-import { getTokenFromLocalStorage } from '../../utils/authUtils';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const getCustomerData = async (): Promise<IGetCustomerData> => {
   try {
-    const { token } = getTokenFromLocalStorage();
+    const { token } = await getActiveToken();
     const response = await axios.get(`${region}/${projectKey}/me`, {
       headers: {
         Authorization: `Bearer ${token}`,

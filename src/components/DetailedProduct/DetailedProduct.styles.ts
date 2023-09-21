@@ -1,3 +1,5 @@
+import theme from '../../theme';
+
 const styles = {
   image: {
     display: 'block',
@@ -12,7 +14,7 @@ const styles = {
   },
   sliderView: {
     p: 0.5,
-    border: '1px solid rgba(0, 0, 0, 0.12)',
+    border: `1px solid ${theme.palette.divider}`,
   },
   tittleBlock: {
     display: 'flex',

@@ -1,7 +1,5 @@
 import { Box, List, ListItem, ListItemText } from '@mui/material';
-import { FC } from 'react';
 
-import styles from './CustomerAddress.styles';
 import { ICustomerAddressProps } from '../../types/types';
 import DeleteIconButton from '../buttons/DeleteIconButton/DeleteIconButton';
 import EditIconButton from '../buttons/EditIconButton/EditIconButton';
@@ -9,7 +7,9 @@ import { useModal } from '../ModalProvider/ModalProvider';
 import { TReturnClose } from '../ModalProvider/type';
 import SetDefaultButton from '../buttons/SetDefaultButton/SetDefaultButton';
 
-const CustomerAddress: FC<ICustomerAddressProps> = ({
+import styles from './CustomerAddress.styles';
+
+const CustomerAddress: React.FC<ICustomerAddressProps> = ({
   addresses,
   defaultAddressId,
   userId,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getTokenFromLocalStorage } from '../../utils/authUtils';
+import getActiveToken from '../authenticate/getActiveToken';
 
 const projectKey = import.meta.env.VITE_REACT_APP_PROJECT_KEY;
 const region = import.meta.env.VITE_REACT_APP_API_URL;
@@ -22,7 +22,7 @@ const editCustomerData = async ({
   userId,
 }: IEditCustomerDataProps) => {
   try {
-    const { token } = getTokenFromLocalStorage();
+    const { token } = await getActiveToken();
     const response = await axios.post(
       `${region}/${projectKey}/customers/${userId}`,
       JSON.stringify({

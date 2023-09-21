@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Typography, Container, Box } from '@mui/material';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { getCustomerData } from '../../services/apiIntegration/customers';
 import { ICustomerAddressBase, IGetCustomerData } from '../../types/types';
 
-import styles from './CustomerInfo.styles';
 import CustomerAddress from '../CustomerAddress/CustomerAddress';
 import CustomerData from '../CustomerData/CustomerData';
 import AddIconButton from '../buttons/AddIconButton/AddIconButton';
 import PassworData from '../PasswordData/PasswordData';
 import setDefaultAddress from '../../services/profile/setDefaultAddress';
+import CustomerDataLoader from '../CustomerDataLoader/CustomerDataLoader';
+
+import styles from './CustomerInfo.styles';
 
 const CustomerInfo: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [customerData, setCustomerData] = useState<IGetCustomerData>();
   const [shippingAddresses, setShippingAddresses] = useState<
   ICustomerAddressBase[]
@@ -40,17 +43,10 @@ const CustomerInfo: React.FC = () => {
     });
     setShippingAddresses(customerShippingAddresses);
     setBillingAddresses(customerBillingAddresses);
+    setIsLoading(false);
   };
 
-  const onDeleteSuccess = () => {
-    fetchCustomerData();
-  };
-
-  const onAddSuccess = () => {
-    fetchCustomerData();
-  };
-
-  const onEditSuccess = () => {
+  const onActionSuccess = () => {
     fetchCustomerData();
   };
 
@@ -83,6 +79,13 @@ const CustomerInfo: React.FC = () => {
     },
   ];
 
+  if (isLoading) {
+    return (
+      <Container sx={styles.innerContainer}>
+        <CustomerDataLoader />
+      </Container>
+    );
+  }
   return (
     <Container sx={styles.innerContainer}>
       <Typography sx={styles.addressesTitle} variant="h5">
@@ -92,14 +95,14 @@ const CustomerInfo: React.FC = () => {
         customer={customerData as IGetCustomerData}
         logoIcon={<PermIdentityIcon />}
         fields={primaryCustomerFields}
-        addSuccess={onEditSuccess}
+        addSuccess={onActionSuccess}
       />
       <Typography sx={styles.addressesTitle} variant="h5">
         Password
       </Typography>
       <PassworData
         customer={customerData as IGetCustomerData}
-        addSuccess={onEditSuccess}
+        addSuccess={onActionSuccess}
       />
       <Box sx={styles.flexBox}>
         <Typography sx={styles.addressesTitle} variant="h5">
@@ -109,7 +112,7 @@ const CustomerInfo: React.FC = () => {
           userId={customerData?.id as string}
           isBilling={false}
           versionId={customerData?.version as number}
-          addSuccess={onAddSuccess}
+          addSuccess={onActionSuccess}
         />
       </Box>
       <CustomerAddress
@@ -117,8 +120,8 @@ const CustomerInfo: React.FC = () => {
         defaultAddressId={customerData?.defaultShippingAddressId}
         versionId={customerData?.version as number}
         userId={customerData?.id as string}
-        deleteSuccess={onDeleteSuccess}
-        editSuccess={onEditSuccess}
+        deleteSuccess={onActionSuccess}
+        editSuccess={onActionSuccess}
         customer={customerData as IGetCustomerData}
         setAsDefault={setAsDefault}
         isBillingAddress={false}
@@ -131,7 +134,7 @@ const CustomerInfo: React.FC = () => {
           userId={customerData?.id as string}
           isBilling
           versionId={customerData?.version as number}
-          addSuccess={onAddSuccess}
+          addSuccess={onActionSuccess}
         />
       </Box>
       <CustomerAddress
@@ -139,8 +142,8 @@ const CustomerInfo: React.FC = () => {
         defaultAddressId={customerData?.defaultBillingAddressId}
         versionId={customerData?.version as number}
         userId={customerData?.id as string}
-        deleteSuccess={onDeleteSuccess}
-        editSuccess={onEditSuccess}
+        deleteSuccess={onActionSuccess}
+        editSuccess={onActionSuccess}
         customer={customerData as IGetCustomerData}
         setAsDefault={setAsDefault}
         isBillingAddress

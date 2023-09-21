@@ -1,10 +1,10 @@
 import { Container, Modal, Paper } from '@mui/material';
 
-import styles from './EditAddressModal.styles';
-// eslint-disable-next-line import/no-cycle
 import EditAddressForm from '../EditAddressForm/EditAddressForm';
 import { TEditAddressContent } from '../ModalProvider/type';
 import { ICustomerAddressBase } from '../../types/types';
+
+import styles from './EditAddressModal.styles';
 
 type EditAddressModalProps = {
   isOpen: boolean;

@@ -1,9 +1,9 @@
 import { Container, Modal, Paper } from '@mui/material';
 
-import styles from './AddAddressModal.styles';
-// eslint-disable-next-line import/no-cycle
 import AddAddressForm from '../AddAddressForm/AddAddressForm';
 import { TAddressContent } from '../ModalProvider/type';
+
+import styles from './AddAddressModal.styles';
 
 interface IAddAddressModalProps {
   isOpen: boolean;
