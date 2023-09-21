@@ -1,6 +1,11 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  palette: {
+    accent: {
+      main: '#d32f2f',
+    },
+  },
   typography: {
     fontFamily: [
       'Urbanist',
@@ -14,6 +19,12 @@ const theme = createTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
+    h2: {
+      fontSize: 28,
+      fontWeight: 400,
+      textAlign: 'center',
+      marginBottom: '0.35em',
+    },
     h3: {
       fontSize: 32,
       fontWeight: 700,
@@ -23,6 +34,12 @@ const theme = createTheme({
       lineHeight: 1.167,
       textTransform: 'uppercase',
       textAlign: 'center',
+      marginBottom: '0.35em',
+    },
+    caption: {
+      fontSize: 'inherit',
+      fontWeight: 400,
+      lineHeight: 1.167,
       marginBottom: '0.35em',
     },
   },

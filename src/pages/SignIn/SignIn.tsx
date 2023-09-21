@@ -9,17 +9,17 @@ import { useAuth } from '../../components/AuthProvider/AuthProvider';
 import styles from './SignIn.styles';
 
 const SignIn: React.FC = () => {
-  const { isSignedIn, setIsSignedIn } = useAuth();
+  const { isAuthenticated, setAuthentication } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSignIn = () => {
-    setIsSignedIn(true);
+    setAuthentication(true);
     enqueueSnackbar('You have been successfully signed in!', {
       variant: 'success',
     });
   };
 
-  return isSignedIn ? (
+  return isAuthenticated ? (
     <Navigate to="/" />
   ) : (
     <Container maxWidth="sm" sx={styles.outerBox}>

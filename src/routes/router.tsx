@@ -5,6 +5,9 @@ import SignIn from '../pages/SignIn/SignIn';
 import SignUp from '../pages/SignUp/SignUp';
 import NotFound404 from '../pages/NotFound404/NotFound404';
 import PrimaryLayout from '../layouts/PrimaryLayout';
+import DetailedProductPage from '../pages/DetailedProductPage/DetailedProductPage';
+import Catalog from '../pages/Catalog/Catalog';
+import Profile from '../pages/Profile/Profile';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +26,23 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: '*',
+        path: '/product/:key',
+        element: <DetailedProductPage />,
+      },
+      {
+        path: '/catalog',
+        element: <Catalog />,
+      },
+      {
+        path: '/category/:key',
+        element: <Catalog />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
+      },
+      {
+        path: '/*',
         element: <NotFound404 />,
       },
     ],

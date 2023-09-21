@@ -16,26 +16,23 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Formik, Form } from 'formik';
 import SignInSchema from './SignInSchema';
 
-import { authenticateClient } from '../../services/authenticateClient';
+import { authenticateClient } from '../../services/authenticate/authenticateClient';
 import { useModal } from '../ModalProvider/ModalProvider';
 
 import styles from './SignInForm.styles';
+import { ISignInFormProps } from '../../types/types';
 
-interface SignInFormProps {
-  onSignInSuccess: () => void;
-}
-
-const SignInForm: React.FC<SignInFormProps> = ({
+const SignInForm: React.FC<ISignInFormProps> = ({
   onSignInSuccess,
-}: SignInFormProps) => {
+}: ISignInFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const { openModal, setContent } = useModal();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const showErrorModal = (error: Error) => {
-    setContent({ title: 'Oops 😕', text: error.message });
-    openModal();
+    setContent('error', { title: 'Oops 😕', text: error.message });
+    openModal('error', false);
   };
 
   const handleMouseDownPassword = (
@@ -88,7 +85,9 @@ const SignInForm: React.FC<SignInFormProps> = ({
                 error={touched.email && Boolean(errors.email)}
               />
               {touched.email && errors.email ? (
-                <FormHelperText error>{errors.email}</FormHelperText>
+                <FormHelperText sx={styles.helperText} error>
+                  {errors.email}
+                </FormHelperText>
               ) : null}
             </FormControl>
             <FormControl fullWidth variant="outlined" required>
@@ -121,7 +120,9 @@ const SignInForm: React.FC<SignInFormProps> = ({
                 label="Password"
               />
               {touched.password && errors.password ? (
-                <FormHelperText error>{errors.password}</FormHelperText>
+                <FormHelperText sx={styles.helperText} error>
+                  {errors.password}
+                </FormHelperText>
               ) : null}
             </FormControl>
           </Box>

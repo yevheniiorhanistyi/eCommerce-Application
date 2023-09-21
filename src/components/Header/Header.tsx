@@ -1,39 +1,56 @@
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import { useState, MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
+
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  MenuItem,
+  Popper,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
 import StoreIcon from '@mui/icons-material/Store';
 
-import { Link } from 'react-router-dom';
-import styles from './Header.styles';
 import SignInButton from '../buttons/SignInButton/SignInButton';
 import SignUpButton from '../buttons/SignUpButton/SignUpButton';
 import SignOutButton from '../buttons/SignOutButton/SignOutButton';
+import ProfileButton from '../buttons/ProfileButton/ProfileButton';
+
+import CategoryMenu from '../CategoryMenu/CategoryMenu';
 import { useAuth } from '../AuthProvider/AuthProvider';
+
 import { removeTokenFromLocalStorage } from '../../utils/authUtils';
 
-const pages = ['Catalog', 'About Us'];
+import styles from './Header.styles';
+import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
 
 const Header: React.FC = () => {
-  const { isSignedIn, setIsSignedIn } = useAuth();
+  const { isAuthenticated, setAuthentication } = useAuth();
+  const pages = [{ title: 'About Us', route: '/' }];
+
+  const { categoryData } = useCategoryData();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
 
   const handleSignOut = () => {
-    setIsSignedIn(false);
+    setAuthentication(false);
     removeTokenFromLocalStorage();
   };
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
@@ -79,9 +96,12 @@ const Header: React.FC = () => {
               onClose={handleCloseNavMenu}
               sx={styles.menubar}
             >
+              <CategoryMenu categoryData={categoryData} />
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                  <Link style={{ textDecoration: 'none' }} to={page.route}>
+                    <Typography textAlign="center">{page.title}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -93,21 +113,33 @@ const Header: React.FC = () => {
             </Typography>
           </Link>
           <Box sx={styles.navMenuBox}>
+            <Button
+              aria-describedby={id}
+              onClick={handleClick}
+              sx={styles.closeNavMenu}
+            >
+              CATALOG
+            </Button>
+            <Popper id={id} open={open} anchorEl={anchorEl} sx={styles.popper}>
+              <CategoryMenu categoryData={categoryData} />
+            </Popper>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.title}
+                component={Link}
+                to={page.route}
                 onClick={handleCloseNavMenu}
                 sx={styles.closeNavMenu}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
 
           <Box sx={styles.menuBox}>
-            {isSignedIn ? (
+            {isAuthenticated ? (
               <>
-                <SignInButton />
+                <ProfileButton />
                 <SignOutButton onSignOutSuccess={handleSignOut} />
               </>
             ) : (

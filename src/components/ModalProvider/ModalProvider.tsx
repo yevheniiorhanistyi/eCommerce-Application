@@ -1,41 +1,160 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
-import { ModalContentType, ModalContextType } from './type';
-import ErrorModal from '../ErrorModal/ErrorModal';
+import { createContext, useContext, useMemo, useState } from 'react';
+import {
+  ModalContextType,
+  ModalFunctionWithContent,
+  TAddressContent,
+  TContent,
+  TCustomerContent,
+  TEditAddressContent,
+  TErrorContent,
+  TImageViewContent,
+  TModalFunction,
+  TModalName,
+  TPasswordContent,
+  TReturnClose,
+} from './type';
 
-interface ModalProviderProps {
-  children: ReactNode;
-}
+import { IModalProviderProps } from '../../types/types';
+import ErrorModal from '../ErrorModal/ErrorModal';
+// eslint-disable-next-line import/no-cycle
+import EditDataModal from '../EditDataModal/EditDataModal';
+// eslint-disable-next-line import/no-cycle
+import AddAddressModal from '../AddAddressModal/AddAddressModal';
+// eslint-disable-next-line import/no-cycle
+import ProductModal from '../ProductModal/ProductModal';
+// eslint-disable-next-line import/no-cycle
+import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
+// eslint-disable-next-line import/no-cycle
+import EditAddressModal from '../EditAddressModal/EditAddressModal';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-export const ModalProvider = ({ children }: ModalProviderProps) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState({
-    title: '',
-    text: '',
+export const ModalProvider = ({ children }: IModalProviderProps) => {
+  const [modals, setModals] = useState({
+    error: {
+      isOpen: false,
+      content: {
+        title: '',
+        text: '',
+      } as TErrorContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    imageView: {
+      isOpen: false,
+      content: {
+        images: [],
+        title: '',
+        index: 0,
+      } as TImageViewContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    customer: {
+      isOpen: false,
+      content: {
+        customer: null,
+      } as TCustomerContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    address: {
+      isOpen: false,
+      content: {
+        userId: '',
+        isBilling: false,
+        versionId: 0,
+      } as TAddressContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    password: {
+      isOpen: false,
+      content: {
+        customer: null,
+      } as TPasswordContent,
+      onClose: (value: TReturnClose) => {},
+    },
+    editAddress: {
+      isOpen: false,
+      content: {
+        address: null,
+        userId: null,
+        versionId: null,
+      } as TEditAddressContent,
+      onClose: (value: TReturnClose) => {},
+    },
   });
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
-  const setContent = (content: ModalContentType) => setModalContent(content);
+  const openModal: TModalFunction = (modalName: TModalName) => {
+    setModals((prevModals) => ({
+      ...prevModals,
+      [modalName]: { ...prevModals[modalName], isOpen: true },
+    }));
+  };
+
+  const closeModal: TModalFunction = (
+    modalName: TModalName,
+    value: TReturnClose,
+  ) => {
+    if (modalName) {
+      modals[modalName].onClose(value);
+    }
+    setModals((prevModals) => ({
+      ...prevModals,
+      [modalName]: { ...prevModals[modalName], isOpen: false },
+    }));
+  };
+
+  const setContent: ModalFunctionWithContent = (
+    modalName: TModalName,
+    content: TContent,
+    onClose?: (value: TReturnClose) => void,
+  ) => {
+    setModals((prevModals) => ({
+      ...prevModals,
+      [modalName]: { ...prevModals[modalName], content, onClose },
+    }));
+  };
 
   const contextValue: ModalContextType = useMemo(
     () => ({
-      modalOpen,
-      modalContent,
+      modals,
       openModal,
       closeModal,
       setContent,
     }),
-    [modalOpen, modalContent],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [modals],
   );
 
   return (
     <ModalContext.Provider value={contextValue}>
+      <EditAddressModal
+        isOpen={modals.editAddress.isOpen}
+        content={modals.editAddress.content}
+        onClose={() => closeModal('editAddress', true)}
+      />
+      <EditDataModal
+        isOpen={modals.customer.isOpen}
+        content={modals.customer.content}
+        onClose={() => closeModal('customer', true)}
+      />
+      <AddAddressModal
+        isOpen={modals.address.isOpen}
+        content={modals.address.content}
+        onClose={() => closeModal('address', true)}
+      />
+      <EditPasswordModal
+        isOpen={modals.password.isOpen}
+        content={modals.password.content}
+        onClose={() => closeModal('password', true)}
+      />
       <ErrorModal
-        open={modalOpen}
-        content={modalContent}
-        onClose={() => setModalOpen(false)}
+        open={modals.error.isOpen}
+        content={modals.error.content}
+        onClose={() => closeModal('error', true)}
+      />
+      <ProductModal
+        open={modals.imageView.isOpen}
+        content={modals.imageView.content}
+        onClose={() => closeModal('imageView', true)}
       />
       {children}
     </ModalContext.Provider>
