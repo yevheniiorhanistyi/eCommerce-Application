@@ -30,7 +30,6 @@ export const CategoryDataProvider = ({ children }: ICategoryDataProvider) => {
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const contextValue = useMemo(

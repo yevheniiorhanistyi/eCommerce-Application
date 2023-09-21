@@ -27,7 +27,6 @@ export const ProductList: React.FC<ProductListProps> = ({
 
   useEffect(() => {
     fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAddedProduct]);
 
   const getItemsFromCart = async (id: string) => {

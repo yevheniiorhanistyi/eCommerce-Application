@@ -85,7 +85,6 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addressValidation = (

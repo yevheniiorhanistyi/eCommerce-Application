@@ -38,7 +38,6 @@ export const ProductItem: React.FC<ProductItemProps> = ({
   useEffect(() => {
     const matchExists = itemsInCart.some((item) => item.productId === id);
     setHasMatch(matchExists);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsInCart, id]);
 
   const handleClick = async (productId: string, variantId: number) => {

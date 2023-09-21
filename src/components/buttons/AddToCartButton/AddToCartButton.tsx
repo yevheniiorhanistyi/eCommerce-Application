@@ -27,7 +27,6 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
 
   useEffect(() => {
     fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCart = async () => {
