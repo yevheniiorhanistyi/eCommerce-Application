@@ -28,7 +28,7 @@ const removeProductFromCart = async ({
 }: IRemoveProductFromCartProps): Promise<Cart | null> => {
   const { token } = await getActiveToken();
   const lineItemResult = await getLineItemsAroundProduct(cartId, productId);
-  const lineItemId = lineItemResult ? lineItemResult[0].id : undefined;
+  const lineItemId = lineItemResult && lineItemResult[0].id;
   try {
     const response = await axios.post(
       `${baseUrl}/${projectKey}/carts/${cartId}`,

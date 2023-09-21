@@ -34,6 +34,10 @@ const styles = {
     padding: '5px 2px',
     minWidth: '150px',
   },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.grey[800],
+  },
 };
 
 export default styles;

@@ -9,12 +9,11 @@ import styles from './Profile.styles';
 const Profile: React.FC = () => {
   const { isAuthenticated } = useAuth();
 
-  return isAuthenticated ? (
+  if (!isAuthenticated) return <Navigate to="/" />;
+  return (
     <Container fixed maxWidth="md" sx={styles.innerBox}>
       <CustomerInfo />
     </Container>
-  ) : (
-    <Navigate to="/" />
   );
 };
 

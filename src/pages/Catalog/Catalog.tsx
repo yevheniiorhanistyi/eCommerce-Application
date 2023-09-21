@@ -113,7 +113,7 @@ const Catalog: React.FC = () => {
                 setSearchParams={setSearchParams}
               />
             </Box>
-            {productList.length === 0 && isLoading === false ? (
+            {productList.length === 0 && !isLoading ? (
               <NoResultsMessage />
             ) : (
               <ProductList isLoading={isLoading} products={productList} />

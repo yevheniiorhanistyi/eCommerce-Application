@@ -5,7 +5,7 @@ const getQuantityProduct = async (
   productId: string,
 ): Promise<number | null> => {
   const lineItemResult = await getLineItemsAroundProduct(cartId, productId);
-  const lineItem = lineItemResult ? lineItemResult[0] : undefined;
+  const lineItem = lineItemResult && lineItemResult[0];
 
   if (lineItem) {
     return lineItem.quantity;

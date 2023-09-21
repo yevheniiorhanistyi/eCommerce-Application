@@ -1,4 +1,4 @@
-import { Skeleton } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 
 const CustomerDataLoader: React.FC = () => {
   const customerDataFields = [
@@ -9,14 +9,14 @@ const CustomerDataLoader: React.FC = () => {
   ];
 
   return (
-    <>
-      {customerDataFields.map(() => (
-        <>
+    <Box>
+      {customerDataFields.map((field) => (
+        <Box key={field}>
           <Skeleton width="40%" height={40} />
           <Skeleton width="100%" height={100} />
-        </>
+        </Box>
       ))}
-    </>
+    </Box>
   );
 };
 

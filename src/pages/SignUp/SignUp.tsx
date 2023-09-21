@@ -15,9 +15,8 @@ const SignUp: React.FC = () => {
     });
   };
 
-  return isAuthenticated ? (
-    <Navigate to="/" />
-  ) : (
+  if (isAuthenticated) return <Navigate to="/" />;
+  return (
     <Container maxWidth="md">
       <Paper elevation={0} sx={{ p: 3, mt: 7, mb: 4 }}>
         <Typography variant="h3" align="center" gutterBottom>
