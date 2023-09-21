@@ -19,8 +19,9 @@ const CategoryDataContext = createContext<{ categoryData: Category[] }>({
 });
 
 export const CategoryDataProvider = ({ children }: ICategoryDataProvider) => {
-  const modal = useModal();
   const [categoryData, setCategoryData] = useState<Category[]>([]);
+
+  const modal = useModal();
 
   useEffect(() => {
     const fetchData = async () => {
