@@ -3,10 +3,7 @@ import { apiRoot } from './ClientBuilder';
 import { ModalContextType } from '../../components/ModalProvider/type';
 import constants from './constants';
 
-// eslint-disable-next-line import/prefer-default-export
-export const getProject = async (
-  modal: ModalContextType,
-): Promise<Project | null> => {
+const getProject = async (modal: ModalContextType): Promise<Project | null> => {
   try {
     const project = await apiRoot.get().execute();
     return project.body;
@@ -20,3 +17,5 @@ export const getProject = async (
     return null;
   }
 };
+
+export default getProject;
