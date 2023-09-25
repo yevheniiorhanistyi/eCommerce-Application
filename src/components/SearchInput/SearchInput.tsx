@@ -1,3 +1,4 @@
+import { FormEvent } from 'react';
 import { Paper, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { ICommonProps } from '../../types/types';
@@ -12,8 +13,12 @@ export const SearchInput: React.FC<ICommonProps> = ({
     setSearchParams({ ...searchParams, term: newValue });
   };
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <Paper component="form" sx={styles.paper}>
+    <Paper component="form" sx={styles.paper} onSubmit={handleSubmit}>
       <InputBase
         sx={styles.inputBase}
         placeholder="Search"
