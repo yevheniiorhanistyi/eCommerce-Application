@@ -9,6 +9,7 @@ type RecursiveMenuProps = {
   fullData: Category[];
   linkTo: string;
   indexParent: string;
+  onClick: () => void;
 };
 
 const RecursiveMenu: React.FC<RecursiveMenuProps> = ({
@@ -16,6 +17,7 @@ const RecursiveMenu: React.FC<RecursiveMenuProps> = ({
   fullData,
   linkTo,
   indexParent,
+  onClick,
 }: RecursiveMenuProps) => (
   <div>
     {data.map((category, index) => (
@@ -23,7 +25,10 @@ const RecursiveMenu: React.FC<RecursiveMenuProps> = ({
         nodeId={`${indexParent}${index.toString()}`}
         key={category.id}
         label={(
-          <Link to={`${linkTo} ${category.slug[languageCode]}`}>
+          <Link
+            to={`${linkTo} ${category.slug[languageCode]}`}
+            onClick={onClick}
+          >
             {category.name[languageCode]}
           </Link>
         )}
@@ -34,6 +39,7 @@ const RecursiveMenu: React.FC<RecursiveMenuProps> = ({
             fullData={fullData}
             linkTo={`${linkTo} ${category.slug[languageCode]}`}
             indexParent={`${indexParent}${index.toString()}`}
+            onClick={onClick}
           />
         )}
       </TreeItem>

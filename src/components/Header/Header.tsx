@@ -85,7 +85,12 @@ const Header: React.FC = () => {
               onClose={handleCloseNavMenu}
               sx={styles.menubar}
             >
-              <CategoryMenu categoryData={categoryData} />
+              <CategoryMenu
+                onClose={() => {
+                  setAnchorEl(null);
+                }}
+                categoryData={categoryData}
+              />
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                   <Link style={{ textDecoration: 'none' }} to={page.route}>
@@ -110,7 +115,12 @@ const Header: React.FC = () => {
               CATALOG
             </Button>
             <Popper id={id} open={open} anchorEl={anchorEl} sx={styles.popper}>
-              <CategoryMenu categoryData={categoryData} />
+              <CategoryMenu
+                onClose={() => {
+                  setAnchorEl(null);
+                }}
+                categoryData={categoryData}
+              />
             </Popper>
             {pages.map((page) => (
               <Button
