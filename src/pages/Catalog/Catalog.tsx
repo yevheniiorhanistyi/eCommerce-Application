@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid, Box, Container } from '@mui/material';
 import { IProduct } from '../../types/productInterfaces';
@@ -20,6 +20,8 @@ import {
 
 import styles from './Catalog.styles';
 
+const WINDOW_BREAKPOINT = 940;
+
 const Catalog: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,9 +33,10 @@ const Catalog: React.FC = () => {
   const { key } = useParams<{ key: string }>();
   const categorySlug = key?.split(' ').pop();
   const { categoryData } = useCategoryData();
-  const idCategory = categoryData.find(
-    (item) => item.slug[languageCode] === categorySlug,
-  )?.id;
+  const idCategory = useMemo(
+    () => categoryData.find((item) => item.slug[languageCode] === categorySlug)?.id,
+    [categoryData, categorySlug],
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +53,7 @@ const Catalog: React.FC = () => {
         });
       } catch (error) {
         console.error(error);
-        setIsLoading(true);
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -61,8 +64,8 @@ const Catalog: React.FC = () => {
     };
   }, [idCategory, searchParams]);
 
-  const filterSize = windowWidth > 940 ? 3 : 12;
-  const productListSize = windowWidth > 940 ? 9 : 12;
+  const filterSize = windowWidth > WINDOW_BREAKPOINT ? 3 : 12;
+  const productListSize = windowWidth > WINDOW_BREAKPOINT ? 9 : 12;
 
   return (
     <Box sx={styles.outerBox}>
