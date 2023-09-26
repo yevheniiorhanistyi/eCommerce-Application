@@ -12,6 +12,7 @@ import {
   Button,
   MenuItem,
   Popper,
+  ClickAwayListener,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import StoreIcon from '@mui/icons-material/Store';
@@ -107,21 +108,34 @@ const Header: React.FC = () => {
             </Typography>
           </Link>
           <Box sx={styles.navMenuBox}>
-            <Button
-              aria-describedby={id}
-              onClick={handleClick}
-              sx={styles.closeNavMenu}
+            <ClickAwayListener
+              onClickAway={() => {
+                setAnchorEl(null);
+              }}
             >
-              CATALOG
-            </Button>
-            <Popper id={id} open={open} anchorEl={anchorEl} sx={styles.popper}>
-              <CategoryMenu
-                onClose={() => {
-                  setAnchorEl(null);
-                }}
-                categoryData={categoryData}
-              />
-            </Popper>
+              <Box>
+                <Button
+                  aria-describedby={id}
+                  onClick={handleClick}
+                  sx={styles.closeNavMenu}
+                >
+                  CATALOG
+                </Button>
+                <Popper
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  sx={styles.popper}
+                >
+                  <CategoryMenu
+                    onClose={() => {
+                      setAnchorEl(null);
+                    }}
+                    categoryData={categoryData}
+                  />
+                </Popper>
+              </Box>
+            </ClickAwayListener>
             {pages.map((page) => (
               <Button
                 key={page.title}
