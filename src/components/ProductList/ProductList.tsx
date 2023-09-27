@@ -14,6 +14,7 @@ import addProductToCart from '../../services/cart/addProductToCart';
 import removeProductFromCart from '../../services/cart/removeProductFromCart';
 
 import styles from './ProductList.styles';
+import Spinner from '../Spinner/Spinner';
 
 export const ProductList: React.FC<ProductListProps> = ({
   isLoading,
@@ -101,13 +102,7 @@ export const ProductList: React.FC<ProductListProps> = ({
   };
 
   if (isLoading) {
-    return (
-      <Box sx={styles.spinnerOuterBox}>
-        <Box sx={styles.spinnerInnerBox}>
-          <CircularProgress />
-        </Box>
-      </Box>
-    );
+    return <Spinner />;
   }
   return (
     <Box sx={styles.productListBox}>
