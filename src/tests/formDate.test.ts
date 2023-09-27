@@ -1,4 +1,4 @@
-import { formatDateToYYYYMMDD } from '../utils/formatDate';
+import formatDateToYYYYMMDD from '../utils/formatDate';
 
 describe('dateUtils', () => {
   test('formatDateToYYYYMMDD formats date correctly', () => {

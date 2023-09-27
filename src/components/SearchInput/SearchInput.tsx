@@ -1,3 +1,4 @@
+import { useEffect, useState, FormEvent } from 'react';
 import { Paper, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { ICommonProps } from '../../types/types';
@@ -8,17 +9,29 @@ export const SearchInput: React.FC<ICommonProps> = ({
   searchParams,
   setSearchParams,
 }: ICommonProps) => {
+  const [debouncedInputValue, setDebouncedInputValue] = useState('');
   const handleSearchChange = (newValue: string) => {
-    setSearchParams({ ...searchParams, term: newValue });
+    setDebouncedInputValue(newValue);
+  };
+
+  useEffect(() => {
+    const delayInputTimeoutId = setTimeout(() => {
+      setSearchParams({ ...searchParams, term: debouncedInputValue });
+    }, 500);
+    return () => clearTimeout(delayInputTimeoutId);
+  }, [debouncedInputValue, 500]);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   return (
-    <Paper component="form" sx={styles.paper}>
+    <Paper component="form" sx={styles.paper} onSubmit={handleSubmit}>
       <InputBase
         sx={styles.inputBase}
         placeholder="Search"
         inputProps={{ 'aria-label': 'search' }}
-        value={searchParams.term}
+        value={debouncedInputValue}
         onChange={(e) => handleSearchChange(e.target.value)}
       />
       <IconButton type="button" sx={styles.iconButton} aria-label="search">

@@ -42,7 +42,6 @@ const CustomerCart: React.FC = () => {
 
   useEffect(() => {
     fetchCartData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCartData = async () => {

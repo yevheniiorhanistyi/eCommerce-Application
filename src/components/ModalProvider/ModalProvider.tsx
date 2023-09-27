@@ -57,7 +57,6 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       closeModal,
       setContent,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [modals],
   );
 

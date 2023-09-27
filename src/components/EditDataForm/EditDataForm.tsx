@@ -15,7 +15,7 @@ import editCustomerData from '../../services/profile/editCustomerData';
 import emailValidation from '../../validation/email.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
 import { IGetCustomerData } from '../../types/types';
-import { formatDateToYYYYMMDD } from '../../utils/formatDate';
+import formatDateToYYYYMMDD from '../../utils/formatDate';
 
 import styles from './EditDataForm.styles';
 
