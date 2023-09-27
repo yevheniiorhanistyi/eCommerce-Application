@@ -25,7 +25,6 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
   const [valueField, setValueField] = useState(startQuantity);
   const [error, setError] = useState(false);
   const [idCartActive, setIdCartActive] = useState('');
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const { isAuthenticated } = useAuth();
   const minQuantity = 1;
   const maxQuantity = Infinity;
@@ -49,7 +48,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     return true;
   };
 
-  const processQuantity = async (value: number) => {
+  const processQuantity = async (value: number): Promise<boolean> => {
     const isSetQuantity = await setQuantityProduct({
       cartId: idCartActive,
       productId: produstId,
@@ -57,52 +56,47 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     });
     if (isSetQuantity) {
       setQuantity(value);
-      setError(false);
+      onChange();
       enqueueSnackbar('Quantity set successfully!', {
         variant: 'success',
       });
-      onChange();
-    } else {
-      enqueueSnackbar('Failed to set quantity!', {
-        variant: 'error',
-      });
-      setValueField(quantity);
+      return true;
     }
+    enqueueSnackbar('Failed to set quantity!', {
+      variant: 'error',
+    });
+    return false;
   };
 
-  const debouncedProcessQuantity = (value: number) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    const id = setTimeout(async () => {
-      processQuantity(value);
-      setTimeoutId(null);
-    }, 500);
-
-    setTimeoutId(id);
-  };
-
-  const handleIncrement = () => {
+  const handleIncrement = async () => {
     const value = valueField + 1;
     if (validation(value + 1)) {
-      setValueField(value);
-      debouncedProcessQuantity(value);
+      const isSetQuantity = await processQuantity(value);
+      if (isSetQuantity) {
+        setValueField(value);
+        setError(false);
+      }
     }
   };
 
-  const handleDecrement = () => {
+  const handleDecrement = async () => {
     const value = valueField - 1;
     if (validation(value)) {
-      setValueField(value);
-      debouncedProcessQuantity(value);
+      const isSetQuantity = await processQuantity(value);
+      if (isSetQuantity) {
+        setValueField(value);
+        setError(false);
+      }
     }
   };
 
-  const handleBlur = () => {
+  const handleBlur = async () => {
     const value = valueField;
     if (validation(value)) {
-      processQuantity(value);
+      const isSetQuantity = await processQuantity(value);
+      if (isSetQuantity) {
+        setError(false);
+      }
     } else {
       setError(true);
       setValueField(quantity);

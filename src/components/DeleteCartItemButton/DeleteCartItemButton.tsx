@@ -33,14 +33,11 @@ const DeleteCartItemButton: FC<DeleteItemButtonProps> = ({
 
   const handleClick = async () => {
     setIsDisabled(true);
-    const isRemoveItem = await removeFromCart();
-    if (isRemoveItem) {
-      deleteSuccess();
-    }
-    setIsDisabled(false);
+    await removeFromCart();
+    deleteSuccess();
   };
 
-  const removeFromCart = async (): Promise<boolean> => {
+  const removeFromCart = async () => {
     const cart = await getCartById(idCartActive);
     if (cart) {
       const removeProductFromCartData = {
@@ -48,12 +45,8 @@ const DeleteCartItemButton: FC<DeleteItemButtonProps> = ({
         cartVersion: cart.version,
         productId: product.productId,
       };
-      const isRemoveItem = Boolean(
-        await removeProductFromCart(removeProductFromCartData),
-      );
-      if (isRemoveItem) return true;
+      await removeProductFromCart(removeProductFromCartData);
     }
-    return false;
   };
 
   return (
