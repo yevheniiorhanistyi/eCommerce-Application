@@ -1,4 +1,7 @@
 const styles = {
+  sliderWrapper: {
+    mb: '30px',
+  },
   imgWrapper: {
     margin: '10px auto',
     '&:focus-visible': { outline: 'none' },
