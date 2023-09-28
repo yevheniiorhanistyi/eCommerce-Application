@@ -1,5 +1,8 @@
 import { ISearchParams } from '../types/types';
 
+export const CATALOG_PAGE_WINDOW_BREAKPOINT = 940;
+export const FEATURED_CLOTHING_CATEGORY_ID = 'd4076a3b-423c-4758-9965-5d47ce0835c6';
+
 export const sortingOptions = [
   { label: 'Name: A - Z', value: 'name.en-us asc' },
   { label: 'Name: Z - A', value: 'name.en-us desc' },
