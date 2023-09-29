@@ -13,9 +13,11 @@ import EmptyCart from '../../components/EmptyCart/EmptyCart';
 import getIdCartActive from '../../services/cart/getIdCartActive';
 
 import styles from './Cart.styles';
+import Spinner from '../../components/Spinner/Spinner';
 
 const CustomerCart: React.FC = () => {
   const [cartData, setCartData] = useState<Cart | null>();
+  const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated } = useAuth();
   const { updateBadgeContent } = useCart();
 
@@ -45,17 +47,25 @@ const CustomerCart: React.FC = () => {
   }, []);
 
   const fetchCartData = async () => {
-    const id = await getIdCartActive(isAuthenticated);
-    const data = await getCartById(id);
-    setCartData(data);
-    if (data) {
-      updateBadgeContent(data.totalLineItemQuantity || 0);
+    try {
+      setIsLoading(true);
+      const id = await getIdCartActive(isAuthenticated);
+      const data = await getCartById(id);
+      setCartData(data);
+      if (data) {
+        updateBadgeContent(data.totalLineItemQuantity || 0);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
     }
   };
 
   const onQuantityChangeSucces = () => {
     fetchCartData();
   };
+
+  if (isLoading && !cartData) return <Spinner />;
 
   if (!cartData) {
     return null;
