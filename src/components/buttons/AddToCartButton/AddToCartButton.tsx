@@ -4,13 +4,13 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { enqueueSnackbar } from 'notistack';
 import { useAuth } from '../../AuthProvider/AuthProvider';
+import { useCart } from '../../CartProvider/CartProvider';
+import { IProductDisplayData } from '../../../types/types';
 import addProductToCart from '../../../services/cart/addProductToCart';
 import getCartById from '../../../services/cart/getCartById';
-import { IProductDisplayData } from '../../../types/types';
 import getIdCartActive from '../../../services/cart/getIdCartActive';
 import removeProductFromCart from '../../../services/cart/removeProductFromCart';
 import checkProductToCart from '../../../services/cart/checkProductToCart';
-import { useCart } from '../../CartProvider/CartProvider';
 
 interface AddToCartButtonProps {
   product: IProductDisplayData;
@@ -21,13 +21,12 @@ const AddToCartButton: FC<AddToCartButtonProps> = ({
 }: AddToCartButtonProps) => {
   const [isAddedProduct, setIsAddProduct] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const { isAuthenticated } = useAuth();
   const [idCartActive, setIdCartActive] = useState('');
+  const { isAuthenticated } = useAuth();
   const { badgeContent, updateBadgeContent } = useCart();
 
   useEffect(() => {
     fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCart = async () => {

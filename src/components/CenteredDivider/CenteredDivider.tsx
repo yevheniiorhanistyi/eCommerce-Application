@@ -1,12 +1,10 @@
 import { Divider } from '@mui/material';
 import { ICenteredDividerProps } from '../../types/types';
 
-import styles from './CenteredDivider.styles';
-
 const CenteredDivider: React.FC<ICenteredDividerProps> = ({
   caption,
 }: ICenteredDividerProps) => (
-  <Divider textAlign="center" sx={styles}>
+  <Divider textAlign="center" sx={{ pt: 2 }}>
     {caption}
   </Divider>
 );

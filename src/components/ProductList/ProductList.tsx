@@ -27,7 +27,6 @@ export const ProductList: React.FC<ProductListProps> = ({
 
   useEffect(() => {
     fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAddedProduct]);
 
   const getItemsFromCart = async (id: string) => {
@@ -101,13 +100,16 @@ export const ProductList: React.FC<ProductListProps> = ({
     }
   };
 
-  return isLoading ? (
-    <Box sx={styles.spinnerOuterBox}>
-      <Box sx={styles.spinnerInnerBox}>
-        <CircularProgress />
+  if (isLoading) {
+    return (
+      <Box sx={styles.spinnerOuterBox}>
+        <Box sx={styles.spinnerInnerBox}>
+          <CircularProgress />
+        </Box>
       </Box>
-    </Box>
-  ) : (
+    );
+  }
+  return (
     <Box sx={styles.productListBox}>
       {products.map((product) => (
         <ProductItem

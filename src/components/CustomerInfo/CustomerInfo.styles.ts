@@ -1,6 +1,8 @@
+import theme from '../../theme';
+
 const styles = {
   innerContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.palette.common.white,
     borderRadius: '16px',
     padding: '25px',
   },

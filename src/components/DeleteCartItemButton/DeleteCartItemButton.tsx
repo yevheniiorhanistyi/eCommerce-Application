@@ -6,6 +6,7 @@ import { useAuth } from '../AuthProvider/AuthProvider';
 import getIdCartActive from '../../services/cart/getIdCartActive';
 import getCartById from '../../services/cart/getCartById';
 import removeProductFromCart from '../../services/cart/removeProductFromCart';
+
 import styles from './DeleteCartItemButton.styles';
 
 interface DeleteItemButtonProps {
@@ -23,7 +24,6 @@ const DeleteCartItemButton: FC<DeleteItemButtonProps> = ({
 
   useEffect(() => {
     fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCart = async () => {

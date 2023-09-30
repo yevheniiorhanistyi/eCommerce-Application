@@ -17,6 +17,7 @@ export const PriceRange: React.FC<ICommonProps> = ({
   searchParams,
   setSearchParams,
 }: ICommonProps) => {
+  const [expanded, setExpanded] = useState<boolean>(true);
   const minPrice = searchParams.prices[0];
   const maxPrice = searchParams.prices[1];
 
@@ -36,8 +37,6 @@ export const PriceRange: React.FC<ICommonProps> = ({
       setSearchParams({ ...searchParams, prices: [min, max] });
     }
   };
-
-  const [expanded, setExpanded] = useState<boolean>(true);
 
   const handleChangeAccordion = () => {
     setExpanded(!expanded);

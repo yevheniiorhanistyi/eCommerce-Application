@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { IContributionSliderProps } from '../../types/types';
 
-import './_contribution_slider.scss';
 import ContributionImage from '../ContributionImage/ContributionImage';
+import './_contribution_slider.scss';
 
 const ContributionSlider: React.FC<IContributionSliderProps> = ({
   sliderData,

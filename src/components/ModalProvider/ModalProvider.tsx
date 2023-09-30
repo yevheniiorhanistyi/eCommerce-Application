@@ -1,18 +1,8 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import {
   ModalContextType,
-  ModalFunctionWithContent,
-  TAddressContent,
-  TConfirmContent,
-  TContent,
-  TCustomerContent,
-  TEditAddressContent,
-  TErrorContent,
-  TImageViewContent,
-  TModalFunction,
-  TModalName,
-  TPasswordContent,
-  TReturnClose,
+  ModalFunctionWithContent, TContent, TModalFunction,
+  TModalName, TReturnClose,
 } from './type';
 
 import { IModalProviderProps } from '../../types/types';
@@ -24,76 +14,12 @@ import EditPasswordModal from '../EditPasswordModal/EditPasswordModal';
 import EditAddressModal from '../EditAddressModal/EditAddressModal';
 import ContributionModal from '../ContributionModal/ContributionModal';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import defaultValues from './defaultValues';
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({ children }: IModalProviderProps) => {
-  const [modals, setModals] = useState({
-    error: {
-      isOpen: false,
-      content: {
-        title: '',
-        text: '',
-      } as TErrorContent,
-      onClose: (value: TReturnClose) => {},
-    },
-    imageView: {
-      isOpen: false,
-      content: {
-        images: [],
-        title: '',
-        index: 0,
-      } as TImageViewContent,
-      onClose: (value: TReturnClose) => {},
-    },
-    customer: {
-      isOpen: false,
-      content: {
-        customer: null,
-      } as TCustomerContent,
-      onClose: (value: TReturnClose) => {},
-    },
-    address: {
-      isOpen: false,
-      content: {
-        userId: '',
-        isBilling: false,
-        versionId: 0,
-      } as TAddressContent,
-      onClose: (value: TReturnClose) => {},
-    },
-    password: {
-      isOpen: false,
-      content: {
-        customer: null,
-      } as TPasswordContent,
-      onClose: (value: TReturnClose) => {},
-    },
-    editAddress: {
-      isOpen: false,
-      content: {
-        address: null,
-        userId: null,
-        versionId: null,
-      } as TEditAddressContent,
-      onClose: (value: TReturnClose) => {},
-    },
-    contribution: {
-      isOpen: false,
-      content: {
-        sliderData: [],
-      },
-      onClose: (value: TReturnClose) => {},
-    },
-    confirm: {
-      isOpen: false,
-      content: {
-        title: '',
-        text: '',
-      } as TConfirmContent,
-      onClose: (value: TReturnClose) => {},
-    },
-  });
+  const [modals, setModals] = useState(defaultValues);
 
   const openModal: TModalFunction = (modalName: TModalName) => {
     setModals((prevModals) => ({
@@ -131,7 +57,6 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
       closeModal,
       setContent,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [modals],
   );
 

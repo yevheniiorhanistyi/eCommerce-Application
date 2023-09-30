@@ -23,10 +23,10 @@ const styles = {
     paddingTop: '10px',
   },
   cardMedia: {
-    width: '100%',
     maxWidth: '100%',
-    height: 'auto',
     maxHeight: '170px',
+    height: 'auto',
+    width: 'auto',
   },
   typograohyTitle: {
     fontSize: '1.2rem',

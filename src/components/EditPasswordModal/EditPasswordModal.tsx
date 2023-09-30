@@ -1,8 +1,9 @@
 import { Container, Modal, Paper } from '@mui/material';
 
-import styles from './EditPasswordModal.styles';
 import { TPasswordContent } from '../ModalProvider/type';
 import EditPasswordForm from '../EditPasswordForm/EditPasswordForm';
+
+import styles from './EditPasswordModal.styles';
 
 type EditPasswordModalProps = {
   isOpen: boolean;

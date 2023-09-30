@@ -2,6 +2,7 @@ import { Container, IconButton, Modal, Paper } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { IContributionContent } from '../ModalProvider/type';
 import ContributionSlider from '../ContributionSlider/ContributionSlider';
+
 import styles from './ContributionModal.styles';
 
 type ContributionModalProps = {

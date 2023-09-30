@@ -31,7 +31,7 @@ module.exports = {
     project: './tsconfig.json',
     extraFileExtensions: ['.scss'],
   },
-  plugins: ['react'],
+  plugins: ['react', 'react-hooks'],
   rules: {
     'react/function-component-definition': [
       'error',
@@ -50,5 +50,6 @@ module.exports = {
     'object-curly-newline': 'off',
     'no-console': ['warn', { allow: ['error'] }],
     'import/no-cycle': ['error', { maxDepth: 1 }],
+    "react-hooks/exhaustive-deps": "off",
   },
 };

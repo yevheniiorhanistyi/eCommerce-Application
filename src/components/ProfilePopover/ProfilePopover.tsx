@@ -75,12 +75,12 @@ const ProfilePopover = () => {
                   </Typography>
                 </ListItemText>
                 <Divider />
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/" style={styles.link}>
                   <ListItemButton sx={styles.buttonAuthenticated}>
                     <AuthButton text="Home" />
                   </ListItemButton>
                 </Link>
-                <Link to="/profile" style={{ textDecoration: 'none' }}>
+                <Link to="/profile" style={styles.link}>
                   <ListItemButton sx={styles.buttonAuthenticated}>
                     <AuthButton text="Profile" />
                   </ListItemButton>
@@ -95,7 +95,7 @@ const ProfilePopover = () => {
               </>
             ) : (
               <>
-                <Link to="/signin" style={{ textDecoration: 'none' }}>
+                <Link to="/signin" style={styles.link}>
                   <ListItemButton sx={styles.button}>
                     <AuthButton
                       text="Sign in"
@@ -103,7 +103,7 @@ const ProfilePopover = () => {
                     />
                   </ListItemButton>
                 </Link>
-                <Link to="/signup" style={{ textDecoration: 'none' }}>
+                <Link to="/signup" style={styles.link}>
                   <ListItemButton sx={styles.button}>
                     <AuthButton
                       text="Sign up"

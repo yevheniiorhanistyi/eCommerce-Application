@@ -7,14 +7,17 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import RecursiveMenu from './RecursiveMenu';
 import { categoryHasChildren, getChildren } from './utils/dataProcessing';
 import languageCode from '../../utils/languageCode';
+
 import styles from './CategoryMenu.styles';
 
 type CategoryMenuProps = {
   categoryData: Category[];
+  onClose: () => void;
 };
 
 const CategoryMenu: React.FC<CategoryMenuProps> = ({
   categoryData,
+  onClose,
 }: CategoryMenuProps) => {
   const topLevelCategories = categoryData.filter((elem) => !('parent' in elem));
 
@@ -26,14 +29,21 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
     >
       <TreeItem
         nodeId="500"
-        label={<Link to="/catalog">All categories</Link>}
+        label={(
+          <Link to="/catalog" onClick={onClose}>
+            All categories
+          </Link>
+        )}
       />
       {topLevelCategories.map((category, index) => (
         <TreeItem
           nodeId={index.toString()}
           key={category.id}
           label={(
-            <Link to={`/category/${category.slug[languageCode]}`}>
+            <Link
+              to={`/category/${category.slug[languageCode]}`}
+              onClick={onClose}
+            >
               {category.name[languageCode]}
             </Link>
           )}
@@ -44,6 +54,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
               fullData={categoryData}
               linkTo={`/category/${category.slug[languageCode]}`}
               indexParent={index.toString()}
+              onClick={onClose}
             />
           )}
         </TreeItem>

@@ -3,9 +3,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 import { ITeamMember } from '../../types/types';
-import styles from './TeamMember.styles';
 import ContributionButton from '../buttons/ContributionButton/ContributionButton';
 import { useModal } from '../ModalProvider/ModalProvider';
+
+import styles from './TeamMember.styles';
 
 const TeamMember: React.FC<ITeamMember> = ({
   name,

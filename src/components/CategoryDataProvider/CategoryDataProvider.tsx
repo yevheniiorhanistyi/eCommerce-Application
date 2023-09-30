@@ -19,8 +19,9 @@ const CategoryDataContext = createContext<{ categoryData: Category[] }>({
 });
 
 export const CategoryDataProvider = ({ children }: ICategoryDataProvider) => {
-  const modal = useModal();
   const [categoryData, setCategoryData] = useState<Category[]>([]);
+
+  const modal = useModal();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +30,6 @@ export const CategoryDataProvider = ({ children }: ICategoryDataProvider) => {
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const contextValue = useMemo(

@@ -19,9 +19,8 @@ const SignIn: React.FC = () => {
     });
   };
 
-  return isAuthenticated ? (
-    <Navigate to="/" />
-  ) : (
+  if (isAuthenticated) return <Navigate to="/" />;
+  return (
     <Container maxWidth="sm" sx={styles.outerBox}>
       <Paper sx={styles.paper}>
         <Typography variant="h3" align="center" sx={styles.title}>

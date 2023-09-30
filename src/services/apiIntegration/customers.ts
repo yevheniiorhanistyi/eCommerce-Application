@@ -7,7 +7,7 @@ import axios from 'axios';
 import { apiRoot } from './ClientBuilder';
 import getActiveToken from '../authenticate/getActiveToken';
 import constants from './constants';
-import { formatDateToYYYYMMDD } from '../../utils/formatDate';
+import formatDateToYYYYMMDD from '../../utils/formatDate';
 
 import { ModalContextType } from '../../components/ModalProvider/type';
 import {

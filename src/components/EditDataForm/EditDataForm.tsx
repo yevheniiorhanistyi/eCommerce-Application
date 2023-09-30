@@ -1,22 +1,23 @@
 import { FC, useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { Button, TextField, Grid } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import CenteredDivider from '../CenteredDivider/CenteredDivider';
-import styles from './EditDataForm.styles';
 import nameValidation from '../../validation/name.validation';
 import dateOfBirthlValidation from '../../validation/dateOfBirth.validation';
 import editCustomerData from '../../services/profile/editCustomerData';
 import emailValidation from '../../validation/email.validation';
 import { useModal } from '../ModalProvider/ModalProvider';
 import { IGetCustomerData } from '../../types/types';
-import { formatDateToYYYYMMDD } from '../../utils/formatDate';
+import formatDateToYYYYMMDD from '../../utils/formatDate';
+
+import styles from './EditDataForm.styles';
 
 type EditDataFormProps = {
   customer: IGetCustomerData;
@@ -25,6 +26,7 @@ type EditDataFormProps = {
 const EditDataForm: FC<EditDataFormProps> = ({
   customer,
 }: EditDataFormProps) => {
+  const [isSubmitting, setSubmitting] = useState(false);
   const modal = useModal();
 
   const data = {
@@ -33,8 +35,6 @@ const EditDataForm: FC<EditDataFormProps> = ({
     dateOfBirth: dayjs(new Date(customer.dateOfBirth)),
     email: customer.email,
   };
-
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 

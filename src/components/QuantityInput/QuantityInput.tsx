@@ -3,10 +3,12 @@ import { ButtonGroup, IconButton, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { enqueueSnackbar } from 'notistack';
-import styles from './QuantityInput.styles';
+
+import { useAuth } from '../AuthProvider/AuthProvider';
 import setQuantityProduct from '../../services/cart/setQuantityProduct';
 import getIdCartActive from '../../services/cart/getIdCartActive';
-import { useAuth } from '../AuthProvider/AuthProvider';
+
+import styles from './QuantityInput.styles';
 
 interface IQuantityInputProps {
   startQuantity: number;
@@ -19,17 +21,17 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
   produstId,
   onChange,
 }: IQuantityInputProps) => {
-  const minQuantity = 1;
-  const maxQuantity = Infinity;
   const [quantity, setQuantity] = useState(startQuantity);
   const [valueField, setValueField] = useState(startQuantity);
   const [error, setError] = useState(false);
   const [idCartActive, setIdCartActive] = useState('');
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const { isAuthenticated } = useAuth();
+  const minQuantity = 1;
+  const maxQuantity = Infinity;
 
   useEffect(() => {
     fetchCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCart = async () => {
@@ -47,7 +49,7 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     return true;
   };
 
-  const processQuantity = async (value: number): Promise<boolean> => {
+  const processQuantity = async (value: number) => {
     const isSetQuantity = await setQuantityProduct({
       cartId: idCartActive,
       productId: produstId,
@@ -55,47 +57,52 @@ const QuantityInput: React.FC<IQuantityInputProps> = ({
     });
     if (isSetQuantity) {
       setQuantity(value);
-      onChange();
+      setError(false);
       enqueueSnackbar('Quantity set successfully!', {
         variant: 'success',
       });
-      return true;
+      onChange();
+    } else {
+      enqueueSnackbar('Failed to set quantity!', {
+        variant: 'error',
+      });
+      setValueField(quantity);
     }
-    enqueueSnackbar('Failed to set quantity!', {
-      variant: 'error',
-    });
-    return false;
   };
 
-  const handleIncrement = async () => {
+  const debouncedProcessQuantity = (value: number) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    const id = setTimeout(async () => {
+      processQuantity(value);
+      setTimeoutId(null);
+    }, 500);
+
+    setTimeoutId(id);
+  };
+
+  const handleIncrement = () => {
     const value = valueField + 1;
     if (validation(value + 1)) {
-      const isSetQuantity = await processQuantity(value);
-      if (isSetQuantity) {
-        setValueField(value);
-        setError(false);
-      }
+      setValueField(value);
+      debouncedProcessQuantity(value);
     }
   };
 
-  const handleDecrement = async () => {
+  const handleDecrement = () => {
     const value = valueField - 1;
     if (validation(value)) {
-      const isSetQuantity = await processQuantity(value);
-      if (isSetQuantity) {
-        setValueField(value);
-        setError(false);
-      }
+      setValueField(value);
+      debouncedProcessQuantity(value);
     }
   };
 
-  const handleBlur = async () => {
+  const handleBlur = () => {
     const value = valueField;
     if (validation(value)) {
-      const isSetQuantity = await processQuantity(value);
-      if (isSetQuantity) {
-        setError(false);
-      }
+      processQuantity(value);
     } else {
       setError(true);
       setValueField(quantity);

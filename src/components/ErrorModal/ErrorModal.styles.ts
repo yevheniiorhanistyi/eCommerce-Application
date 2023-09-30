@@ -1,10 +1,12 @@
+import theme from '../../theme';
+
 const styles = {
   box: {
     position: 'absolute',
     left: '50%',
     top: '50%',
-    width: 500,
-    backgroundColor: '#fff',
+    width: '500px',
+    backgroundColor: theme.palette.common.white,
     p: 3,
     borderRadius: 2,
     transform: 'translate(-50%, -50%)',
