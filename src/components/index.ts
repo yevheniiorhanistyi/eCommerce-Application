@@ -12,3 +12,4 @@ export * from './PromoSlider/PromoSlider';
 export * from './BestSellers/BestSellers';
 export * from './PreviewBanner/PreviewBanner';
 export * from './OurBrands/OurBrands';
+export * from './FeatureBanner/FeatureBanner';
