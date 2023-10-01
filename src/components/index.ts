@@ -10,3 +10,4 @@ export * from './CategoryAccordion/CategoryAccordion';
 export * from './FilterSidebar/FilterSidebar';
 export * from './PromoSlider/PromoSlider';
 export * from './BestSellers/BestSellers';
+export * from './PreviewBanner/PreviewBanner';
