@@ -6,6 +6,9 @@ const theme = createTheme({
     accent: {
       main: '#d32f2f',
     },
+    primary: {
+      main: '#000',
+    },
   },
   typography: {
     fontFamily: [
@@ -55,7 +58,7 @@ const theme = createTheme({
           minWidth: 64,
           padding: '16px 40px',
           margin: '24px 0 16px',
-          borderRadius: '8px',
+          borderRadius: 0,
         },
       },
     },
@@ -65,6 +68,7 @@ const theme = createTheme({
           '& input[type="password"]': {
             fontFamily: 'Roboto',
           },
+          borderRadius: 0,
         },
       },
     },
