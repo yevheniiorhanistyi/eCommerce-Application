@@ -1,11 +1,12 @@
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 
-import { PromoSlider, BestSellers } from '../../components';
+import { PromoSlider, BestSellers, PreviewBanner } from '../../components';
 
 const Main: React.FC = () => (
-  <Container maxWidth="lg">
-    <PromoSlider />
+  <>
+    {/* <PromoSlider /> */}
+    <PreviewBanner />
     <BestSellers />
-  </Container>
+  </>
 );
 export default Main;
