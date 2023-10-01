@@ -1,3 +1,5 @@
+import * as palette from '@mui/material/colors';
+
 const styles = {
   outerBox: {
     width: '100%',
@@ -32,6 +34,7 @@ const styles = {
     margin: '15px auto',
     border: '2px solid #fff',
     borderRadius: '0',
+    color: palette.common.white,
   },
 };
 
