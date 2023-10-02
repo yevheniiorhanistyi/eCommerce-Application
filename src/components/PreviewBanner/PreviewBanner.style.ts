@@ -14,6 +14,7 @@ const styles = {
     objectPosition: 'center',
   },
   innerBox: {
+    minWidth: '225px',
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
@@ -22,10 +23,14 @@ const styles = {
     transform: 'translate(-50%, -50%)',
   },
   title: {
+    width: '100%',
     fontSize: '1.5rem',
     fontWeight: '600',
     letterSpacing: '.1em',
     color: '#fff',
+    '@media (max-width: 560px)': {
+      fontSize: '1.2rem',
+    },
   },
   button: {
     fontSize: '0.8rem',
@@ -35,6 +40,10 @@ const styles = {
     border: '2px solid #fff',
     borderRadius: '0',
     color: palette.common.white,
+    '@media (max-width: 560px)': {
+      fontSize: '0.6rem',
+      padding: '8px 25px',
+    },
   },
 };
 
