@@ -8,7 +8,7 @@ const CartButton: React.FC = () => {
 
   return (
     <Tooltip title="Cart">
-      <Badge overlap="circular" badgeContent={badgeContent} color="error">
+      <Badge overlap="circular" badgeContent={badgeContent} color="info">
         <Link to="/cart" style={{ textDecoration: 'none' }}>
           <IconButton sx={{ color: 'common.white' }}>
             <ShoppingCartIcon />

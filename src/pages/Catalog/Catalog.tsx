@@ -5,7 +5,10 @@ import { IProduct } from '../../types/productInterfaces';
 import { ISearchParams } from '../../types/types';
 import { getProductByParams } from '../../services/products/getProductByParams';
 import { useCategoryData } from '../../components/CategoryDataProvider/CategoryDataProvider';
-import { initialSearchParams } from '../../constants/constants';
+import {
+  initialSearchParams,
+  CATALOG_PAGE_WINDOW_BREAKPOINT,
+} from '../../constants/constants';
 import languageCode from '../../utils/languageCode';
 import {
   AppPagination,
@@ -19,8 +22,6 @@ import {
 } from '../../components';
 
 import styles from './Catalog.styles';
-
-const WINDOW_BREAKPOINT = 940;
 
 const Catalog: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
@@ -64,8 +65,8 @@ const Catalog: React.FC = () => {
     };
   }, [idCategory, searchParams]);
 
-  const filterSize = windowWidth > WINDOW_BREAKPOINT ? 3 : 12;
-  const productListSize = windowWidth > WINDOW_BREAKPOINT ? 9 : 12;
+  const filterSize = windowWidth > CATALOG_PAGE_WINDOW_BREAKPOINT ? 3 : 12;
+  const productListSize = windowWidth > CATALOG_PAGE_WINDOW_BREAKPOINT ? 9 : 12;
 
   return (
     <Box sx={styles.outerBox}>

@@ -6,6 +6,9 @@ const theme = createTheme({
     accent: {
       main: '#d32f2f',
     },
+    primary: {
+      main: '#000',
+    },
   },
   typography: {
     fontFamily: [
@@ -51,11 +54,17 @@ const theme = createTheme({
           fontWeight: 700,
           textTransform: 'uppercase',
           lineHeight: 1.75,
-          color: palette.common.white,
+          color: palette.common.black,
+          backgroundColor: 'transparent',
           minWidth: 64,
           padding: '16px 40px',
           margin: '24px 0 16px',
-          borderRadius: '8px',
+          borderRadius: 0,
+          transition: 'all .2s linear',
+          '&:hover': {
+            color: palette.common.white,
+            backgroundColor: palette.common.black,
+          },
         },
       },
     },
@@ -65,6 +74,7 @@ const theme = createTheme({
           '& input[type="password"]': {
             fontFamily: 'Roboto',
           },
+          borderRadius: 0,
         },
       },
     },
