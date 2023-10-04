@@ -1,9 +1,10 @@
+import theme from '../../../theme';
+
 const styles = {
   setDefaultButton: {
-    margin: 0,
     padding: 0,
-    color: '#07c',
-    opacity: 0,
+    margin: 0,
+    color: theme.palette.common.black,
     transition: '.2s ease',
 
     '@media (max-width: 450px)': {

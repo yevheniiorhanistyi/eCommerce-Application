@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import {
   AppBar,
@@ -13,6 +13,7 @@ import {
   MenuItem,
   Popper,
   ClickAwayListener,
+  Link,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import StoreIcon from '@mui/icons-material/Store';
@@ -53,7 +54,7 @@ const Header: React.FC = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <StoreIcon sx={styles.storeIcon} />
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" component={RouterLink}>
             <Typography variant="h6" noWrap sx={[styles.typo, styles.typoH6]}>
               BUYIT
             </Typography>
@@ -94,7 +95,7 @@ const Header: React.FC = () => {
               />
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                  <Link style={{ textDecoration: 'none' }} to={page.route}>
+                  <Link to={page.route} component={RouterLink} sx={styles.link}>
                     <Typography textAlign="center">{page.title}</Typography>
                   </Link>
                 </MenuItem>
@@ -102,7 +103,7 @@ const Header: React.FC = () => {
             </Menu>
           </Box>
           <StoreIcon sx={styles.storeIconFlex} />
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" component={RouterLink}>
             <Typography variant="h5" noWrap sx={[styles.typo, styles.typoH5]}>
               BUYIT
             </Typography>
@@ -139,7 +140,7 @@ const Header: React.FC = () => {
             {pages.map((page) => (
               <Button
                 key={page.title}
-                component={Link}
+                component={RouterLink}
                 to={page.route}
                 onClick={handleCloseNavMenu}
                 sx={styles.closeNavMenu}

@@ -78,6 +78,21 @@ const theme = createTheme({
         },
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: palette.red[500],
+          textDecoration: 'none',
+        },
+      },
+    },
   },
 });
 

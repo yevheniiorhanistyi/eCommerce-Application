@@ -26,10 +26,10 @@ const TeamMember: React.FC<ITeamMember> = ({
       </Box>
       <Container>
         <Container sx={styles.links} disableGutters>
-          <Link href={linkedin} target="_blank">
+          <Link href={linkedin} target="_blank" sx={styles.link}>
             <LinkedInIcon fontSize="large" sx={styles.icon} />
           </Link>
-          <Link href={github} target="_blank">
+          <Link href={github} target="_blank" sx={styles.link}>
             <GitHubIcon fontSize="large" sx={styles.icon} />
           </Link>
         </Container>

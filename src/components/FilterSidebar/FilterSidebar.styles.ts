@@ -11,6 +11,7 @@ const styles = {
     color: theme.palette.primary.main,
     backgroundColor: theme.palette.grey[100],
     '&:hover': {
+      color: theme.palette.primary.main,
       backgroundColor: theme.palette.grey[200],
     },
   },

@@ -40,6 +40,11 @@ const styles = {
     border: '2px solid #fff',
     borderRadius: '0',
     color: palette.common.white,
+    transition: 'box-shadow .3s linear',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      boxShadow: '0px 0px 10px 0px #fff',
+    },
     '@media (max-width: 560px)': {
       fontSize: '0.6rem',
       padding: '8px 25px',
