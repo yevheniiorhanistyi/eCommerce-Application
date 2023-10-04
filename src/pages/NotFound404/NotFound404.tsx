@@ -9,6 +9,7 @@ const NotFound404: React.FC = () => (
     <Grid container spacing={2} minHeight={600}>
       <Grid
         xs
+        item
         display="flex"
         justifyContent="center"
         alignItems="center"
