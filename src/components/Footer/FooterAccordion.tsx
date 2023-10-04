@@ -18,7 +18,7 @@ import theme from '../../theme';
 import styles from './Footer.styles';
 
 const FooterAccordion: React.FC = () => (
-  <div>
+  <>
     <Box sx={styles.companySection}>
       <Link to="/" style={{ textDecoration: 'none' }}>
         <Typography variant="h6" noWrap sx={styles.companyLink}>
@@ -113,7 +113,7 @@ const FooterAccordion: React.FC = () => (
         ))}
       </AccordionDetails>
     </Accordion>
-  </div>
+  </>
 );
 
 export default FooterAccordion;
