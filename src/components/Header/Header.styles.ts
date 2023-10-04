@@ -28,6 +28,13 @@ const styles = {
   popper: {
     zIndex: 1,
   },
+  link: {
+    textDecoration: 'none',
+    '& p': {
+      fontWeight: 600,
+      color: theme.palette.common.black,
+    },
+  },
 };
 
 export default styles;
