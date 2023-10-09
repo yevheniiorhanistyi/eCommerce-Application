@@ -1,10 +1,12 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid, Box, Container } from '@mui/material';
-import { IProduct } from '../../types/productInterfaces';
+
 import { ISearchParams } from '../../types/types';
-import { getProductByParams } from '../../services/products/getProductByParams';
+
 import { useCategoryData } from '../../components/CategoryDataProvider/CategoryDataProvider';
+import { useProductData } from '../../hooks/useProductData';
+import { useDisplayState } from '../../hooks/useDisplayState';
 import {
   initialSearchParams,
   CATALOG_PAGE_WINDOW_BREAKPOINT,
@@ -24,13 +26,8 @@ import {
 import styles from './Catalog.styles';
 
 const Catalog: React.FC = () => {
-  const [productList, setProductList] = useState<IProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
   const [searchParams, setSearchParams] = useState<ISearchParams>(initialSearchParams);
-  const [totalElements, setTotalElements] = useState(0);
   const [anchorElem, setAnchorElem] = useState<HTMLElement | null>(null);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { key } = useParams<{ key: string }>();
   const categorySlug = key?.split(' ').pop();
   const { categoryData } = useCategoryData();
@@ -38,32 +35,11 @@ const Catalog: React.FC = () => {
     () => categoryData.find((item) => item.slug[languageCode] === categorySlug)?.id,
     [categoryData, categorySlug],
   );
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      setAnchorElem(null);
-    };
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        getProductByParams(idCategory, searchParams).then((response) => {
-          setProductList(response.results);
-          setTotalElements(response.total);
-          setIsLoading(false);
-        });
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [idCategory, searchParams]);
+  const { currentPage, setCurrentPage, windowWidth } = useDisplayState();
+  const { productList, totalElements, isLoading } = useProductData(
+    idCategory,
+    searchParams,
+  );
 
   const filterSize = windowWidth > CATALOG_PAGE_WINDOW_BREAKPOINT ? 3 : 12;
   const productListSize = windowWidth > CATALOG_PAGE_WINDOW_BREAKPOINT ? 9 : 12;
