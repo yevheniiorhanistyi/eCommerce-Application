@@ -41,7 +41,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
           key={category.id}
           label={(
             <Link
-              to={`/category/${category.slug[languageCode]}`}
+              to={`catalog/category/${category.slug[languageCode]}`}
               onClick={onClose}
             >
               {category.name[languageCode]}
@@ -52,7 +52,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
             <RecursiveMenu
               data={getChildren(category, categoryData)}
               fullData={categoryData}
-              linkTo={`/category/${category.slug[languageCode]}`}
+              linkTo={`catalog/category/${category.slug[languageCode]}`}
               indexParent={index.toString()}
               onClick={onClose}
             />

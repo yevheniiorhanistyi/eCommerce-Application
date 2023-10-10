@@ -34,10 +34,12 @@ const router = createBrowserRouter([
       {
         path: '/catalog',
         element: <Catalog />,
-      },
-      {
-        path: '/category/:key',
-        element: <Catalog />,
+        children: [
+          {
+            path: 'category/:key',
+            element: <Catalog />,
+          },
+        ],
       },
       {
         path: '/profile',
