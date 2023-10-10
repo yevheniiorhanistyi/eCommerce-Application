@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 export const useDisplayState = () => {
-  const [currentPage, setCurrentPage] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -15,7 +14,7 @@ export const useDisplayState = () => {
     };
   }, []);
 
-  return { currentPage, windowWidth, setCurrentPage };
+  return { windowWidth };
 };
 
 export default useDisplayState;
