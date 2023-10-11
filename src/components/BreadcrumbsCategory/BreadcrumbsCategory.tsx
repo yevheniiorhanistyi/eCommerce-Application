@@ -22,12 +22,13 @@ export const BreadcrumbsCategory: React.FC<BreadcrumbsCategoryProps> = ({
 
     return (
       <Breadcrumbs sx={styles.wrap}>
+        <Link to="/catalog">Catalog</Link>
         {paramLinkArray.map((item, index, array) => {
           if (index < paramLinkArray.length - 1) {
             return (
               <Link
                 key={item.address}
-                to={`/category/${array
+                to={`category/${array
                   .map((obj) => obj.address)
                   .slice(0, index + 1)
                   .join(' ')}`}
@@ -43,7 +44,7 @@ export const BreadcrumbsCategory: React.FC<BreadcrumbsCategoryProps> = ({
   }
   return (
     <Breadcrumbs sx={styles.wrap}>
-      <Typography>/</Typography>
+      <Typography height={24}> </Typography>
     </Breadcrumbs>
   );
 };

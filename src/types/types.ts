@@ -153,10 +153,10 @@ export interface ICommonProps {
   setSearchParams: React.Dispatch<React.SetStateAction<ISearchParams>>;
 }
 
-export interface IAppPaginationProps extends ICommonProps {
-  totalElements: number;
+export interface IAppPaginationProps {
+  totalPages: number;
   currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  handlePageChange: (e: React.ChangeEvent<unknown>, page: number) => void;
 }
 
 export interface ICategoryPopoverProps {

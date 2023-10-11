@@ -11,10 +11,10 @@ const styles = {
   productListBox: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
 
     '@media (max-width: 1175px)': {
-      justifyContent: 'space-around',
+      justifyContent: 'center',
     },
   },
 };

@@ -4,7 +4,10 @@ const styles = {
     flexDirection: 'column',
     height: '554px',
     maxWidth: 280,
-    marginBottom: '15px',
+    margin: '0 auto 15px',
+    '@media (max-width: 1175px)': {
+      margin: '0 20px 15px',
+    },
   },
   link: {
     flex: '1 0 auto',

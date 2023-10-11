@@ -8,7 +8,7 @@ const styles = {
     width: '500px',
     backgroundColor: theme.palette.common.white,
     p: 3,
-    borderRadius: 2,
+    borderRadius: 0,
     transform: 'translate(-50%, -50%)',
     '@media (max-width:500px)': {
       width: '95%',

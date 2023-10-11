@@ -15,7 +15,7 @@ const styles = {
     bottom: '1vh',
     padding: 1,
     backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: 0,
   },
 };
 
