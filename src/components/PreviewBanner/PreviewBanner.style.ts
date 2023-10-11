@@ -3,8 +3,9 @@ import * as palette from '@mui/material/colors';
 const styles = {
   outerBox: {
     width: '100%',
-    height: '80vh',
+    height: '88vh',
     position: 'relative',
+    overflow: 'hidden',
   },
   img: {
     display: 'block',
@@ -12,6 +13,8 @@ const styles = {
     height: '100%',
     objectFit: 'cover',
     objectPosition: 'center',
+    transform: 'scale(1.2)',
+    opacity: 0,
   },
   innerBox: {
     minWidth: '225px',
