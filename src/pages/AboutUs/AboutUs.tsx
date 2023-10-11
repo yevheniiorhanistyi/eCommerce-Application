@@ -1,7 +1,9 @@
 import { Box, Link, Typography } from '@mui/material';
+import { motion } from 'framer-motion';
 
-import TeamMember from '../../components/TeamMember/TeamMember';
 import { ITeamMember } from '../../types/types';
+import TeamMember from '../../components/TeamMember/TeamMember';
+import { textAnimation, itemAnimation } from '../../utils/animations';
 
 import skillEuhenii from '../../assets/skillEuhenii.png';
 import reactYevhenii from '../../assets/reactYevhenii.png';
@@ -87,9 +89,20 @@ const AboutUs: React.FC = () => {
   ];
 
   return (
-    <Box sx={styles.outerBox}>
+    <Box
+      component={motion.div}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      sx={styles.outerBox}
+    >
       <Box sx={styles.innerBox}>
-        <Box sx={styles.title}>
+        <Box
+          custom={1}
+          component={motion.div}
+          variants={textAnimation}
+          sx={styles.title}
+        >
           <Typography variant="h3" align="center" sx={styles.titleText}>
             Meet our
           </Typography>
@@ -109,17 +122,23 @@ const AboutUs: React.FC = () => {
           </Typography>
         </Box>
 
-        {teamMembers.map((member) => (
-          <TeamMember
-            name={member.name}
-            role={member.role}
-            bio={member.bio}
-            github={member.github}
-            linkedin={member.linkedin}
-            photo={member.photo}
+        {teamMembers.map((member, index) => (
+          <Box
             key={member.name}
-            sliderData={member.sliderData}
-          />
+            custom={index + 1.1}
+            component={motion.div}
+            variants={itemAnimation}
+          >
+            <TeamMember
+              name={member.name}
+              role={member.role}
+              bio={member.bio}
+              github={member.github}
+              linkedin={member.linkedin}
+              photo={member.photo}
+              sliderData={member.sliderData}
+            />
+          </Box>
         ))}
       </Box>
     </Box>
