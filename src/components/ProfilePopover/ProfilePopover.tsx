@@ -96,7 +96,7 @@ const ProfilePopover = () => {
             ) : (
               <>
                 <Link to="/signin" style={styles.link}>
-                  <ListItemButton sx={styles.button}>
+                  <ListItemButton onClick={handleClose} sx={styles.button}>
                     <AuthButton
                       text="Sign in"
                       icon={<AccountCircleIcon sx={styles.icon} />}
@@ -104,7 +104,7 @@ const ProfilePopover = () => {
                   </ListItemButton>
                 </Link>
                 <Link to="/signup" style={styles.link}>
-                  <ListItemButton sx={styles.button}>
+                  <ListItemButton onClick={handleClose} sx={styles.button}>
                     <AuthButton
                       text="Sign up"
                       icon={<VpnKeyIcon sx={styles.icon} />}
