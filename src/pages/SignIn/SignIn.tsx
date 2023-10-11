@@ -1,10 +1,12 @@
-import { Typography, Paper, Container, Link } from '@mui/material';
-
 import { Link as RouterLink, Navigate } from 'react-router-dom';
+import { Typography, Paper, Container, Link } from '@mui/material';
 import { useSnackbar } from 'notistack';
+import { motion } from 'framer-motion';
+
 import SignInForm from '../../components/SignInForm/SignInForm';
 
 import { useAuth } from '../../components/AuthProvider/AuthProvider';
+import { itemAnimation } from '../../utils/animations';
 
 import styles from './SignIn.styles';
 
@@ -21,8 +23,20 @@ const SignIn: React.FC = () => {
 
   if (isAuthenticated) return <Navigate to="/" />;
   return (
-    <Container maxWidth="sm" sx={styles.outerBox}>
-      <Paper sx={styles.paper}>
+    <Container
+      component={motion.section}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      maxWidth="sm"
+      sx={styles.outerBox}
+    >
+      <Paper
+        custom={1}
+        component={motion.div}
+        variants={itemAnimation}
+        sx={styles.paper}
+      >
         <Typography variant="h3" align="center" sx={styles.title}>
           Sign In
         </Typography>

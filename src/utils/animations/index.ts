@@ -23,7 +23,7 @@ export const textAnimation = {
 
 export const itemAnimation = {
   hidden: {
-    y: -30,
+    y: 30,
     opacity: 0,
   },
   visible: (custom: number) => ({
