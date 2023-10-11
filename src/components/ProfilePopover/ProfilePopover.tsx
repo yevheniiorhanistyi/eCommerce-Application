@@ -35,6 +35,7 @@ const ProfilePopover = () => {
   };
 
   const handleSignOut = () => {
+    setAnchorEl(null);
     setAuthentication(false);
     removeTokenFromLocalStorage();
     removeUserData();
