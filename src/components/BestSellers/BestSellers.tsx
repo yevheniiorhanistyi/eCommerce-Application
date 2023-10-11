@@ -9,13 +9,15 @@ import {
   CardActionArea,
   Link,
 } from '@mui/material';
+import { motion } from 'framer-motion';
 
 import { IProduct } from '../../types/productInterfaces';
+import { itemAnimation, textAnimation } from '../../utils/animations';
+import { getProductByParams } from '../../services/products/getProductByParams';
 import {
   initialSearchParams,
   FEATURED_CLOTHING_CATEGORY_ID,
 } from '../../constants/constants';
-import { getProductByParams } from '../../services/products/getProductByParams';
 
 import styles from './BestSellers.style';
 
@@ -39,13 +41,37 @@ export const BestSellers: React.FC = () => {
   }, [FEATURED_CLOTHING_CATEGORY_ID, initialSearchParams]);
 
   return (
-    <Box sx={styles.outerBox}>
-      <Typography variant="h4" align="center" sx={styles.title}>
+    <Box
+      component={motion.div}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.2, once: true }}
+      sx={styles.outerBox}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        sx={styles.title}
+        custom={1}
+        component={motion.h4}
+        variants={textAnimation}
+      >
         Featured Products
       </Typography>
-      <Box sx={styles.innerBox}>
-        {productList.map((product) => (
-          <Card key={product.key} sx={styles.card}>
+      <Box
+        component={motion.div}
+        initial="hidden"
+        whileInView="visible"
+        sx={styles.innerBox}
+      >
+        {productList.map((product, index) => (
+          <Card
+            custom={index + 1}
+            component={motion.div}
+            variants={itemAnimation}
+            key={product.key}
+            sx={styles.card}
+          >
             <Link
               to={`/product/${product.key}`}
               component={RouterLink}
