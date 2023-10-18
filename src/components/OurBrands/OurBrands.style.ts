@@ -4,6 +4,7 @@ const styles = {
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   image: {
     display: 'block',

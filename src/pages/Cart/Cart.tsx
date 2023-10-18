@@ -11,11 +11,13 @@ import NonEmptyCart from '../../components/NonEmptyCard/NonEmptyCart';
 import getCartById from '../../services/cart/getCartById';
 import EmptyCart from '../../components/EmptyCart/EmptyCart';
 import getIdCartActive from '../../services/cart/getIdCartActive';
+import CartDataLoader from '../../components/CartDataLoader/CartDataLoader';
 
 import styles from './Cart.styles';
 
 const CustomerCart: React.FC = () => {
   const [cartData, setCartData] = useState<Cart | null>();
+  const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated } = useAuth();
   const { updateBadgeContent } = useCart();
 
@@ -42,12 +44,13 @@ const CustomerCart: React.FC = () => {
 
   useEffect(() => {
     fetchCartData();
-  }, []);
+  }, [isLoading]);
 
   const fetchCartData = async () => {
     const id = await getIdCartActive(isAuthenticated);
     const data = await getCartById(id);
     setCartData(data);
+    setIsLoading(false);
     if (data) {
       updateBadgeContent(data.totalLineItemQuantity || 0);
     }
@@ -57,8 +60,12 @@ const CustomerCart: React.FC = () => {
     fetchCartData();
   };
 
-  if (!cartData) {
-    return null;
+  if (isLoading) {
+    return (
+      <Container maxWidth="lg" disableGutters>
+        <CartDataLoader />
+      </Container>
+    );
   }
   if (cartData && !cartData?.lineItems?.length) {
     return (

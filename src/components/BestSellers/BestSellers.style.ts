@@ -5,6 +5,7 @@ const styles = {
   title: {
     textTransform: 'capitalize',
     mb: '30px',
+    opacity: 0,
   },
   innerBox: {
     display: 'flex',
