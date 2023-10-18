@@ -6,8 +6,10 @@ import {
   colors,
 } from '../../constants/constants';
 import { ICommonProps } from '../../types/types';
+import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
 import { CategoryAccordion } from '../CategoryAccordion/CategoryAccordion';
 import { PriceRange } from '../PriceRange/PriceRange';
+import CategoryMenu from '../CategoryMenu/CategoryMenu';
 
 import styles from './FilterSidebar.styles';
 
@@ -15,12 +17,14 @@ export const FilterSidebar: React.FC<ICommonProps> = ({
   searchParams,
   setSearchParams,
 }: ICommonProps) => {
+  const { categoryData } = useCategoryData();
   const resetFilters = () => {
     setSearchParams({ ...initialSearchParams });
   };
 
   return (
     <>
+      <CategoryMenu categoryData={categoryData} />
       <PriceRange
         searchParams={searchParams}
         setSearchParams={setSearchParams}

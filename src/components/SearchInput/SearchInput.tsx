@@ -10,14 +10,20 @@ export const SearchInput: React.FC<ICommonProps> = ({
   setSearchParams,
 }: ICommonProps) => {
   const [debouncedInputValue, setDebouncedInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const handleSearchChange = (newValue: string) => {
     setDebouncedInputValue(newValue);
+    setIsTyping(true);
   };
 
   useEffect(() => {
-    const delayInputTimeoutId = setTimeout(() => {
-      setSearchParams({ ...searchParams, term: debouncedInputValue });
-    }, 500);
+    let delayInputTimeoutId: NodeJS.Timeout;
+    if (isTyping) {
+      delayInputTimeoutId = setTimeout(() => {
+        setSearchParams({ ...searchParams, term: debouncedInputValue });
+        setIsTyping(false);
+      }, 500);
+    }
     return () => clearTimeout(delayInputTimeoutId);
   }, [debouncedInputValue, 500]);
 
