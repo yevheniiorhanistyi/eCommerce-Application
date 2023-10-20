@@ -8,10 +8,11 @@ const styles = {
   buttonReset: {
     width: '100%',
     padding: '10px 5px',
-    color: theme.palette.primary.main,
-    backgroundColor: theme.palette.grey[100],
+    color: theme.palette.common.black,
+    backgroundColor: theme.palette.common.white,
     '&:hover': {
-      backgroundColor: theme.palette.grey[200],
+      color: theme.palette.common.white,
+      backgroundColor: theme.palette.common.black,
     },
   },
 };

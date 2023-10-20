@@ -11,7 +11,7 @@ import 'react-lazy-load-image-component/src/effects/opacity.css';
 
 import styles from './PromoSlider.styles';
 
-const PromoSlider = () => {
+export const PromoSlider: React.FC = () => {
   const images = [
     { imgSrc: promoImg1, alt: 'Promo code: REALLYGREATESITE' },
     { imgSrc: promoImg2, alt: 'Promo code: RSSCHOOL' },
@@ -19,27 +19,29 @@ const PromoSlider = () => {
 
   return (
     <Container>
-      <Slider
-        dots
-        infinite
-        speed={600}
-        slidesToShow={1}
-        slidesToScroll={1}
-        autoplay
-        autoplaySpeed={6000}
-        arrows={false}
-      >
-        {images.map((item) => (
-          <Box sx={styles.imgWrapper} key={item.alt}>
-            <LazyLoadImage
-              alt={item.alt}
-              src={item.imgSrc}
-              effect="opacity"
-              style={styles.img}
-            />
-          </Box>
-        ))}
-      </Slider>
+      <Box sx={styles.sliderWrapper}>
+        <Slider
+          dots
+          infinite
+          speed={600}
+          slidesToShow={1}
+          slidesToScroll={1}
+          autoplay
+          autoplaySpeed={6000}
+          arrows={false}
+        >
+          {images.map((item) => (
+            <Box sx={styles.imgWrapper} key={item.alt}>
+              <LazyLoadImage
+                alt={item.alt}
+                src={item.imgSrc}
+                effect="opacity"
+                style={styles.img}
+              />
+            </Box>
+          ))}
+        </Slider>
+      </Box>
     </Container>
   );
 };

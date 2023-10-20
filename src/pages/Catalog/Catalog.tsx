@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid, Box, Container } from '@mui/material';
-import { IProduct } from '../../types/productInterfaces';
+
 import { ISearchParams } from '../../types/types';
-import { getProductByParams } from '../../services/products/getProductByParams';
+
 import { useCategoryData } from '../../components/CategoryDataProvider/CategoryDataProvider';
-import { initialSearchParams } from '../../constants/constants';
+import { useProductData } from '../../hooks/useProductData';
+import { useDisplayState } from '../../hooks/useDisplayState';
+import {
+  initialSearchParams,
+  CATALOG_PAGE_WINDOW_BREAKPOINT,
+} from '../../constants/constants';
 import languageCode from '../../utils/languageCode';
 import {
   AppPagination,
@@ -21,48 +26,35 @@ import {
 import styles from './Catalog.styles';
 
 const Catalog: React.FC = () => {
-  const [productList, setProductList] = useState<IProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchParams, setSearchParams] = useState<ISearchParams>(initialSearchParams);
-  const [totalElements, setTotalElements] = useState(0);
   const [anchorElem, setAnchorElem] = useState<HTMLElement | null>(null);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { key } = useParams<{ key: string }>();
   const categorySlug = key?.split(' ').pop();
   const { categoryData } = useCategoryData();
-  const idCategory = categoryData.find(
-    (item) => item.slug[languageCode] === categorySlug,
-  )?.id;
+  const idCategory = useMemo(
+    () => categoryData.find((item) => item.slug[languageCode] === categorySlug)?.id,
+    [categoryData, categorySlug],
+  );
+  const { windowWidth } = useDisplayState();
+  const { productList, totalElements, isLoading } = useProductData(
+    idCategory,
+    searchParams,
+    setSearchParams,
+    setCurrentPage,
+  );
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      setAnchorElem(null);
-    };
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        getProductByParams(idCategory, searchParams).then((response) => {
-          setProductList(response.results);
-          setTotalElements(response.total);
-          setIsLoading(false);
-        });
-      } catch (error) {
-        console.error(error);
-        setIsLoading(true);
-      }
-    };
-    fetchData();
-    window.addEventListener('resize', handleResize);
+  const elementsPerPage = 6;
+  const totalPages = Math.ceil(totalElements / elementsPerPage);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [idCategory, searchParams]);
+  const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+    const newOffset = ((page - 1) * 6) % totalElements;
+    setCurrentPage(page - 1);
+    setSearchParams({ ...searchParams, offset: newOffset });
+  };
 
-  const filterSize = windowWidth > 940 ? 3 : 12;
-  const productListSize = windowWidth > 940 ? 9 : 12;
+  const filterSize = windowWidth > CATALOG_PAGE_WINDOW_BREAKPOINT ? 3 : 12;
+  const productListSize = windowWidth > CATALOG_PAGE_WINDOW_BREAKPOINT ? 9 : 12;
 
   return (
     <Box sx={styles.outerBox}>
@@ -120,11 +112,9 @@ const Catalog: React.FC = () => {
             )}
             {!isLoading && productList.length > 0 ? (
               <AppPagination
-                searchParams={searchParams}
                 currentPage={currentPage}
-                totalElements={totalElements}
-                setCurrentPage={setCurrentPage}
-                setSearchParams={setSearchParams}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
               />
             ) : null}
           </Grid>

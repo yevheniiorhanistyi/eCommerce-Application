@@ -3,13 +3,12 @@ import theme from '../../theme';
 const styles = {
   treeView: {
     p: 1,
+    mb: 2,
     color: theme.palette.primary.main,
     backgroundColor: theme.palette.background.paper,
-    borderRadius: '4px',
     a: {
       color: theme.palette.primary.main,
       textDecoration: 'none',
-      fontWeight: 'bold',
     },
   },
 };

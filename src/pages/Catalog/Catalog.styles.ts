@@ -5,7 +5,7 @@ const styles = {
     justifyContent: 'center',
   },
   filterSidebarBox: {
-    paddingTop: '96px',
+    paddingTop: '20px',
   },
   innerBox: {
     display: 'flex',

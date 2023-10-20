@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import {
   AppBar,
@@ -11,7 +11,8 @@ import {
   Container,
   Button,
   MenuItem,
-  Popper,
+  ClickAwayListener,
+  Link,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import StoreIcon from '@mui/icons-material/Store';
@@ -20,21 +21,12 @@ import ProfilePopover from '../ProfilePopover/ProfilePopover';
 import CartButton from '../buttons/CartButton/CartButton';
 import NotificationsButton from '../buttons/NotificationsButton/NotificationsButton';
 
-import CategoryMenu from '../CategoryMenu/CategoryMenu';
-
-import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
-
 import styles from './Header.styles';
 
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const { categoryData } = useCategoryData();
   const pages = [{ title: 'About Us', route: '/about' }];
-
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popper' : undefined;
@@ -52,7 +44,7 @@ const Header: React.FC = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <StoreIcon sx={styles.storeIcon} />
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" component={RouterLink}>
             <Typography variant="h6" noWrap sx={[styles.typo, styles.typoH6]}>
               BUYIT
             </Typography>
@@ -85,10 +77,9 @@ const Header: React.FC = () => {
               onClose={handleCloseNavMenu}
               sx={styles.menubar}
             >
-              <CategoryMenu categoryData={categoryData} />
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                  <Link style={{ textDecoration: 'none' }} to={page.route}>
+                  <Link to={page.route} component={RouterLink} sx={styles.link}>
                     <Typography textAlign="center">{page.title}</Typography>
                   </Link>
                 </MenuItem>
@@ -96,26 +87,29 @@ const Header: React.FC = () => {
             </Menu>
           </Box>
           <StoreIcon sx={styles.storeIconFlex} />
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" component={RouterLink}>
             <Typography variant="h5" noWrap sx={[styles.typo, styles.typoH5]}>
               BUYIT
             </Typography>
           </Link>
           <Box sx={styles.navMenuBox}>
-            <Button
-              aria-describedby={id}
-              onClick={handleClick}
-              sx={styles.closeNavMenu}
+            <ClickAwayListener
+              onClickAway={() => {
+                setAnchorEl(null);
+              }}
             >
-              CATALOG
-            </Button>
-            <Popper id={id} open={open} anchorEl={anchorEl} sx={styles.popper}>
-              <CategoryMenu categoryData={categoryData} />
-            </Popper>
+              <Box>
+                <Link to="/catalog" component={RouterLink}>
+                  <Button aria-describedby={id} sx={styles.closeNavMenu}>
+                    CATALOG
+                  </Button>
+                </Link>
+              </Box>
+            </ClickAwayListener>
             {pages.map((page) => (
               <Button
                 key={page.title}
-                component={Link}
+                component={RouterLink}
                 to={page.route}
                 onClick={handleCloseNavMenu}
                 sx={styles.closeNavMenu}

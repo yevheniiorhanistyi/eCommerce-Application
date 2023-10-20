@@ -45,6 +45,9 @@ const styles = {
     display: 'flex',
     gap: '8px',
   },
+  link: {
+    color: theme.palette.common.black,
+  },
   name: {
     fontWeight: 400,
     marginBottom: '5px',
