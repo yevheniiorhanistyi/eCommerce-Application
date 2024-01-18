@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
@@ -14,23 +14,23 @@ import { motion } from 'framer-motion';
 import { IProduct } from '../../types/productInterfaces';
 import { itemAnimation, textAnimation } from '../../utils/animations';
 import { getProductByParams } from '../../services/products/getProductByParams';
-import {
-  initialSearchParams,
-  FEATURED_CLOTHING_CATEGORY_ID,
-} from '../../constants/constants';
+import { useCategoryData } from '../CategoryDataProvider/CategoryDataProvider';
+import { initialSearchParams } from '../../constants/constants';
 
 import styles from './BestSellers.style';
 
 export const BestSellers: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
+  const { categoryData } = useCategoryData();
+  const idCategory = useMemo(
+    () => categoryData.find((item) => item.key === 'feature')?.id,
+    [categoryData],
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        getProductByParams(
-          FEATURED_CLOTHING_CATEGORY_ID,
-          initialSearchParams,
-        ).then((response) => {
+        getProductByParams(idCategory, initialSearchParams).then((response) => {
           setProductList(response.results);
         });
       } catch (error) {
@@ -38,7 +38,7 @@ export const BestSellers: React.FC = () => {
       }
     };
     fetchData();
-  }, [FEATURED_CLOTHING_CATEGORY_ID, initialSearchParams]);
+  }, [idCategory, initialSearchParams]);
 
   return (
     <Box
