@@ -2,7 +2,7 @@
 <!-- DESCRIPTION -->
 _BUYIT is a powerful eCommerce application developed using state-of-the-art web development technologies. It represents an innovative and user-friendly web application designed for selling products online. The primary goal of the project is to provide users with a convenient and secure online shopping experience._
 
-Deployment Link: [BUYIT](https://679e53ce181de31c5e6975c9--buyit-shop-f.netlify.app/)
+Deployment Link: [BUYIT](https://buyit-shop-f.netlify.app/)
 
 <!-- TABLE OF CONTENTS -->
 <details>
